@@ -26,8 +26,7 @@ jobs:
             python -m pip install --upgrade pip
             
         - name: Deployment
-          run: |
-               cd infra 
+          run: | 
                pip install -r requirements.txt
                cdk deploy --require-approval never
           env:
