@@ -30,6 +30,7 @@ jobs:
         - name: Build UI
           run: |
                cd webapp
+               cd .nuxt
                npm install
                npm run build
                cd ..
