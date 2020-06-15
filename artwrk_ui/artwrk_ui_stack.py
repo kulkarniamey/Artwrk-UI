@@ -10,13 +10,18 @@ class ArtwrkUiStack(core.Stack):
         super().__init__(scope, id, **kwargs)
 
         # The code that defines your stack goes here
-        website_bucket = s3.Bucket(self, "artwrk-ui",
+        buckets={}
+        buckets["refs/heads/master"] = s3.Bucket(self, "artwrk.prod",
+            website_index_document="index.html",
+            public_read_access=True
+        )
+        buckets["refs/heads/develop"] = s3.Bucket(self, "artwrk.dev",
             website_index_document="index.html",
             public_read_access=True
         )
 
         s3deploy.BucketDeployment(self, "DeployWebsite",
             sources=[s3deploy.Source.asset("webapp/dist")],
-            destination_bucket=website_bucket,
+            destination_bucket=buckets[self.node.try_get_context("branch")],
             destination_key_prefix=""
         )
