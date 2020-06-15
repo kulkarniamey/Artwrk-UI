@@ -1,0 +1,36 @@
+on:
+  push:
+    branches: master
+
+jobs:
+  aws_cdk:
+    runs-on: ubuntu-latest
+    steps:
+        - uses: actions/checkout@v2
+                  
+        - name: Setup Node
+          uses: actions/setup-node@v1
+          with:
+            node-version: '10.x'
+        
+        - name: install cdk
+          run: npm install -g aws-cdk
+    
+        - name: Setup python
+          uses: actions/setup-python@v2
+          with:
+            python-version: '3.x'
+            
+        - name: Install dependencies
+          run: |
+            python -m pip install --upgrade pip
+            
+        - name: Deployment
+          run: |
+               cd infra 
+               pip install -r requirements.txt
+               cdk deploy --require-approval never
+          env:
+            AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+            AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+            AWS_DEFAULT_REGION: 'us-east-1'
