@@ -21,7 +21,7 @@ class ArtwrkUiStack(core.Stack):
         )
 
         s3deploy.BucketDeployment(self, "DeployWebsite",
-            sources=[s3deploy.Source.asset("webapp/.nuxt/dist")],
+            sources=[s3deploy.Source.asset("webapp/dist")],
             destination_bucket=buckets[self.node.try_get_context("branch")],
             destination_key_prefix=""
         )
