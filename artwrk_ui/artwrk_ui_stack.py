@@ -16,7 +16,7 @@ class ArtwrkUiStack(core.Stack):
         )
 
         s3deploy.BucketDeployment(self, "DeployWebsite",
-            sources=[s3deploy.Source.asset("webapp")],
+            sources=[s3deploy.Source.asset("webapp/dist")],
             destination_bucket=website_bucket,
             destination_key_prefix=""
         )
