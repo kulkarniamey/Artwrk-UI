@@ -21,6 +21,7 @@
                 label="Password*"
                 v-model="pass"
                 :rules="passRules"
+                type="password"
                 required
               ></v-text-field>
             </v-col>
@@ -29,6 +30,7 @@
                 label="Confirm Password*"
                 v-model="pass2"
                 :rules="passTwoRules"
+                type="password"
                 required
               ></v-text-field>
             </v-col>
@@ -69,9 +71,7 @@ export default {
       pass2: '',
       passRules: [
         (v) => !!v || 'Password is required',
-        (v) =>
-          (v && v.length <= 8) || 'Password must be less than 8 characters',
-        (v) => (v && this.checkMatch) || 'Passwords must match'
+        (v) => (v && v.length <= 8) || 'Password must be less than 8 characters'
       ],
       passTwoRules: [
         (v) => !!v || 'Password is required',
