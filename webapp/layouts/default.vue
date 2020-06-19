@@ -13,7 +13,14 @@
      
       <img class="mr-3" :src="require('../assets/v.png')" height="40"/>
       <v-toolbar-title>ArtWrk</v-toolbar-title>
-      
+
+      <section v-if="!state">
+      <v-btn small  fixed right rounded  top @click="signIn" >Sign In </v-btn>
+      </section>
+
+      <section v-else>
+      <v-btn small  fixed right rounded  top @click="logOut" >Log Out </v-btn>        
+      </section>
     </v-app-bar>
 
     <v-content>
@@ -98,6 +105,27 @@
         }
       ],
 
+      state:false,
+
+      
+
     }),
+
+    methods :{
+            signIn: function (){
+                this.state=true;
+                
+            },
+
+            logOut: function (){
+                this.state=false;
+                this.signIN
+                
+            },
+
+
+    },
+
+    
   }
 </script>
