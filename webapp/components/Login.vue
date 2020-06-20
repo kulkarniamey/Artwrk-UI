@@ -72,6 +72,9 @@ export default {
     validate() {
       this.$refs.form.validate()
     }
+  },
+  beforeDestroy() {
+    console.log('login destroyed')
   }
 }
 </script>
