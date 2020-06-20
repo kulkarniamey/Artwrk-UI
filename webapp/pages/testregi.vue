@@ -44,30 +44,6 @@ export default {
         this.statevar = 'register'
       }
     }
-  },
-  beforeCreate() {
-    console.log('I am b4created')
-  },
-  created() {
-    console.log('I am created')
-  },
-  beforeMount() {
-    console.log('I am bmount')
-  },
-  mounted() {
-    console.log('I am mounted')
-  },
-  beforeUpdate() {
-    console.log('I am bupdate')
-  },
-  updated() {
-    console.log('I am updated')
-  },
-  beforeDestroy() {
-    console.log('I am bdestroy')
-  },
-  destroyed() {
-    console.log('I am destro')
   }
 }
 </script>

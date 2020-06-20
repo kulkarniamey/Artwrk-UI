@@ -23,7 +23,6 @@ export default {
   },
   computed: {
     renderImage() {
-      console.log(this.cat.url)
       return this.cat.url
     }
   },
@@ -36,8 +35,6 @@ export default {
         .get('https://api.thecatapi.com/v1/images/search')
         .then((response) => {
           pussyUrl = response.data[0].url
-          console.log(response)
-          console.log(pussyUrl)
           urlarray.push(pussyUrl)
         })
       return urlarray
@@ -48,7 +45,6 @@ export default {
     for (i in this.cols) {
       var link = await this.getManyPussy()
       this.caturls.push(link)
-      console.log(this.caturls)
     }
   }
 }
