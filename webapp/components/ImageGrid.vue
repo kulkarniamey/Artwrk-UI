@@ -1,8 +1,20 @@
 <template>
   <div>
     <v-row>
-      <v-col cols="3" v-for="(x, index) in caturls" :key="index">
-        <img :style="colstyle" :src="caturls[index][0]" alt="pussy" />
+      <v-col
+        sm="12"
+        md="3"
+        v-for="(x, index) in caturls"
+        :key="index"
+        align="center"
+      >
+        <v-lazy
+          v-model="isActive[index]"
+          :options="{ threshold: 0.5 }"
+          transition="fade-transition"
+        >
+          <img :style="colstyle" :src="caturls[index][0]" alt="pussy" />
+        </v-lazy>
       </v-col>
     </v-row>
   </div>
@@ -16,9 +28,53 @@ export default {
 
   data() {
     return {
-      cols: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+      cols: [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
       caturls: [],
-      colstyle: 'border: 3px solid #fff'
+      colstyle: 'border: 3px solid #fff',
+      isActive: [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     }
   },
   computed: {
