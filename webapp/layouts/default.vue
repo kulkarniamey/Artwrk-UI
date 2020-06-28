@@ -1,77 +1,107 @@
 <template>
-  <v-app dark>
-    <v-navigation-drawer
-      v-model="drawer"
-      :mini-variant="miniVariant"
-      :clipped="clipped"
-      fixed
-      app
+  <v-app>
+    
+
+    <v-app-bar
+    app
+    color="indigo lighten-1"
+    dense
+    flat
+      
     >
-      <v-list>
-        <v-list-item
-          v-for="(item, i) in items"
-          :key="i"
-          :to="item.to"
-          router
-          exact
-        >
-          <v-list-item-action>
-            <v-icon>{{ item.icon }}</v-icon>
-          </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title v-text="item.title" />
-          </v-list-item-content>
-        </v-list-item>
-      </v-list>
-    </v-navigation-drawer>
-    <v-app-bar :clipped-left="clipped" fixed app>
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
-      <v-btn icon @click.stop="miniVariant = !miniVariant">
-        <v-icon>mdi-{{ `chevron-${miniVariant ? 'right' : 'left'}` }}</v-icon>
-      </v-btn>
-      <v-btn icon @click.stop="clipped = !clipped">
-        <v-icon>mdi-application</v-icon>
-      </v-btn>
-      <v-btn icon @click.stop="fixed = !fixed">
-        <v-icon>mdi-minus</v-icon>
-      </v-btn>
-      <v-toolbar-title v-text="title" />
-      <v-spacer />
-      <v-btn icon @click.stop="rightDrawer = !rightDrawer">
-        <v-icon>mdi-menu</v-icon>
-      </v-btn>
+      <!-- <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon> -->
+      
+
+     
+      <img class="mr-3" :src="require('../assets/v.png')" height="40"/>
+      <v-toolbar-title>ArtWrk</v-toolbar-title>
+
+      
+      
+      <section v-if="!state">
+         <v-list-item> 
+      <v-btn  fixed right text @click="signIn" dark >Sign In </v-btn>
+          </v-list-item>
+      </section>
+
+  
+      <section v-else>
+        <v-list-item>
+      <v-btn fixed right text @click="logOut" dark >Log Out </v-btn>        
+      </v-list-item>
+      </section>
+
+      
     </v-app-bar>
+
     <v-content>
       <v-container>
         <nuxt />
       </v-container>
     </v-content>
-    <v-navigation-drawer v-model="rightDrawer" :right="right" temporary fixed>
-      <v-list>
-        <v-list-item @click.native="right = !right">
-          <v-list-item-action>
-            <v-icon light>
-              mdi-repeat
-            </v-icon>
-          </v-list-item-action>
-          <v-list-item-title>Switch drawer (click me)</v-list-item-title>
-        </v-list-item>
-      </v-list>
-    </v-navigation-drawer>
-    <v-footer :fixed="fixed" app>
-      <span>&copy; {{ new Date().getFullYear() }}</span>
-    </v-footer>
+
+    <v-footer
+    
+    dark
+    padless 
+    
+  >
+
+    <v-row justify="center" no-gutters>
+     <v-col >
+    <v-card
+      flat
+      tile
+      class="indigo lighten-1 white--text text-center"
+      
+    >
+      <v-card-text > 
+        
+        <v-btn
+          v-for="icon in icons"
+          :key="icon"
+          class="mx-4 white--text"
+          icon
+        >
+          <v-icon size="24px">{{ icon }}</v-icon>
+        </v-btn>
+      </v-card-text>
+
+     
+
+      <v-divider></v-divider>
+      
+
+      <v-card-text class="white--text" >
+        {{ new Date().getFullYear() }} — <strong>ArtWrk</strong>
+      </v-card-text>
+    </v-card>
+
+      </v-col>
+    </v-row>
+  </v-footer>
+
+
   </v-app>
 </template>
 
+
+
 <script>
-export default {
-  data() {
-    return {
-      clipped: false,
-      drawer: false,
-      fixed: false,
-      items: [
+
+  export default {
+    props: {
+      source: String,
+    },
+    data: () => ({
+      drawer: null,
+      icons: [
+        'mdi-facebook',
+        'mdi-twitter',
+        'mdi-linkedin',
+        'mdi-instagram',
+      ],
+        items: [
         {
           icon: 'mdi-apps',
           title: 'Welcome',
@@ -83,11 +113,33 @@ export default {
           to: '/inspire'
         }
       ],
-      miniVariant: false,
-      right: true,
-      rightDrawer: false,
-      title: 'Vuetify.js'
-    }
+
+      state:false,
+
+      
+
+    }),
+
+    methods :{
+            signIn: function (){
+                this.state=true;
+                
+            },
+
+            logOut: function (){
+                this.state=false;
+                this.signIN
+                
+            },
+
+
+    },
+
+    
   }
-}
 </script>
+<style scoped>
+.v-btn{
+ height: 10px;
+  }
+</style>

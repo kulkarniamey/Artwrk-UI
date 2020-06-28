@@ -31,7 +31,7 @@ jobs:
           run: |
                cd webapp
                npm install
-               npm run build
+               npm run generate
                cd ..
             
         - name: Deployment
