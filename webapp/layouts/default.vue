@@ -5,6 +5,8 @@
     <v-app-bar
     app
     color="indigo lighten-1"
+    dense
+    flat
       
     >
       <!-- <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon> -->
@@ -13,6 +15,22 @@
      
       <img class="mr-3" :src="require('../assets/v.png')" height="40"/>
       <v-toolbar-title>ArtWrk</v-toolbar-title>
+
+      
+      
+      <section v-if="!state">
+         <v-list-item> 
+      <v-btn  fixed right text @click="signIn" dark >Sign In </v-btn>
+          </v-list-item>
+      </section>
+
+  
+      <section v-else>
+        <v-list-item>
+      <v-btn fixed right text @click="logOut" dark >Log Out </v-btn>        
+      </v-list-item>
+      </section>
+
       
     </v-app-bar>
 
@@ -23,11 +41,9 @@
     </v-content>
 
     <v-footer
-    v-row justify="center" rows="12"
-
-    dark
-    padless
     
+    dark
+    padless 
     
   >
 
@@ -98,6 +114,32 @@
         }
       ],
 
+      state:false,
+
+      
+
     }),
+
+    methods :{
+            signIn: function (){
+                this.state=true;
+                
+            },
+
+            logOut: function (){
+                this.state=false;
+                this.signIN
+                
+            },
+
+
+    },
+
+    
   }
 </script>
+<style scoped>
+.v-btn{
+ height: 10px;
+  }
+</style>
