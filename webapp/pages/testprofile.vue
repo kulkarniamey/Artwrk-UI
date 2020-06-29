@@ -1,8 +1,12 @@
 <template>
   <div>
-    <CoverPic class="cover-header" />
+    <v-row>
+      <CoverPic class="cover-header" />
+    </v-row>
     <v-divider></v-divider>
-    <ImageGrid class="grid" />
+    <v-row>
+      <ImageGrid class="grid" />
+    </v-row>
   </div>
 </template>
 
@@ -20,7 +24,7 @@ export default {
 
 <style lang="scss" scoped>
 .grid {
-  margin-top: 1rem;
+  margin-top: 6rem;
 }
 .cover-header {
   margin-bottom: 2rem;

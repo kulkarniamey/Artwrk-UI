@@ -1,7 +1,11 @@
 <template>
   <div>
     <div class="text-center cover">
-      <v-container class="" fluid>Username</v-container>
+      <v-avatar color="indigo" size="63"
+        ><span class="white--text headline">UN</span></v-avatar
+      >
+      <h3 class="">Username</h3>
+      <p class="">Name</p>
     </div>
   </div>
 </template>
@@ -19,9 +23,10 @@ export default {
   background-position: center;
   background-size: cover;
 
-  padding: 0;
+  padding: 1rem 0;
   width: 100%;
-  height: 10vh;
+  height: 20vh;
+
   position: absolute;
   left: 0;
   top: 0;
