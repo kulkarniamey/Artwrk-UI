@@ -3,7 +3,7 @@
     <v-row>
       <CoverPic class="cover-header" />
     </v-row>
-    <v-divider></v-divider>
+
     <v-row>
       <ImageGrid class="grid" />
     </v-row>
