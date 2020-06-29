@@ -62,7 +62,6 @@ export default {
             var catPic = response.data
             // urlarray.push(pussyUrl)
             this.caturls.push(catPic)
-            console.log(response)
           })
       }
       // return pussyUrl
