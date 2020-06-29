@@ -1,20 +1,31 @@
 <template>
   <div>
-    <v-row>
+    <v-row class="fill-height overflow-y-auto" no-gutters>
       <v-col
-        sm="12"
-        md="3"
+        lg="3"
+        md="4"
+        sm="6"
+        cols="12"
         v-for="(x, index) in caturls"
         :key="index"
         align="center"
-      >
-        <v-lazy
-          v-model="isActive[index]"
-          :options="{ threshold: 0.5 }"
-          transition="fade-transition"
-        >
-          <img :style="colstyle" :src="caturls[index][0]" alt="pussy" />
-        </v-lazy>
+        no-gutters
+        ><div class="grid-square">
+          <v-lazy
+            v-model="x.isActive"
+            :options="{ threshold: 0.5 }"
+            transition="fade-transition"
+            class="fill-height"
+          >
+            <img
+              :style="colstyle"
+              :src="x[0].url"
+              :key="index"
+              alt="pussy"
+              class="img-class"
+            />
+          </v-lazy>
+        </div>
       </v-col>
     </v-row>
   </div>
@@ -28,87 +39,59 @@ export default {
 
   data() {
     return {
-      cols: [
-        0,
-        1,
-        2,
-        3,
-        4,
-        5,
-        6,
-        7,
-        8,
-        9,
-        10,
-        11,
-        12,
-        13,
-        14,
-        15,
-        16,
-        17,
-        18,
-        19,
-        20
-      ],
       caturls: [],
-      colstyle: 'border: 3px solid #fff',
-      isActive: [
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false
-      ]
+      colstyle: 'border: 3px solid #fff'
     }
   },
   computed: {
     renderImage() {
-      return this.cat.url
+      // return this.cat.url
+      return this.caturls.filter((p) => p.isActive).length
     }
   },
   methods: {
     getManyPussy() {
-      var pussyUrl = ''
-      var urlarray = []
-
-      axios
-        .get('https://api.thecatapi.com/v1/images/search')
-        .then((response) => {
-          pussyUrl = response.data[0].url
-          urlarray.push(pussyUrl)
-        })
-      return urlarray
+      // var pussyUrl = ''
+      // var urlarray = []
+      var totalCount = 10
+      var i = 0
+      for (i = 0; i < totalCount; i++) {
+        axios
+          .get('https://api.thecatapi.com/v1/images/search')
+          .then((response) => {
+            var catPic = response.data
+            // urlarray.push(pussyUrl)
+            this.caturls.push(catPic)
+            console.log(response)
+          })
+      }
+      // return pussyUrl
+      return this.caturls
     }
   },
-  async created() {
-    var i
-    for (i in this.cols) {
-      var link = await this.getManyPussy()
-      this.caturls.push(link)
-    }
+  created() {
+    // var i
+    // for (i in this.cols) {
+    //   var link = await this.getManyPussy()
+    //   this.caturls.push(link)
+    this.getManyPussy()
   }
 }
 </script>
 
 <style lang="scss" scoped>
-img {
+.grid-square {
+  width: 100%;
+  height: 100%;
+  padding: 3rem;
+  background: #121212;
+  margin: 0;
+  // border: 3px solid #fff;
+}
+.img-class {
+  max-width: 100%;
   height: 200px;
-  width: 200px;
+  object-fit: cover;
+  object-position: center;
 }
 </style>

@@ -15,7 +15,7 @@
       </v-container>
     </v-content>
 
-    <v-footer v-row justify="center" rows="12" dark padless>
+    <v-footer justify="center" dark padless>
       <v-row justify="center" no-gutters>
         <v-col>
           <v-card flat tile class="indigo lighten-1 white--text text-center">
