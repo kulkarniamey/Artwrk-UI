@@ -40,7 +40,7 @@ export default {
   data() {
     return {
       caturls: [],
-      colstyle: 'border: 3px solid #fff'
+      colstyle: 'border: 3px solid #000'
     }
   },
   computed: {
@@ -83,7 +83,7 @@ export default {
   width: 100%;
   height: 100%;
   padding: 3rem;
-  background: #121212;
+  background: #fff;
   margin: 0;
   // border: 3px solid #fff;
 }
