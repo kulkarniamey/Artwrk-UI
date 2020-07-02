@@ -34,15 +34,23 @@
                 required
               ></v-text-field>
             </v-col>
+            <v-col cols="12" sm="6">
+              <v-select
+                v-model="userType"
+                :items="items"
+                label="User Type"
+              ></v-select>
+            </v-col>
           </v-row>
         </v-form>
       </v-container>
       <small>*indicates required field</small>
       <p class="text-lg-right">
         Already an User?<v-btn
-          @click="changeOption"
           text
+          nuxt
           color="orange darken-1"
+          to="/auth/login"
         >
           Log in
         </v-btn>
@@ -67,6 +75,7 @@ export default {
   data() {
     return {
       valid: true,
+      userType: null,
       pass: '',
       pass2: '',
       passRules: [
@@ -83,15 +92,23 @@ export default {
       emailRules: [
         (v) => !!v || 'E-mail is required',
         (v) => /.+@.+\..+/.test(v) || 'E-mail must be valid'
-      ]
+      ],
+      items: ['Artist', 'Recruiter']
     }
   },
   methods: {
-    changeOption() {
-      this.$emit('optionChanged')
-    },
     validate() {
-      this.$refs.form.validate()
+      if (this.$refs.form.validate()) {
+        this.submitForm()
+      }
+    },
+    submitForm() {
+      let payload = {
+        email: this.email,
+        password: this.pass,
+        type: this.userType
+      }
+      console.log('Data Submitted payload:', payload)
     }
   },
   computed: {

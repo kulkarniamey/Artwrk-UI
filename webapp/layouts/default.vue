@@ -1,12 +1,24 @@
 <template>
   <v-app>
-    <v-app-bar app color="indigo lighten-1">
+    <v-app-bar app color="indigo lighten-1" dense flat>
       <!-- <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon> -->
 
       <nuxt-link to="/"
         ><img class="mr-3" :src="require('../assets/v.png')" height="40"
       /></nuxt-link>
       <v-toolbar-title>ArtWrk</v-toolbar-title>
+
+      <section v-if="!state">
+        <v-list-item>
+          <v-btn fixed right text @click="signIn" dark>Sign In </v-btn>
+        </v-list-item>
+      </section>
+
+      <section v-else>
+        <v-list-item>
+          <v-btn fixed right text @click="logOut" dark>Log Out </v-btn>
+        </v-list-item>
+      </section>
     </v-app-bar>
 
     <v-content>
@@ -15,7 +27,7 @@
       </v-container>
     </v-content>
 
-    <v-footer justify="center" dark padless>
+    <v-footer dark padless>
       <v-row justify="center" no-gutters>
         <v-col>
           <v-card flat tile class="indigo lighten-1 white--text text-center">
@@ -61,7 +73,25 @@ export default {
         title: 'Inspire',
         to: '/inspire'
       }
-    ]
-  })
+    ],
+
+    state: false
+  }),
+
+  methods: {
+    signIn: function() {
+      this.state = true
+    },
+
+    logOut: function() {
+      this.state = false
+      this.signIN
+    }
+  }
 }
 </script>
+<style scoped>
+.v-btn {
+  height: 10px;
+}
+</style>
