@@ -16,20 +16,20 @@
       <img class="mr-3" :src="require('../assets/v.png')" height="40"/>
       <v-toolbar-title>ArtWrk</v-toolbar-title>
 
-      
-      
-      <section v-if="!state">
-         <v-list-item> 
-      <v-btn  fixed right text @click="signIn" dark >Sign In </v-btn>
-          </v-list-item>
-      </section>
+      <v-spacer />
+   
+   <div v-if="isLoggedIn">
+      <v-btn text large dark>Welcome User </v-btn>
+     <v-btn text @click="logOut" dark>Logout</v-btn>
+   </div>
 
-  
-      <section v-else>
-        <v-list-item>
-      <v-btn fixed right text @click="logOut" dark >Log Out </v-btn>        
-      </v-list-item>
-      </section>
+   <div v-else>
+     flag = {{ $auth.user }}
+     <v-btn text to="/testregi/Login">Login</v-btn>
+     <v-btn text to="/testrgi">Register</v-btn>
+   </div>
+      
+
 
       
     </v-app-bar>
@@ -121,16 +121,14 @@
     }),
 
     methods :{
-            signIn: function (){
-                this.state=true;
-                
-            },
+            
+            // // isLoggedIn: function(){
+            // //   $auth.loggedIn
+            // // },
 
-            logOut: function (){
-                this.state=false;
-                this.signIN
-                
-            },
+            // // logOut:function(){
+            // //    this.$auth.logout()
+            // // }
 
 
     },
