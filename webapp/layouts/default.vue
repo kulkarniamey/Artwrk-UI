@@ -25,8 +25,10 @@
 
    <div v-else>
      flag = {{ $auth.user }}
-     <v-btn text to="/testregi/Login">Login</v-btn>
-     <v-btn text to="/testrgi">Register</v-btn>
+
+     <nuxt-link to="/Login"><v-btn text  >Login</v-btn></nuxt-link>
+     
+     <v-btn text to="/testregi">Register</v-btn>
    </div>
       
 
@@ -89,6 +91,8 @@
 
 <script>
 
+import Login from '../components/Login';
+
   export default {
     props: {
       source: String,
@@ -120,18 +124,22 @@
 
     }),
 
-    methods :{
+    computed :{
             
-            // // isLoggedIn: function(){
-            // //   $auth.loggedIn
-            // // },
+            isLoggedIn: function(){
+              return this.$auth.loggedIn
+            },
 
-            // // logOut:function(){
-            // //    this.$auth.logout()
-            // // }
+            logOut:function(){
+              return $auth.logout()
+            }
 
 
     },
+
+    components:{
+            Login
+        },
 
     
   }
