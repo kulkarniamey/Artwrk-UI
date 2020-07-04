@@ -4,8 +4,8 @@
       <v-avatar color="indigo" size="63"
         ><span class="white--text headline">UN</span></v-avatar
       >
-      <h3 class="">Username</h3>
-      <p class="">Name</p>
+      <h3 class="white--text">Username</h3>
+      <p class="white--text">Name</p>
     </div>
   </div>
 </template>
@@ -19,7 +19,7 @@ export default {
 <style lang="scss" scoped>
 .cover {
   background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)),
-    url('../assets/art-backlight-blur-249203.jpg');
+    url('/cover.jpg');
   background-position: center;
   background-size: cover;
 

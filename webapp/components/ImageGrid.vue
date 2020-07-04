@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-row class="fill-height overflow-y-auto" no-gutters>
+    <v-row class="" no-gutters>
       <v-col
         lg="3"
         md="4"
@@ -15,44 +15,53 @@
             v-model="x.isActive"
             :options="{ threshold: 0.5 }"
             transition="fade-transition"
-            class="fill-height"
+            class=""
           >
-            <img
-              :style="colstyle"
-              :src="x[0].url"
-              :key="index"
-              alt="pussy"
-              class="img-class"
-            />
+            <v-card outlined class="grid-card">
+              <img
+                :src="x[0].url"
+                :key="index"
+                alt="pussy"
+                class="img-class"
+                @click="showDetail($event, 'Cool Post', x[0].url)"
+              />
+            </v-card>
           </v-lazy>
         </div>
       </v-col>
     </v-row>
+    <Modal
+      :showModal="dialog"
+      :postTitle="title"
+      :postImg="imgval"
+      @closedModal="clearModalValues()"
+    />
   </div>
 </template>
 
 <script>
 import axios, * as others from 'axios'
+import Modal from './Modal'
 const API_KEY = 'c397975f-36f1-49d9-9299-530a628c8663'
 export default {
   name: 'imageGrid',
-
+  components: { Modal },
   data() {
     return {
       caturls: [],
-      colstyle: 'border: 3px solid #000'
+      colstyle: 'padding:0em; margin:1em',
+      dialog: false,
+      title: '',
+      imgval: ''
     }
   },
   computed: {
     renderImage() {
-      // return this.cat.url
       return this.caturls.filter((p) => p.isActive).length
     }
   },
   methods: {
     getManyPussy() {
-      // var pussyUrl = ''
-      // var urlarray = []
       var totalCount = 10
       var i = 0
       for (i = 0; i < totalCount; i++) {
@@ -60,19 +69,25 @@ export default {
           .get('https://api.thecatapi.com/v1/images/search')
           .then((response) => {
             var catPic = response.data
-            // urlarray.push(pussyUrl)
+
             this.caturls.push(catPic)
           })
       }
-      // return pussyUrl
+
       return this.caturls
+    },
+    showDetail(e, dTitle, dImg) {
+      this.title = dTitle
+      this.imgval = dImg
+      this.dialog = true
+    },
+    clearModalValues() {
+      this.dialog = false
+      this.title = ''
+      this.imgval = ''
     }
   },
   created() {
-    // var i
-    // for (i in this.cols) {
-    //   var link = await this.getManyPussy()
-    //   this.caturls.push(link)
     this.getManyPussy()
   }
 }
@@ -82,15 +97,30 @@ export default {
 .grid-square {
   width: 100%;
   height: 100%;
-  padding: 3rem;
+  padding: 0;
   background: #fff;
   margin: 0;
-  // border: 3px solid #fff;
+}
+.grid-square:hover {
+  cursor: pointer;
 }
 .img-class {
   max-width: 100%;
   height: 200px;
   object-fit: cover;
   object-position: center;
+  opacity: 1;
 }
+.grid-card {
+  margin: 0.5em;
+  border-radius: 0;
+}
+
+// .overlay {
+//   opacity: 0;
+// }
+// .grid-square:hover .overlay {
+//   opacity: 1;
+//   transition: 0.5s;
+// }
 </style>

@@ -24,7 +24,8 @@ export default {
 
 <style lang="scss" scoped>
 .grid {
-  margin-top: 6rem;
+  margin-top: 8em;
+  padding: 0;
 }
 .cover-header {
   margin-bottom: 2rem;

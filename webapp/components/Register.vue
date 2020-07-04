@@ -1,11 +1,11 @@
 <template>
-  <v-card>
+  <v-card elevation="9">
     <v-card-title>
       <span class="headline">Sign Up!</span>
     </v-card-title>
     <v-card-text>
       <v-container>
-        <v-form ref="form" v-model="valid" lazy-validation>
+        <v-form ref="form" v-model="valid">
           <v-row>
             <v-col cols="12">
               <v-text-field
