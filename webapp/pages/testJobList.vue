@@ -7,7 +7,7 @@
 <script>
 import JobCard from '../components/JobCard'
 export default {
-  name: 'testJobList',
+  name: 'testjoblist',
   head() {
     title: 'Jobs'
   },
