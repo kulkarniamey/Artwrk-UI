@@ -14,7 +14,7 @@
                   <img
                     v-if="message.avatar"
                     alt="Avatar"
-                    src="https://cdn3.iconfinder.com/data/icons/diversity-avatars-vol-2/64/steve-jobs-apple-computers-mac-512.png"
+                    :src="message.avatar"
                   />
                   <v-icon
                     v-else
@@ -70,12 +70,31 @@ export default {
   data: () => ({
     messages: [
       {
-        avatar: 'https://avatars0.githubusercontent.com/u/9064066?v=4&s=460',
+        avatar:
+          'https://cdn3.iconfinder.com/data/icons/diversity-avatars-vol-2/64/steve-jobs-apple-computers-mac-512.png',
         name: 'Steve Jobs',
         title: 'CEO',
         excerpt: 'Thank you for joining our community...',
         description: 'Hi Im Steve! CEO of Appuul Inc. Nice to meet you! '
       },
+      {
+        avatar:
+          'https://1401700980.rsc.cdn77.org/data/images/full/96588/tim-cook-avatar.jpg',
+        name: 'Tim Cook',
+        title: 'CEO',
+        excerpt: 'Thank you for joining our community...',
+        description: 'Hi Im Tim! CEO of Appuul Inc. Nice to meet you! '
+      },
+      {
+        avatar:
+          'https://images.macrumors.com/t/7m_uuse1SUD9XcwDWGk4Tk0uQkA=/1600x1200/smart/article-new/2017/10/katherine-adams.jpg',
+        name: 'Katherine Adams',
+        title: 'Senior VP',
+        excerpt: 'Thank you for joining our community...',
+        description:
+          'Hi Im Katherine! Vice President of Appuul Inc. Nice to meet you! '
+      }
+      /*
       {
         color: 'red',
         icon: 'people',
@@ -94,10 +113,8 @@ export default {
         title: 'Shop your way',
         exceprt: 'New deals available, Join Today',
         description: 'Hi Im Steve! CEO of Appuul Inc. Nice to meet you!'
-      }
-    ],
-    lorem:
-      'Lorem ipsum dolor sit amet, at aliquam vivendum vel, everti delicatissimi cu eos. Dico iuvaret debitis mel an, et cum zril menandri. Eum in consul legimus accusam. Ea dico abhorreant duo, quo illum minimum incorrupte no, nostro voluptaria sea eu. Suas eligendi ius at, at nemore equidem est. Sed in error hendrerit, in consul constituam cum.'
+      } */
+    ]
   })
 }
 </script>
