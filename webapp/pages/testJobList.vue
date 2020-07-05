@@ -1,9 +1,20 @@
 <template>
-  <div></div>
+  <div>
+    <JobCard></JobCard>
+  </div>
 </template>
 
 <script>
-export default {}
+import JobCard from '../components/JobCard'
+export default {
+  name: 'testJobList',
+  head() {
+    title: 'Jobs'
+  },
+  components: {
+    JobCard
+  }
+}
 </script>
 
 <style lang="scss" scoped></style>
