@@ -3,29 +3,29 @@
     <v-app-bar app color="indigo lighten-1" dense flat>
       <!-- <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon> -->
 
-      <nuxt-link to="/"
-        ><img class="mr-3" :src="require('../assets/v.png')" height="40"
-      /></nuxt-link>
+      <img class="mr-3" :src="require('../assets/v.png')" height="40" />
       <v-toolbar-title>ArtWrk</v-toolbar-title>
 
-      <section v-if="!state">
-        <v-list-item>
-          <v-btn fixed right text @click="signIn" dark>Sign In </v-btn>
-        </v-list-item>
-      </section>
+      <v-spacer />
 
-      <section v-else>
-        <v-list-item>
-          <v-btn fixed right text @click="logOut" dark>Log Out </v-btn>
-        </v-list-item>
-      </section>
+      <div v-if="$auth.loggedIn">
+        flag = {{ $auth.user }}
+        <v-btn text large dark>Welcome User </v-btn>
+        <v-btn text @click="$auth.logout()" dark>Logout</v-btn>
+      </div>
+
+      <div v-else>
+        <v-btn text to="/auth/login">Login</v-btn>
+
+        <v-btn text to="/auth/testregi">Register</v-btn>
+      </div>
     </v-app-bar>
 
-    <v-content>
+    <v-main>
       <v-container>
         <nuxt />
       </v-container>
-    </v-content>
+    </v-main>
 
     <v-footer dark padless>
       <v-row justify="center" no-gutters>
@@ -55,6 +55,8 @@
 </template>
 
 <script>
+import Login from '../components/Login'
+
 export default {
   props: {
     source: String
@@ -78,14 +80,13 @@ export default {
     state: false
   }),
 
-  methods: {
-    signIn: function() {
-      this.state = true
+  computed: {
+    isLoggedIn: function() {
+      return this.$auth.loggedIn
     },
 
     logOut: function() {
-      this.state = false
-      this.signIN
+      this.$auth.logout()
     }
   }
 }

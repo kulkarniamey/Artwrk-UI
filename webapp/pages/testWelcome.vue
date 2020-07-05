@@ -1,14 +1,23 @@
 <template>
   <div>
-    <h1>Welcome!</h1>
+    <h1>Welcome! {{ user }}</h1>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'Welcome page',
+  middleware: 'auth',
+  name: 'welcome',
   head() {
     title: 'Welcome page'
+  },
+  data() {
+    return {
+      user: undefined
+    }
+  },
+  mounted() {
+    this.user = this.$auth.user.name
   }
 }
 </script>
