@@ -9,8 +9,7 @@
       <v-spacer />
 
       <div v-if="$auth.loggedIn">
-        flag = {{ $auth.user }}
-        <v-btn text large dark>Welcome User </v-btn>
+        <v-btn text large dark>Welcome {{ user }} </v-btn>
         <v-btn text @click="$auth.logout()" dark>Logout</v-btn>
       </div>
 
@@ -77,7 +76,8 @@ export default {
       }
     ],
 
-    state: false
+    state: false,
+    user: undefined
   }),
 
   computed: {
@@ -88,6 +88,9 @@ export default {
     logOut: function() {
       this.$auth.logout()
     }
+  },
+  mounted() {
+    this.user = this.$auth.user.name
   }
 }
 </script>
