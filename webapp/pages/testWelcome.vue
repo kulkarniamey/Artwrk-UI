@@ -6,10 +6,11 @@
 
 <script>
 export default {
+  middleware: 'auth',
   name: 'Welcome page',
   head() {
     title: 'Welcome page'
-  }
+  },
 }
 </script>
 
