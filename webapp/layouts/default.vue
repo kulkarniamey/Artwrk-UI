@@ -26,7 +26,7 @@
    <div v-else>
      flag = {{ $auth.user }}
 
-     <nuxt-link to="/Login"><v-btn text  >Login</v-btn></nuxt-link>
+     ><v-btn text  >Login</v-btn>
      
      <v-btn text to="/testregi">Register</v-btn>
    </div>
