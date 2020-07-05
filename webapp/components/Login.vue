@@ -9,7 +9,7 @@
           <v-row>
             <v-col cols="12">
               <v-text-field
-                v-model="userinfo.email"
+                v-model="email"
                 :rules="emailRules"
                 label="E-mail"
                 required
@@ -19,7 +19,7 @@
             <v-col cols="12">
               <v-text-field
                 label="Password*"
-                v-model="userinfo.password"
+                v-model="pass"
                 :rules="passRules"
                 required
               ></v-text-field>
@@ -53,47 +53,22 @@ export default {
   data() {
     return {
       valid: true,
-
+      pass: '',
       passRules: [
         (v) => !!v || 'Password is required',
-        (v) => (v && v.length <= 15) || 'Password must be less than 8 characters'
+        (v) => (v && v.length <= 8) || 'Password must be less than 8 characters'
       ],
- 
+      email: '',
       emailRules: [
         (v) => !!v || 'E-mail is required',
         (v) => /.+@.+\..+/.test(v) || 'E-mail must be valid'
-      ],
-      userinfo:{
-        email:"",
-        password:"",
-      }
+      ]
     }
   },
   methods: {
     validate() {
-      
-      if(this.$refs.form.validate()){
-        this.login();
-      }
-    },
-    login(){
-      console.log("Payload:");
-      // var userinfo=JSON.stringify({email:this.email,password:this.pass});
-      
-      this.loginUser(this.userinfo);
-    },
-    
-    async loginUser(userinfo) {
-        
-      try {
-        let response = await this.$auth.loginWith('local', { data: userinfo })
-        console.log(response)
-      } catch (err) {
-        console.log(err)
-      }
-    
-  }
-
+      this.$refs.form.validate()
+    }
   }
 }
 </script>
