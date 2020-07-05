@@ -18,17 +18,18 @@
 
       <v-spacer />
    
-   <div v-if="isLoggedIn">
-      <v-btn text large dark>Welcome User </v-btn>
-     <v-btn text @click="logOut" dark>Logout</v-btn>
+   <div v-if="$auth.loggedIn"> 
+     flag  = {{ $auth.user }}
+      <v-btn text large dark >Welcome User </v-btn>
+     <v-btn text @click="$auth.logout()" dark>Logout</v-btn>
    </div>
 
    <div v-else>
-     flag = {{ $auth.user }}
-
-     ><v-btn text  >Login</v-btn>
      
-     <v-btn text to="/testregi">Register</v-btn>
+
+     <v-btn text to="/auth/login">Login</v-btn>
+     
+     <v-btn text to="/auth/testregi">Register</v-btn>
    </div>
       
 
@@ -131,15 +132,13 @@ import Login from '../components/Login';
             },
 
             logOut:function(){
-              return $auth.logout()
+               this.$auth.logout()
             }
 
 
     },
 
-    components:{
-            Login
-        },
+  
 
     
   }
