@@ -1,20 +1,23 @@
 <template>
   <div>
-    <v-row>
-      <v-col class="d-none d-sm-flex" cols="6">
-        <h2>Art is an explosion!</h2>
-      </v-col>
+    <v-container>
+      <v-row>
+        <v-col class="d-none d-sm-flex " cols="6" height="600px">
+          <h1 class="white--text legend-text">Art is an explosion!</h1>
+        </v-col>
 
-      <v-col xs="12" md="6" cols="12">
-        <Login> </Login>
-      </v-col>
-    </v-row>
+        <v-col xs="12" md="6" cols="12">
+          <Login> </Login>
+        </v-col>
+      </v-row>
+    </v-container>
   </div>
 </template>
 
 <script>
 import Login from '../../components/Login'
 export default {
+  layout: 'authlayout',
   name: 'loginPage',
   components: {
     Login
@@ -25,4 +28,9 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.legend-text {
+  margin: auto;
+  font-weight: 700;
+}
+</style>

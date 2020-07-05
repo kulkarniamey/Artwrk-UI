@@ -1,6 +1,8 @@
 <template>
   <div>
-    <CompanyHeader />
+    <v-container>
+      <CompanyHeader />
+    </v-container>
     <CompanyBody />
     <CompanyJobs />
   </div>
@@ -23,4 +25,11 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.header-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+</style>
