@@ -90,7 +90,7 @@ export default {
     }
   },
   mounted() {
-    this.user = this.$auth.user.name
+    this.user = this.$auth?.user?.name || null
   }
 }
 </script>
