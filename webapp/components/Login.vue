@@ -29,7 +29,7 @@
       </v-container>
       <small>*indicates required field</small>
       <p class="text-lg-right">
-        New User?<v-btn @click="changeOption" text color="orange darken-1">
+        New User?<v-btn nuxt text color="orange darken-1" to="/auth/register">
           Create Account
         </v-btn>
       </p>
@@ -66,9 +66,6 @@ export default {
     }
   },
   methods: {
-    changeOption() {
-      this.$emit('optionChanged')
-    },
     validate() {
       this.$refs.form.validate()
     }
