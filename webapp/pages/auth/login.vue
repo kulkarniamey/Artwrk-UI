@@ -8,7 +8,9 @@
           min-height="600"
           max-width="450"
         >
-          <h1 class="white--text legend-text">Art happens here.</h1>
+          <h1 class="white--text legend-text mx-auto">
+            We Inspire an Artist to Aspire!
+          </h1>
         </v-col>
 
         <v-col xs="12" md="6" cols="12">
@@ -37,6 +39,6 @@ export default {
 .legend-text {
   margin: auto;
   font-weight: 700;
-  font-size: 4em;
+  font-size: 3.5em;
 }
 </style>
