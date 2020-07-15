@@ -1,4 +1,8 @@
 /* font-family */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&display=swap');
+* {
+  font-family: 'Montserrat', sans-serif !important;
+}
 
 /* width */
 ::-webkit-scrollbar {
@@ -20,4 +24,16 @@
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
+}
+
+.authboard {
+  background-image: url('https://source.unsplash.com/random/?mystery,night');
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100%;
+  overflow: hidden;
+}
+
+.auth-body {
+  padding-top: 4em;
 }

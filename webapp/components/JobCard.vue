@@ -8,7 +8,7 @@
           transition="fade-transition"
         >
           <v-card class="text-sm-center ma-2">
-            <v-responsive class="pt-3">
+            <v-responsive class="pt-3 justify-center">
               <v-avatar color="deep-purple" size="100">
                 <v-icon size="80" color="white" v-text="job.avatar"></v-icon>
               </v-avatar>
