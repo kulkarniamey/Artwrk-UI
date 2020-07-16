@@ -1,5 +1,5 @@
 <template>
-  <v-card elevation="0" min-height="600" max-width="450" class="mx-auto">
+  <v-card elevation="0" min-height="600" max-width="500" class="mx-auto">
     <v-card-title>
       <span class="headline">Job details</span>
     </v-card-title>
@@ -9,7 +9,7 @@
           <v-row>
             <v-col cols="12">
               <v-text-field
-                v-model="jobTitle"
+                v-model="formData.jobTitle"
                 :rules="jobTitleRules"
                 label="Job Title"
                 required
@@ -17,16 +17,17 @@
             </v-col>
             <v-col cols="12">
               <v-textarea
-                v-model="jobDesc"
+                v-model="formData.jobDescription"
                 :rules="jobDescRules"
                 label="Job Description"
+                rows="3"
                 required
               ></v-textarea>
             </v-col>
             <!-- <v-col cols="12"> {{ name }} </v-col> -->
             <v-col cols="12">
               <v-text-field
-                v-model="companyName"
+                v-model="formData.companyName"
                 :rules="companyNameRules"
                 label="Company Name"
                 required
@@ -34,7 +35,7 @@
             </v-col>
             <v-col cols="12">
               <v-select
-                v-model="e1"
+                v-model="formData.artistType"
                 :items="artistTypes"
                 menu-props="auto"
                 label="Artist Type"
@@ -44,8 +45,8 @@
             </v-col>
             <v-col cols="12">
               <v-select
-                v-model="e2"
-                :items="jobType"
+                v-model="formData.jobType"
+                :items="jobTypes"
                 label="Job Type"
                 hide-details
                 single-line
@@ -86,31 +87,21 @@ export default {
   name: 'jobpostform',
   data() {
     return {
-      e1: null,
-      e2: null,
+      formData: {
+        jobTitle: undefined,
+        jobDescription: undefined,
+        companyName: undefined,
+        artistType: undefined,
+        jobType: undefined
+      },
       valid: true,
-      companyName: '',
-      companyNameRules: [
-        (v) => !!v || 'Company name is required',
-        (v) =>
-          (v && v.length <= 50) || 'Company name must be less than 25 words'
-        // Tentative word limit. Needs to be changed.
-      ],
-      jobTitle: '',
-      jobTitleRules: [
-        (v) => !!v || 'Job title is required',
-        (v) => (v && v.length <= 50) || 'Job title must be less than 25 words'
-        // Tentative word limit. Needs to be changed.
-      ],
-      jobDesc: '',
-      jobDescRules: [
-        (v) => !!v || 'Job description is required',
-        (v) =>
-          (v && v.length <= 3000) ||
-          'Job description must be less than 500 words'
-        // Tentative word limit. Needs to be changed.
-      ],
-      jobType: ['Full time', 'Part time', 'Freelance'],
+
+      companyNameRules: [],
+
+      jobTitleRules: [],
+
+      jobDescRules: [],
+      jobTypes: ['Full time', 'Part time', 'Freelance'],
       artistTypes: [
         'Illustrator',
         'Photoshop artist',
@@ -127,17 +118,58 @@ export default {
   },
   methods: {
     validate() {
+      this.companyNameRules = [
+        (v) => !!v || 'Company name is required',
+        (v) =>
+          (v && v.length <= 50) || 'Company name must be less than 25 words'
+        // Tentative word limit. Needs to be changed.
+      ]
+
+      this.jobTitleRules = [
+        (v) => !!v || 'Job title is required',
+        (v) => (v && v.length <= 50) || 'Job title must be less than 25 words'
+        // Tentative word limit. Needs to be changed.
+      ]
+
+      this.jobDescRules = [
+        (v) => !!v || 'Job description is required',
+        (v) =>
+          (v && v.length <= 3000) ||
+          'Job description must be less than 500 words'
+        // Tentative word limit. Needs to be changed.
+      ]
       if (this.$refs.form.validate()) {
-        this.submitForm()
+        if (
+          this.formData.artistType &&
+          this.formData.jobType &&
+          this.formData.jobTitle &&
+          this.formData.jobDescription &&
+          this.formData.companyName
+        ) {
+          this.submitForm()
+        }
+      } else {
+        this.companyNameRules = []
+
+        this.jobTitleRules = []
+
+        this.jobDescRules = []
       }
     },
     submitForm() {
-      let payload = {
-        email: this.email,
-        password: this.pass,
-        type: this.userType
+      console.log('Data Submitted payload:', this.formData)
+      this.formData = {
+        jobTitle: undefined,
+        jobDescription: undefined,
+        companyName: undefined,
+        artistType: undefined,
+        jobType: undefined
       }
-      console.log('Data Submitted payload:', payload)
+      this.companyNameRules = []
+
+      this.jobTitleRules = []
+
+      this.jobDescRules = []
     }
   },
   computed: {
