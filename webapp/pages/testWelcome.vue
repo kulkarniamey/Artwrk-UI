@@ -1,15 +1,20 @@
 <template>
   <div>
-    <h1>Welcome! {{ user }}</h1>
+    <artistonboardingform />
   </div>
 </template>
 
 <script>
+import artistonboardingform from '../components/Artist Onboarding/artistonboardform'
+
 export default {
   middleware: 'auth',
   name: 'welcome',
   head() {
     title: 'Welcome page'
+  },
+  components: {
+    artistonboardingform
   },
   data() {
     return {
