@@ -56,6 +56,8 @@
           <v-btn color="primary" nuxt to="/inspire">
             Continue
           </v-btn>
+          <v-btn nuxt to="/auth/register">Registration</v-btn>
+          <v-btn nuxt to="/testprofile">Catss!!!</v-btn>
         </v-card-actions>
       </v-card>
     </v-flex>
