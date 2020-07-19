@@ -9,7 +9,7 @@
 
     <v-btn small v-on:click="editContent" icon >
       
-      <i v-show="!isEditing" ><v-icon dark>mdi-pencil</v-icon></i>
+       <profileEdit/>
       
       <i v-show="isEditing" ><v-icon dark>mdi-content-save</v-icon></i>
 
@@ -32,6 +32,8 @@
       <v-list-item-title class="font-weight-black pl-5 pt-10">Connections {{ connections }}</v-list-item-title>
       <v-list-item-title class="font-weight-black pl-5 pb-10">Contact <br> Email-{{email}} </v-list-item-title>
 
+      
+
   
 
   
@@ -46,11 +48,17 @@
  
     
 </v-card>
-  
+
+
 </template>
 
 <script>
+import profileEdit from  '../components/ProfileEdit'
 export default {
+
+   components: {
+    profileEdit
+  },
 data: () => ({
 
   text:"We are network company based in India",
@@ -58,7 +66,8 @@ data: () => ({
   ActiveJobs:"34",
   connections:"1.2k",
   email:"abc@xyz.com",
-  isEditing: false
+  isEditing: false,
+
       
     
     }),
