@@ -1,5 +1,5 @@
 <template>
-  <v-card elevation="9">
+  <v-card elevation="9" min-height="600" max-width="450" class="mx-auto">
     <v-card-title>
       <span class="headline">Log in</span>
     </v-card-title>
@@ -11,7 +11,7 @@
               <v-text-field
                 v-model="userinfo.email"
                 :rules="emailRules"
-                label="E-mail"
+                label="E-mail*"
                 required
               ></v-text-field>
             </v-col>

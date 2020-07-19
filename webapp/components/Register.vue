@@ -1,5 +1,5 @@
 <template>
-  <v-card elevation="9">
+  <v-card elevation="9" min-height="600" max-width="450" class="mx-auto">
     <v-card-title>
       <span class="headline">Sign Up!</span>
     </v-card-title>
@@ -11,7 +11,15 @@
               <v-text-field
                 v-model="email"
                 :rules="emailRules"
-                label="E-mail"
+                label="E-mail*"
+                required
+              ></v-text-field>
+            </v-col>
+            <v-col cols="12">
+              <v-text-field
+                v-model="username"
+                :rules="usernameRules"
+                label="Username*"
                 required
               ></v-text-field>
             </v-col>
@@ -38,7 +46,7 @@
               <v-select
                 v-model="userType"
                 :items="items"
-                label="User Type"
+                label="User Type*"
               ></v-select>
             </v-col>
           </v-row>
@@ -92,6 +100,11 @@ export default {
       emailRules: [
         (v) => !!v || 'E-mail is required',
         (v) => /.+@.+\..+/.test(v) || 'E-mail must be valid'
+      ],
+      username: '',
+      usernameRules: [
+        (v) => !!v || 'Username is required',
+        (v) => (v && v.length <= 8) || 'Username must be less than 8 characters'
       ],
       items: ['Artist', 'Recruiter']
     }

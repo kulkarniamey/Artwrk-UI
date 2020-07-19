@@ -11,6 +11,7 @@
         align="center"
         no-gutters
         ><div class="grid-square">
+          {{ x }}
           <v-lazy
             v-model="x.isActive"
             :options="{ threshold: 0.5 }"
@@ -19,12 +20,12 @@
           >
             <v-card outlined class="grid-card">
               <img
-                :src="x[0].url"
+                :src="x"
                 :key="index"
                 alt="pussy"
                 class="img-class"
                 @click="showDetail($event, 'Cool Post', x[0].url)"
-              />
+              />{{ x }}
             </v-card>
           </v-lazy>
         </div>
@@ -68,9 +69,10 @@ export default {
         axios
           .get('https://api.thecatapi.com/v1/images/search')
           .then((response) => {
-            var catPic = response.data
+            var catPic = response.data[0].url
 
             this.caturls.push(catPic)
+            console.log(this.caturls)
           })
       }
 
