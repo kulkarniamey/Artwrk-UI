@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import artistonboardingform from '../components/Artist Onboarding/artistonboardform'
+import artistonboardingform from '../components/Onboarding/artistonboardform'
 
 export default {
   middleware: 'auth',
