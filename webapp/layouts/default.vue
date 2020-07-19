@@ -10,8 +10,24 @@
 
       <div v-if="$auth.loggedIn">
         flag = {{ $auth.user }}
+        <v-btn icon dark @click="snackbar = true">  <v-icon >mdi-bell-outline</v-icon> </v-btn>
         <v-btn text large dark>Welcome User </v-btn>
         <v-btn text @click="$auth.logout()" dark>Logout</v-btn>
+
+        
+
+      <v-snackbar v-model="snackbar"  right top color="indigo lighten-1" :timeout="timeout" >
+               {{ text }}
+               <br>
+               <v-btn light x-small > Approve</v-btn>
+               <v-btn light x-small> Delete</v-btn>
+
+              <template v-slot:action="{ attrs }">
+                <v-btn   color=""   text    v-bind="attrs" @click="snackbar = false" > Close  </v-btn>
+              </template>
+    </v-snackbar>
+
+
       </div>
 
       <div v-else>
@@ -78,6 +94,9 @@ export default {
     ],
 
     state: false,
+    snackbar: false,
+    text: 'Hello I am New User',
+    timeout:null
   }),
 
   computed: {
