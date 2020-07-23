@@ -10,22 +10,92 @@
 
       <div v-if="$auth.loggedIn">
         flag = {{ $auth.user }}
-        <v-btn icon dark @click="snackbar = true">  <v-icon >mdi-bell-outline</v-icon> </v-btn>
+             
+             
+      
+        
+        <!-- <v-btn icon dark @click="snackbar = true,messages=0" >
+          <v-badge 
+        :content="messages"
+        :value="messages"
+         color="green"
+        overlap> 
+        <v-icon >mdi-bell-outline</v-icon>    </v-badge>  
+        </v-btn> -->
+
+        <v-menu bottom offset-y transition="slide-x-transition" >
+
+          <template v-slot:activator="{ on, attrs }" >
+
+            
+            <v-btn :disabled="notifications.length === 0" dark  icon class="ma-2" v-bind="attrs" v-on="on"  > 
+                  <v-badge 
+                                      :content="notifications.length"
+                                      :value="notifications.length"
+                                      color="green"
+                                      overlap> 
+                            <v-icon >mdi-bell-outline</v-icon>  
+                    </v-badge>   
+            
+            </v-btn>
+
+          </template>
+
+          <v-card>
+
+          <v-list>
+
+            <v-list-item
+              v-for="(notification, i) in notifications"
+              :key="i"
+              
+            >
+                 <v-list-item-title>{{ notification.text }} </v-list-item-title>
+                 <v-card-actions>
+          <v-spacer></v-spacer>
+
+          <v-btn text @click="menu = false">Approve</v-btn>
+          <v-btn color="primary" text @click="removeNotification(i)">Remove</v-btn>
+        </v-card-actions>
+            </v-list-item>
+          </v-list>
+
+           
+
+          </v-card>
+
+        </v-menu>
+
+     
         <v-btn text large dark>Welcome User </v-btn>
         <v-btn text @click="$auth.logout()" dark>Logout</v-btn>
 
         
+       
+        
+  
+          
+        
+    <!-- <v-Snackbars
 
-      <v-snackbar v-model="snackbar"  right top color="indigo lighten-1" :timeout="timeout" >
-               {{ text }}
+
+ v-for="(notification,index) in notifications" v-model="snackbar" :key="index" right top color="indigo lighten-1" :timeout="timeout" >
+    
+      
+               {{ notification.text }}
                <br>
                <v-btn light x-small > Approve</v-btn>
                <v-btn light x-small> Delete</v-btn>
 
               <template v-slot:action="{ attrs }">
-                <v-btn   color=""   text    v-bind="attrs" @click="snackbar = false" > Close  </v-btn>
+                <v-btn   color=""   text    v-bind="attrs" @click="snackbar = false"  > Close  </v-btn>
               </template>
-    </v-snackbar>
+      </v-Snackbars> -->
+
+
+       
+
+
 
 
       </div>
@@ -94,9 +164,20 @@ export default {
     ],
 
     state: false,
+    messages:"4",
     snackbar: false,
     text: 'Hello I am New User',
-    timeout:null
+    timeout:null,
+    notifications: [{
+      id:1,
+      text:"This is first",
+      status: "unread"
+    },
+    {
+      id:2,
+      text:"This is second",
+      status:"unread"
+    }]
   }),
 
   computed: {
@@ -108,6 +189,13 @@ export default {
       this.$auth.logout()
     },
   },
+  methods: {
+    removeNotification(index){
+      
+      this.notifications.splice(index,1);
+      debugger;
+    }
+  }
 }
 </script>
 <style scoped>

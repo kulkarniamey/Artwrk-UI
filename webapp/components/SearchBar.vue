@@ -2,7 +2,7 @@
 
 <div class="container-fluid" >
 
-  <v-card >
+  
 
       <v-text-field prepend-inner-icon="mdi-magnify"  autofocus solo outlined  input   clearable   @input="isTyping = true" v-model="searchQuery" placeholder="Search ArtWrk"> </v-text-field>
       
@@ -39,13 +39,13 @@
       
       <v-list v-if="searchQuery">
         <v-list-item  
-          v-for="(item, i) in searchResult" :key="i">
+          v-for="(item, i) in searchResult" :key="i" @click="() => {}">
           <v-list-item-content @click="user(item.login)" >
             {{item.login}}
           </v-list-item-content>
         </v-list-item>
       </v-list>
-      </v-card>
+     
 
 
   </div>
