@@ -12,6 +12,8 @@
             <v-stepper-step :complete="e1 > 2" step="2"> </v-stepper-step>
             <v-divider></v-divider>
             <v-stepper-step :complete="e1 > 3" step="3"> </v-stepper-step>
+            <v-divider></v-divider>
+            <v-stepper-step :complete="e1 > 4" step="4"> </v-stepper-step>
           </v-stepper-header>
           <v-stepper-items>
             <v-stepper-content step="1">
@@ -75,7 +77,7 @@
               </v-btn>
             </v-stepper-content>
             <v-stepper-content step="2">
-              <v-form ref="form" v-model="valid">
+              <v-form ref="secondPageForm" v-model="valid">
                 <v-row>
                   <v-col cols="12">
                     <v-textarea
@@ -106,17 +108,38 @@
               <v-btn color="warning" @click="e1 = 1">
                 back
               </v-btn>
-              <v-btn color="primary" @click="seconPageValid">
+              <v-btn color="primary" @click="secondPageValid">
                 Continue
               </v-btn>
             </v-stepper-content>
             <v-stepper-content step="3">
+              <v-form ref="thirdPageForm" v-model="valid">
+                <v-row>
+                  <v-col cols="12">
+                    <v-file-input
+                      :rules="rules"
+                      accept="image/png, image/jpeg, image/bmp"
+                      placeholder="Pick an avatar!"
+                      prepend-icon="mdi-camera"
+                      label="Profile Picture"
+                    ></v-file-input>
+                  </v-col>
+                </v-row>
+              </v-form>
+              <v-btn color="warning" @click="e1 = 2">
+                back
+              </v-btn>
+              <v-btn color="primary" @click="thirdPageValid">
+                Continue
+              </v-btn>
+            </v-stepper-content>
+            <v-stepper-content step="4">
               <small class="pa-2 ma-2">
                 Make sure you filled every field :)
               </small>
 
               <v-card-actions>
-                <v-btn color="warning" class="" @click="e1 = 2">
+                <v-btn color="warning" class="" @click="e1 = 3">
                   back
                 </v-btn>
                 <v-btn
@@ -144,17 +167,6 @@
         </v-btn>
       </p>
     </v-card-text>
-    <v-card-actions>
-      <!-- <v-spacer></v-spacer> -->
-      <!-- <v-btn
-        color="orange darken-1"
-        text
-        class="mx-auto"
-        :disabled="!valid"
-        @click="validate"
-        >Post Job</v-btn
-      > -->
-    </v-card-actions>
   </v-card>
 </template>
 
@@ -175,7 +187,12 @@ export default {
       valid: true,
       e1: 1,
       steps: 4,
-
+      rules: [
+        (value) =>
+          !value ||
+          value.size < 20000000 ||
+          'Picture size should be less than 20 MB!'
+      ],
       companyNameRules: [],
 
       usernameRules: [],
@@ -249,9 +266,14 @@ export default {
       }
     },
 
-    seconPageValid() {
-      if (this.$refs.firstPageForm.validate()) {
+    secondPageValid() {
+      if (this.$refs.secondPageForm.validate()) {
         this.e1 = 3
+      }
+    },
+    thirdPageValid() {
+      if (this.$refs.thirdPageForm.validate()) {
+        this.e1 = 4
       }
     }
   },
