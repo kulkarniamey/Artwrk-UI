@@ -27,7 +27,20 @@
           </v-row>
         </v-form>
       </v-container>
-      <small>*indicates required field</small>
+      <span class="text-caption text-left inline"
+        >*indicates required field
+      </span>
+      <p class="text-right inline">
+        Forgot password? Reset<v-btn
+          nuxt
+          text
+          small
+          color="orange darken-1"
+          to="/auth/forgot"
+        >
+          Here.
+        </v-btn>
+      </p>
       <p class="text-lg-right">
         New User?<v-btn nuxt text color="orange darken-1" to="/auth/register">
           Create Account
