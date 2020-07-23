@@ -9,11 +9,11 @@
           <v-stepper-header>
             <v-stepper-step :complete="e1 > 1" step="1"> </v-stepper-step>
             <v-divider></v-divider>
-            <v-stepper-step :complete="e1 > 2" step="2"> </v-stepper-step>
+            <!-- <v-stepper-step :complete="e1 > 4" step="4"> </v-stepper-step>
             <v-divider></v-divider>
             <v-stepper-step :complete="e1 > 3" step="3"> </v-stepper-step>
-            <v-divider></v-divider>
-            <v-stepper-step :complete="e1 > 4" step="4"> </v-stepper-step>
+            <v-divider></v-divider> -->
+            <v-stepper-step :complete="e1 > 2" step="2"> </v-stepper-step>
           </v-stepper-header>
           <v-stepper-items>
             <v-stepper-content step="1">
@@ -21,46 +21,36 @@
                 <v-row>
                   <v-col cols="12">
                     <v-text-field
-                      v-model="formData.username"
-                      :rules="usernameRules"
-                      label="Username"
+                      v-model="formData.artworkTitle"
+                      :rules="artworkTitleRules"
+                      label="artworkTitle"
                       required
                     ></v-text-field>
                   </v-col>
                   <v-col cols="12">
-                    <v-text-field
-                      v-model="formData.artistName"
-                      :rules="artistNameRules"
-                      label="Name"
+                    <v-textarea
+                      v-model="formData.artworkDescription"
+                      label="artworkDescription"
+                      rows="3"
                       required
-                    ></v-text-field>
+                    ></v-textarea>
                   </v-col>
-                  <v-col cols="6" subheading="Social Media">
-                    <v-text-field
-                      v-model="formData.fbHandle"
-                      label="Facebook profile"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col cols="6">
-                    <v-text-field
-                      v-model="formData.twitterHandle"
-                      label="Twitter profile"
-                    ></v-text-field>
+                  <v-col cols="12">
+                    <v-file-input
+                      :rules="rules"
+                      accept="image/png, image/jpeg, image/bmp"
+                      placeholder="Your beatiful Art!"
+                      prepend-icon="mdi-camera"
+                      label="Select artwork"
+                    ></v-file-input>
                   </v-col>
 
                   <v-col cols="12">
-                    <v-text-field
-                      v-model="formData.currentEmployer"
-                      label="Current Employer"
-                      required
-                    ></v-text-field>
-                  </v-col>
-                  <v-col cols="12">
                     <v-select
-                      v-model="formData.skilltag"
+                      v-model="formData.skillsUsed"
                       :items="skilltags"
                       menu-props="auto"
-                      label="Skills"
+                      label="Skills Used"
                       chips
                       multiple
                       required
@@ -76,7 +66,7 @@
                 Continue
               </v-btn>
             </v-stepper-content>
-            <v-stepper-content step="2">
+            <v-stepper-content step="4">
               <v-form ref="secondPageForm" v-model="valid">
                 <v-row>
                   <v-col cols="12">
@@ -142,13 +132,13 @@
                 Continue
               </v-btn>
             </v-stepper-content>
-            <v-stepper-content step="4">
+            <v-stepper-content step="2">
               <small class="pa-2 ma-2">
                 Make sure you filled every field :)
               </small>
 
               <v-card-actions>
-                <v-btn color="warning" class="" @click="e1 = 3">
+                <v-btn color="warning" class="" @click="e1 = 1">
                   back
                 </v-btn>
                 <v-btn
@@ -156,7 +146,7 @@
                   class="white--text"
                   :disabled="!valid"
                   @click="validate"
-                  >Save</v-btn
+                  >Post your art</v-btn
                 >
               </v-card-actions>
             </v-stepper-content>
@@ -181,15 +171,15 @@
 
 <script>
 export default {
-  name: 'artistonboardingform',
+  name: 'CreatePost',
   data() {
     return {
       formData: {
-        username: undefined,
+        artworkTitle: undefined,
         artistName: undefined,
         currentEmployer: undefined,
-        skilltag: undefined,
-        empHistory: undefined,
+        skillsUsed: undefined,
+        artworkDescription: undefined,
         awards: undefined,
         education: undefined
       },
@@ -199,8 +189,8 @@ export default {
       rules: [
         (value) =>
           !value ||
-          value.size < 20000000 ||
-          'Picture size should be less than 20 MB!'
+          value.size < 200000000 ||
+          'Picture size should be less than 200 MB!'
       ],
       companyNameRules: [],
 
@@ -210,15 +200,15 @@ export default {
       jobTypes: ['Full time', 'Part time', 'Freelance'],
       skilltags: [
         'Illustrator',
-        'Photoshop artist',
+        'Photoshop',
         'Photographer',
         'Videographer',
-        'Vfx artist',
-        'Animator',
-        'Logo Designer',
-        'UI/UX Designer',
-        'Dancer',
-        'Musician'
+        'Cinema4D',
+        'Blender',
+        'After effects',
+        'Adobe Xd',
+        'Dance',
+        'Guitar'
       ]
     }
   },
@@ -269,9 +259,7 @@ export default {
       ]
 
       if (this.$refs.firstPageForm.validate()) {
-        if (this.formData.username && this.formData.artistName) {
-          this.e1 = 2
-        }
+        this.e1 = 2
       }
     },
 
