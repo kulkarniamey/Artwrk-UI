@@ -14,10 +14,10 @@ export default {
       {
         hid: 'description',
         name: 'description',
-        content: process.env.npm_package_description || '',
-      },
+        content: process.env.npm_package_description || ''
+      }
     ],
-    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
+    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
   },
   /*
    ** Customize the progress-bar color
@@ -26,11 +26,11 @@ export default {
   /*
    ** Global CSS
    */
-  css: [],
+  css: ['~/css/main.css'],
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: [],
+  plugins: ['~/plugins/axios'],
   /*
    ** Nuxt.js dev-modules
    */
@@ -41,14 +41,14 @@ export default {
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
-    '@nuxtjs/auth',
+    '@nuxtjs/auth'
   ],
   /*
    ** Axios module configuration
    ** See https://axios.nuxtjs.org/options
    */
   axios: {
-    baseURL: 'https://reqres.in',
+    baseURL: 'https://reqres.in'
   },
   /*
    ** vuetify module configuration
@@ -66,10 +66,10 @@ export default {
           info: colors.teal.lighten1,
           warning: colors.amber.base,
           error: colors.deepOrange.accent4,
-          success: colors.green.accent3,
-        },
-      },
-    },
+          success: colors.green.accent3
+        }
+      }
+    }
   },
   /*
    ** Build configuration
@@ -78,25 +78,26 @@ export default {
     /*
      ** You can extend webpack config here
      */
-    extend(config, ctx) {},
+    extend(config, ctx) {}
   },
 
   auth: {
     redirect: {
       login: '/auth/login',
+      home: '/comingsoon'
     },
     strategies: {
       local: {
         endpoints: {
           login: { url: '/api/login', method: 'post', propertyName: 'token' },
           logout: { url: '/api/auth/logout', method: 'delete' },
-          user: { url: '/api/user/2', method: 'get', propertyName: 'data' },
-        },
+          user: { url: '/api/user/2', method: 'get', propertyName: 'data' }
+        }
         // tokenRequired: true,
         // tokenType: 'bearer',
         // globalToken: true,
         // autoFetchUser: true
-      },
-    },
-  },
+      }
+    }
+  }
 }

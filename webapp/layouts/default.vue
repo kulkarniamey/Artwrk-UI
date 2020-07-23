@@ -9,7 +9,7 @@
       <v-spacer />
 
       <div v-if="$auth.loggedIn">
-        flag = {{ $auth.user }}
+        
              
              
       
@@ -67,7 +67,8 @@
         </v-menu>
 
      
-        <v-btn text large dark>Welcome User </v-btn>
+        
+        <v-btn text large dark>Welcome {{ user }} </v-btn>
         <v-btn text @click="$auth.logout()" dark>Logout</v-btn>
 
         
@@ -108,9 +109,7 @@
     </v-app-bar>
 
     <v-main>
-      <v-container>
-        <nuxt />
-      </v-container>
+      <nuxt />
     </v-main>
 
     <v-footer dark padless>
@@ -145,7 +144,7 @@ import Login from '../components/Login'
 
 export default {
   props: {
-    source: String,
+    source: String
   },
   data: () => ({
     drawer: null,
@@ -154,13 +153,13 @@ export default {
       {
         icon: 'mdi-apps',
         title: 'Welcome',
-        to: '/',
+        to: '/'
       },
       {
         icon: 'mdi-chart-bubble',
         title: 'Inspire',
-        to: '/inspire',
-      },
+        to: '/inspire'
+      }
     ],
 
     state: false,
@@ -177,17 +176,18 @@ export default {
       id:2,
       text:"This is second",
       status:"unread"
-    }]
+    }],
+    user: undefined
   }),
 
   computed: {
-    isLoggedIn: function () {
+    isLoggedIn: function() {
       return this.$auth.loggedIn
     },
 
-    logOut: function () {
+    logOut: function() {
       this.$auth.logout()
-    },
+    }
   },
   methods: {
     removeNotification(index){
@@ -195,6 +195,10 @@ export default {
       this.notifications.splice(index,1);
       debugger;
     }
+ 
+},
+ mounted() {
+    this.user = this.$auth?.user?.name || null
   }
 }
 </script>
