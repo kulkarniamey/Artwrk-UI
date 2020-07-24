@@ -1,11 +1,11 @@
 <template>
-  <v-card class="mx-auto my-12 tile" max-width="374">
+  <v-card class="mx-auto my-12 tile" min-width="374">
     <v-card-actions class="pt-10">
       <v-btn mx-auto rounded color="indigo accent-4" dark> Connect</v-btn>
       <v-spacer />
 
       <v-btn small v-on:click="editContent" icon>
-        <profileEdit :profileData="profile" :event-bus="eventBus" />
+        <artistProfileEdit :profileData="profile" :event-bus="eventBus" />
 
         <i v-show="isEditing"><v-icon dark>mdi-content-save</v-icon></i>
       </v-btn>
@@ -20,11 +20,17 @@
       </v-list-item-title>
     </v-list-item-content>
     <div>
-      <div class="display-2 pl-15 pt-5 font-weight-black">Active Jobs</div>
+      <div class="display-2 pl-15 pt-5 font-weight-black">Artist Score</div>
       <div class="display-2 pt-5 text-center font-weight-black">
-        {{ profile.ActiveJobs }}
+        {{ profile.artistScore }}
       </div>
     </div>
+    <v-list-item-title class="font-weight-black pl-5 pt-10"
+      >Skillset</v-list-item-title
+    >
+    <v-list-item-content class="font-weight-black pl-5 pt-10">{{
+      profile.skillset
+    }}</v-list-item-content>
     <v-list-item-title class="font-weight-black pl-5 pt-10"
       >Connections {{ profile.connections }}</v-list-item-title
     >
@@ -36,19 +42,20 @@
 </template>
 
 <script>
-import profileEdit from '../components/ProfileEdit'
+import artistProfileEdit from '../components/artistProfileEdit'
 export default {
-  name: 'ProfileCard',
+  name: 'ArtistProfileCard',
   components: {
-    profileEdit
+    artistProfileEdit
   },
   data: () => ({
     profile: {
-      text: 'We are network company based in India',
-      address: 'Banglore India',
-      ActiveJobs: '34',
+      text: "Hi! I'm an UI/UX Designer based in India. ",
+      address: 'Pune, India',
+      artistScore: '1253',
       connections: '1.2k',
       email: 'abc@xyz.com',
+      skillset: [],
       isEditing: false
     }
   }),

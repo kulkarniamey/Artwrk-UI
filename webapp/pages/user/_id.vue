@@ -5,10 +5,12 @@
         <CoverPic :profileData="profile" />
       </v-col>
     </v-row>
-    <div class="profile-content">
+    <div>
       <v-row>
-        <v-col cols="3"></v-col>
-        <v-col cols="9">
+        <v-col cols="3" class="profile-card">
+          <ArtistProfileCard />
+        </v-col>
+        <v-col cols="9" class="profile-content">
           <imageGrid />
         </v-col>
       </v-row>
@@ -18,10 +20,11 @@
 
 <script>
 import CoverPic from '../../components/CoverPic'
+import ArtistProfileCard from '../../components/ArtistProfileCard'
 import imageGrid from '../../components/ImageGrid'
 export default {
   value: '_id',
-  components: { CoverPic, imageGrid },
+  components: { CoverPic, imageGrid, ArtistProfileCard },
   data: () => ({
     user: '',
     profile: {
@@ -55,5 +58,8 @@ export default {
 .profile-content {
   margin-top: 12em;
   padding: 0 5em;
+}
+.profile-card {
+  padding: 3em;
 }
 </style>

@@ -2,7 +2,7 @@
   <div>
     <div class="text-center cover">
       <v-avatar color="indigo" size="63"
-        ><span class="white--text headline">UN</span></v-avatar
+        ><span class="white--text headline">PS</span></v-avatar
       >
       <h3 class="white--text">{{ profile.username }}</h3>
       <p class="white--text">{{ profile.user_id }}</p>
