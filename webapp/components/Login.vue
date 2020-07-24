@@ -9,7 +9,7 @@
           <v-row>
             <v-col cols="12">
               <v-text-field
-                v-model="userinfo.email"
+                v-model="userinfo.username"
                 :rules="emailRules"
                 label="E-mail*"
                 required
@@ -60,13 +60,12 @@ export default {
           (v && v.length <= 15) || 'Password must be less than 8 characters'
       ],
 
-      emailRules: [
-        (v) => !!v || 'E-mail is required',
-        (v) => /.+@.+\..+/.test(v) || 'E-mail must be valid'
-      ],
+      emailRules: [(v) => !!v || 'Username is required'],
       userinfo: {
-        email: '',
-        password: ''
+        operation: 'sign_in',
+        username: '',
+        password: '',
+        type: 'artist'
       }
     }
   },
@@ -83,9 +82,17 @@ export default {
       this.loginUser(this.userinfo)
     },
 
-    async loginUser(userinfo) {
+    async loginUser({ operation, username, password, type }) {
       try {
-        let response = await this.$auth.loginWith('local', { data: userinfo })
+        let response = await this.$auth.loginWith('local', {
+          data: {
+            username: username,
+            password: password,
+            type: type,
+            operation: operation
+          }
+        })
+
         console.log(response)
       } catch (err) {
         console.log(err)

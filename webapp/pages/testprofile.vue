@@ -15,10 +15,34 @@ import ImageGrid from '../components/ImageGrid'
 import CoverPic from '../components/CoverPic'
 export default {
   name: 'testprofile',
+  data() {
+    return {
+      profile: {
+        user_id: 'artist_pruthvi2',
+        username: 'pruthvi2',
+        artist_score: 0,
+        awards_recognition: [],
+        current_employer: null,
+        education_history: [],
+        email_verfication: 'False',
+        employer_history: [],
+        facebook_link: null,
+        followers: {},
+        following: {},
+        name: null,
+        skill_tags: [],
+        twitter_link: null,
+        certificates: {},
+        applied_jobs: {},
+        email: 'pruthvishetty.artwrk@gmail.com',
+        artist_type: null,
+      },
+    }
+  },
   components: {
     CoverPic,
-    ImageGrid
-  }
+    ImageGrid,
+  },
 }
 </script>
 

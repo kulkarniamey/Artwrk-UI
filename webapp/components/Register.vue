@@ -106,7 +106,7 @@ export default {
         (v) => !!v || 'Username is required',
         (v) => (v && v.length <= 8) || 'Username must be less than 8 characters'
       ],
-      items: ['Artist', 'Recruiter']
+      items: ['artist', 'recruiter']
     }
   },
   methods: {
@@ -115,11 +115,22 @@ export default {
         this.submitForm()
       }
     },
-    submitForm() {
+    async submitForm() {
       let payload = {
+        operation: 'create_user',
+        username: this.username,
         email: this.email,
         password: this.pass,
         type: this.userType
+      }
+      try {
+        await this.$axios
+          .$put('/test-stage/register', payload)
+          .then((response) => {
+            console.log('Successfully Logged in')
+          })
+      } catch (error) {
+        console.log(error)
       }
       console.log('Data Submitted payload:', payload)
     }

@@ -16,7 +16,7 @@
       <div v-else>
         <v-btn text to="/auth/login">Login</v-btn>
 
-        <v-btn text to="/auth/testregi">Register</v-btn>
+        <v-btn text to="/auth/register">Register</v-btn>
       </div>
     </v-app-bar>
 
