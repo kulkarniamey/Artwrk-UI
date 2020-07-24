@@ -21,7 +21,7 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="css" scoped>
 .bg-container {
   background-repeat: no-repeat;
   background-size: cover;

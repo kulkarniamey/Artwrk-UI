@@ -2,6 +2,10 @@
   <v-card class="mx-auto my-12 tile" min-width="374">
     <v-card-actions class="pt-10">
       <v-btn mx-auto rounded color="indigo accent-4" dark> Connect</v-btn>
+      <v-spacer></v-spacer>
+      <v-list-item-title class="font-weight-medium pl-5 "
+        >Connections {{ profile.connections }}</v-list-item-title
+      >
       <v-spacer />
 
       <v-btn small v-on:click="editContent" icon>
@@ -35,9 +39,7 @@
         :isEdit="false"
       />
     </v-list-item-content>
-    <v-list-item-title class="font-weight-black pl-5 pt-10"
-      >Connections {{ profile.connections }}</v-list-item-title
-    >
+
     <v-list-item-title class="font-weight-black pl-5 pb-10"
       >Contact <br />
       Email-{{ profile.email }}
@@ -61,7 +63,7 @@ export default {
       artistScore: '1253',
       connections: '1.2k',
       email: 'abc@xyz.com',
-      skillset: []
+      skillset: ['Photoshop', 'Illustrator']
     },
     isEditing: false
   }),
