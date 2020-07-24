@@ -21,16 +21,16 @@
           <v-container>
             <v-row>
               <v-col cols="12" sm="6" md="12">
-                <v-text-field label="Description of Company" required></v-text-field>
+                <v-text-field v-model="profile.text" label="Description of Company" required></v-text-field>
               </v-col>
               
               
               <v-col cols="12">
-                <v-text-field label="Location " required></v-text-field>
+                <v-text-field v-model="profile.address" label="Location " required></v-text-field>
               </v-col>
 
                <v-col cols="12">
-                <v-text-field label="Email " required></v-text-field>
+                <v-text-field v-model="profile.email" label="Email " required></v-text-field>
               </v-col>
           
       
@@ -50,8 +50,21 @@
 
 <script>
 export default {
+    props:{
+      profileData:{type: Object, required: true},
+      eventBus:{type:Object, required:true }
+    },
     data: () => ({
       dialog: false,
+      profile: {}
     }),
+  mounted(){
+    this.profile = this.profileData;
+  },
+  methods:{
+    onSave(){
+      this.eventBus.$emit('save-profile',this.profile)
+    }
+  }
 }
 </script>
