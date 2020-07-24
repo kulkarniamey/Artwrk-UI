@@ -4,15 +4,22 @@
       <v-avatar color="indigo" size="63"
         ><span class="white--text headline">UN</span></v-avatar
       >
-      <h3 class="white--text">Username</h3>
-      <p class="white--text">Name</p>
+      <h3 class="white--text">{{ profile.username }}</h3>
+      <p class="white--text">{{ profile.user_id }}</p>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'CoverPic'
+  name: 'CoverPic',
+  data: () => ({
+    profile: {}
+  }),
+  props: { profileData: { type: Object } },
+  mounted() {
+    this.profile = this.profileData
+  }
 }
 </script>
 
