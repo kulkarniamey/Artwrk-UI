@@ -28,9 +28,13 @@
     <v-list-item-title class="font-weight-black pl-5 pt-10"
       >Skillset</v-list-item-title
     >
-    <v-list-item-content class="font-weight-black pl-5 pt-10">{{
-      profile.skillset
-    }}</v-list-item-content>
+    <v-list-item-content class="font-weight-black pl-5 pt-10">
+      <Skillset
+        :skillData="profile.skillset"
+        :event-bus="eventBus"
+        :isEdit="false"
+      />
+    </v-list-item-content>
     <v-list-item-title class="font-weight-black pl-5 pt-10"
       >Connections {{ profile.connections }}</v-list-item-title
     >
@@ -42,11 +46,13 @@
 </template>
 
 <script>
-import artistProfileEdit from '../components/artistProfileEdit'
+import ArtistProfileEdit from '../components/ArtistProfileEdit'
+import Skillset from '../components/Skillset'
 export default {
   name: 'ArtistProfileCard',
   components: {
-    artistProfileEdit
+    ArtistProfileEdit,
+    Skillset
   },
   data: () => ({
     profile: {
@@ -55,9 +61,9 @@ export default {
       artistScore: '1253',
       connections: '1.2k',
       email: 'abc@xyz.com',
-      skillset: [],
-      isEditing: false
-    }
+      skillset: []
+    },
+    isEditing: false
   }),
   computed: {
     eventBus() {

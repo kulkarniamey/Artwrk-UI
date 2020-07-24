@@ -48,7 +48,6 @@
                   hint="What are the target regions"
                   persistent-hint
                 ></v-select>
-                {{ profile.skillset }}
               </v-col>
             </v-row>
           </v-container>
@@ -59,7 +58,7 @@
           <v-btn color="blue darken-1" text @click="dialog = false"
             >Close</v-btn
           >
-          <v-btn color="blue darken-1" text @click="dialog = false">Save</v-btn>
+          <v-btn color="blue darken-1" text @click="onSave">Save</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -68,7 +67,7 @@
 
 <script>
 export default {
-  name: 'artistProfileEdit',
+  name: 'ArtistProfileEdit',
   props: {
     profileData: { type: Object, required: true },
     eventBus: { type: Object, required: true }
@@ -91,6 +90,7 @@ export default {
   methods: {
     onSave() {
       this.eventBus.$emit('save-profile', this.profile)
+      this.dialog = false
     }
   }
 }
