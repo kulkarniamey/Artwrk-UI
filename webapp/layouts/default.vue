@@ -58,6 +58,9 @@
 
           <v-list>
 
+            <v-subheader>Notifications</v-subheader>
+              <v-divider></v-divider>
+
             <v-list-item
               v-for="(notification, i) in notifications"
               :key="i"
