@@ -4,7 +4,9 @@
 
   
 
-      <v-text-field prepend-inner-icon="mdi-magnify"  autofocus solo-inverted outlined  input  rounded  clearable   @input="isTyping = true" v-model="searchQuery" placeholder="Search ArtWrk"> </v-text-field>
+      <v-text-field prepend-inner-icon="mdi-magnify"   label="Search ArtWrk"
+            outlined
+            dense  input  rounded  clearable   @input="isTyping = true" v-model="searchQuery"> </v-text-field>
       
 
       <div align="center" v-if="isLoading">

@@ -7,13 +7,14 @@
       <v-btn icon >
             <v-icon>mdi-apps</v-icon>
       </v-btn>
-    <v-toolbar-title><nuxt-link to="/" class="text-decoration-none white--text"> ArtWrk </nuxt-link> </v-toolbar-title> 
+    <v-toolbar-title class="pl-0"><nuxt-link to="/" class="text-decoration-none white--text"> ArtWrk </nuxt-link> </v-toolbar-title> 
 
       <v-spacer />
       <v-btn color="indigo accent-4" to="testJobList" rounded > Jobs </v-btn>
        <v-btn icon  to="/search">
         <v-icon>mdi-magnify</v-icon>
       </v-btn>
+          
 
      <v-btn icon>
         <v-icon>mdi-arrow-all</v-icon>
