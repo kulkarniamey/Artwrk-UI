@@ -16,7 +16,7 @@
           right
           rounded
           nuxt
-          to="/auth/register"
+          to="../pages/auth/register.vue"
           class="pa-3"
         >
           <h4 class=" font-weight-regular pa-1">Join Us Now!</h4>
