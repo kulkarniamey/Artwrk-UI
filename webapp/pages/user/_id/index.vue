@@ -8,7 +8,7 @@
     <div>
       <v-row>
         <v-col cols="3" class="profile-card">
-          <ArtistProfileCard />
+          <ArtistProfileCardComponent />
         </v-col>
         <v-col cols="9" class="profile-content">
           <PortfolioButton />
@@ -18,7 +18,6 @@
     </div>
   </div>
 </template>
-
 <script>
 import CoverPic from '../../components/CoverPic'
 import ArtistProfileCard from '../../components/ArtistProfileCard'
@@ -47,12 +46,12 @@ export default {
       certificates: [],
       applied_jobs: [],
       email: 'pruthvishetty.artwrk@gmail.com',
-      artist_type: null
-    }
+      artist_type: null,
+    },
   }),
   mounted() {
     this.user = this.$route.params.id
-  }
+  },
 }
 </script>
 

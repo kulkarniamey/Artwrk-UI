@@ -3,13 +3,13 @@
     <v-card-actions class="pt-10">
       <v-btn mx-auto rounded color="indigo accent-4" dark> Connect</v-btn>
       <v-spacer></v-spacer>
-      <v-list-item-title class="font-weight-bold pl-5 "
+      <v-list-item-title class="font-weight-bold pl-5"
         >Connections {{ profile.connections }}</v-list-item-title
       >
       <v-spacer />
 
       <v-btn small v-on:click="editContent" icon>
-        <artistProfileEdit :profileData="profile" :event-bus="eventBus" />
+        <artistProfileEdit :profileData="profile" />
 
         <i v-show="isEditing"><v-icon dark>mdi-content-save</v-icon></i>
       </v-btn>
@@ -33,11 +33,7 @@
       >Skillset</v-list-item-title
     >
     <v-list-item-content class="font-weight-black pl-5 pt-10">
-      <Skillset
-        :skillData="profile.skillset"
-        :event-bus="eventBus"
-        :isEdit="false"
-      />
+      <Skillset :skillData="profile.skillset" :isEdit="false" />
     </v-list-item-content>
 
     <v-list-item-title class="font-weight-black pl-5 pb-10"
@@ -51,10 +47,10 @@
 import ArtistProfileEdit from '../components/ArtistProfileEdit'
 import Skillset from '../components/Skillset'
 export default {
-  name: 'ArtistProfileCard',
+  name: 'ArtistProfileCardComponent',
   components: {
     ArtistProfileEdit,
-    Skillset
+    Skillset,
   },
   data: () => ({
     profile: {
@@ -63,17 +59,13 @@ export default {
       artistScore: '1253',
       connections: '1.2k',
       email: 'abc@xyz.com',
-      skillset: ['Photoshop', 'Illustrator']
+      skillset: [],
     },
-    isEditing: false
+    isEditing: false,
   }),
-  computed: {
-    eventBus() {
-      return this
-    }
-  },
+  computed: {},
   created() {
-    this.eventBus.$on('save-profile', (newProfile) => {
+    this.$nuxt.$on('save-profile', (newProfile) => {
       this.profile = newProfile
     })
   },
@@ -85,8 +77,8 @@ export default {
       } else {
         this.isEditing = !this.isEditing
       }
-    }
-  }
+    },
+  },
 }
 </script>
 

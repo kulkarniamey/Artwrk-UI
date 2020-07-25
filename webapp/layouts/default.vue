@@ -1,14 +1,27 @@
 <template>
   <v-app>
-    <v-app-bar app dense dark flat>
+    <v-app-bar app color="#2b2b2b" dense flat dark>
       <!-- <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon> -->
 
-      <img class="mr-3" :src="require('../static/templogo.png')" height="25" />
-      <v-toolbar-title>
-        ArtWrk
+      <!-- <img class="mr-3" :src="require('../assets/v.png')" height="40" /> -->
+      <v-btn icon>
+        <v-icon>mdi-apps</v-icon>
+      </v-btn>
+      <v-toolbar-title class="pl-0"
+        ><nuxt-link to="/" class="text-decoration-none white--text">
+          ArtWrk
+        </nuxt-link>
       </v-toolbar-title>
 
       <v-spacer />
+      <v-btn color="indigo accent-4" to="testJobList" rounded> Jobs </v-btn>
+      <v-btn icon to="/search">
+        <v-icon>mdi-magnify</v-icon>
+      </v-btn>
+
+      <v-btn icon>
+        <v-icon>mdi-arrow-all</v-icon>
+      </v-btn>
 
       <div v-if="$auth.loggedIn">
         <!-- <v-btn icon dark @click="snackbar = true,messages=0" >
@@ -43,6 +56,9 @@
 
           <v-card>
             <v-list>
+              <v-subheader>Notifications</v-subheader>
+              <v-divider></v-divider>
+
               <v-list-item v-for="(notification, i) in notifications" :key="i">
                 <v-list-item-title>{{ notification.text }} </v-list-item-title>
                 <v-card-actions>
@@ -89,6 +105,7 @@
       <nuxt />
     </v-main>
 
+    <<<<<<< HEAD
     <v-footer dark padless class="foot">
       <v-row no-gutters>
         <v-col cols="6">
@@ -109,30 +126,35 @@
         </v-col>
       </v-row>
     </v-footer>
+    =======
+    <FooterComponent />
+    >>>>>>> a-navbar-correction
   </v-app>
 </template>
 
 <script>
 import Login from '../components/Login'
+import FooterComponent from '../components/FooterComponent'
 
 export default {
   props: {
-    source: String
+    source: String,
   },
+  components: { FooterComponent },
   data: () => ({
     drawer: null,
-    icons: ['mdi-facebook', 'mdi-twitter', 'mdi-linkedin', 'mdi-instagram'],
+
     items: [
       {
         icon: 'mdi-apps',
         title: 'Welcome',
-        to: '/'
+        to: '/',
       },
       {
         icon: 'mdi-chart-bubble',
         title: 'Inspire',
-        to: '/inspire'
-      }
+        to: '/inspire',
+      },
     ],
 
     state: false,
@@ -144,35 +166,35 @@ export default {
       {
         id: 1,
         text: 'This is first',
-        status: 'unread'
+        status: 'unread',
       },
       {
         id: 2,
         text: 'This is second',
-        status: 'unread'
-      }
+        status: 'unread',
+      },
     ],
-    user: undefined
+    user: undefined,
   }),
 
   computed: {
-    isLoggedIn: function() {
+    isLoggedIn: function () {
       return this.$auth.loggedIn
     },
 
-    logOut: function() {
+    logOut: function () {
       this.$auth.logout()
-    }
+    },
   },
   methods: {
     removeNotification(index) {
       this.notifications.splice(index, 1)
       debugger
-    }
+    },
   },
   mounted() {
     this.user = this.$auth?.user?.username || null
-  }
+  },
 }
 </script>
 <style scoped>

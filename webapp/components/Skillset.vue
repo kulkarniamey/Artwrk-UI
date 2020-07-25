@@ -50,7 +50,6 @@ export default {
   props: {
     skillData: { type: Array },
     isEdit: { type: Boolean, default: false },
-    eventBus: { type: Object, required: true }
   },
   methods: {
     addSkills: function() {
@@ -65,10 +64,10 @@ export default {
     this.skills = this.skillData
   },
   created() {
-    this.eventBus.$on('save-profile', (newProfile) => {
-      this.skills = newProfile?.skillset
-      console.log('Emitted!!')
+      this.$nuxt.$on('save-profile',(newProfile) => {
+this.profile = newProfile
     })
+
   }
 }
 </script>
