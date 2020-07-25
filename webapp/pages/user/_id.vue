@@ -11,6 +11,7 @@
           <ArtistProfileCard />
         </v-col>
         <v-col cols="9" class="profile-content">
+          <PortfolioButton />
           <imageGrid />
         </v-col>
       </v-row>
@@ -22,9 +23,10 @@
 import CoverPic from '../../components/CoverPic'
 import ArtistProfileCard from '../../components/ArtistProfileCard'
 import imageGrid from '../../components/ImageGrid'
+import PortfolioButton from '../../components/PortfolioButton'
 export default {
   value: '_id',
-  components: { CoverPic, imageGrid, ArtistProfileCard },
+  components: { CoverPic, imageGrid, ArtistProfileCard, PortfolioButton },
   data: () => ({
     user: '',
     profile: {

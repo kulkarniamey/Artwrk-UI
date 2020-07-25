@@ -3,7 +3,7 @@
     <v-card-actions class="pt-10">
       <v-btn mx-auto rounded color="indigo accent-4" dark> Connect</v-btn>
       <v-spacer></v-spacer>
-      <v-list-item-title class="font-weight-medium pl-5 "
+      <v-list-item-title class="font-weight-bold pl-5 "
         >Connections {{ profile.connections }}</v-list-item-title
       >
       <v-spacer />

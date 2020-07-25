@@ -89,7 +89,7 @@
       <nuxt />
     </v-main>
 
-    <v-footer dark padless absolute class="foot">
+    <v-footer dark padless class="foot">
       <v-row no-gutters>
         <v-col cols="6">
           <v-card>

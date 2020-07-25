@@ -11,7 +11,7 @@
           all types of artists including media and entertainment related people.
         </h3>
         <v-btn
-          color="indigo"
+          color="white lighten-1"
           absolute
           right
           rounded
@@ -19,7 +19,7 @@
           to="../pages/auth/register.vue"
           class="pa-3"
         >
-          <h4 class="white--text font-weight-regular pa-1">Join Us Now!</h4>
+          <h4 class=" font-weight-regular pa-1">Join Us Now!</h4>
         </v-btn>
       </div>
     </section>

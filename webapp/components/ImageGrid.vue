@@ -62,7 +62,7 @@ export default {
   },
   methods: {
     getManyPussy() {
-      var totalCount = 10
+      var totalCount = 20
       var i = 0
       for (i = 0; i < totalCount; i++) {
         const url = { url: '/coolpost.png' }
