@@ -8,7 +8,7 @@
     <div>
       <v-row>
         <v-col cols="3" class="profile-card">
-          <ArtistProfileCardComponent />
+          <ArtistProfileCardComponentComponent />
         </v-col>
         <v-col cols="9" class="profile-content">
           <PortfolioButton />
@@ -19,13 +19,18 @@
   </div>
 </template>
 <script>
-import CoverPic from '../../components/CoverPic'
-import ArtistProfileCard from '../../components/ArtistProfileCard'
-import imageGrid from '../../components/ImageGrid'
-import PortfolioButton from '../../components/PortfolioButton'
+import CoverPic from '../../../components/CoverPic'
+import ArtistProfileCardComponent from '../../../components/ArtistProfileCardComponent'
+import imageGrid from '../../../components/ImageGrid'
+import PortfolioButton from '../../../components/PortfolioButton'
 export default {
   value: '_id',
-  components: { CoverPic, imageGrid, ArtistProfileCard, PortfolioButton },
+  components: {
+    CoverPic,
+    imageGrid,
+    ArtistProfileCardComponent,
+    PortfolioButton,
+  },
   data: () => ({
     user: '',
     profile: {

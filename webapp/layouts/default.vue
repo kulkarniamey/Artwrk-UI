@@ -74,7 +74,7 @@
           </v-card>
         </v-menu>
 
-        <v-btn text large dark>Welcome {{ user }} </v-btn>
+        <v-btn @click="gotoProfile" text large dark>Welcome {{ user }} </v-btn>
         <v-btn text @click="$auth.logout()" dark>Logout</v-btn>
 
         <!-- <v-Snackbars
@@ -105,30 +105,7 @@
       <nuxt />
     </v-main>
 
-    <<<<<<< HEAD
-    <v-footer dark padless class="foot">
-      <v-row no-gutters>
-        <v-col cols="6">
-          <v-card>
-            <v-card-text class="white--text text-left">
-              &copy; {{ new Date().getFullYear() }} — <strong>ArtWrk</strong>
-            </v-card-text>
-          </v-card> </v-col
-        ><v-col cols="6"
-          ><v-card>
-            <!-- <v-divider></v-divider> -->
-            <v-card-text class="white--text text-right">
-              <v-btn v-for="icon in icons" :key="icon" icon>
-                <v-icon size="18px">{{ icon }}</v-icon>
-              </v-btn>
-            </v-card-text>
-          </v-card>
-        </v-col>
-      </v-row>
-    </v-footer>
-    =======
     <FooterComponent />
-    >>>>>>> a-navbar-correction
   </v-app>
 </template>
 
@@ -190,6 +167,9 @@ export default {
     removeNotification(index) {
       this.notifications.splice(index, 1)
       debugger
+    },
+    gotoProfile() {
+      this.$router.push('artist/' + this.user)
     },
   },
   mounted() {
