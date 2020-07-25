@@ -1,12 +1,24 @@
 <template>
   <v-app>
-    <v-app-bar app color="indigo lighten-1" dense flat>
+    <v-app-bar app color="#2b2b2b" dense flat dark >
       <!-- <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon> -->
 
-      <img class="mr-3" :src="require('../assets/v.png')" height="40" />
-      <v-toolbar-title>ArtWrk</v-toolbar-title>
+      <!-- <img class="mr-3" :src="require('../assets/v.png')" height="40" /> -->
+      <v-btn icon >
+            <v-icon>mdi-apps</v-icon>
+      </v-btn>
+    <v-toolbar-title><nuxt-link to="/" class="text-decoration-none white--text"> ArtWrk </nuxt-link> </v-toolbar-title> 
 
       <v-spacer />
+      <v-btn color="indigo accent-4" to="testJobList" rounded > Jobs </v-btn>
+       <v-btn icon  to="/search">
+        <v-icon>mdi-magnify</v-icon>
+      </v-btn>
+
+     <v-btn icon>
+        <v-icon>mdi-arrow-all</v-icon>
+      </v-btn>
+      
 
       <div v-if="$auth.loggedIn">
         
@@ -112,43 +124,22 @@
       <nuxt />
     </v-main>
 
-    <v-footer dark padless>
-      <v-row justify="center" no-gutters>
-        <v-col>
-          <v-card flat tile class="indigo lighten-1 white--text text-center">
-            <v-card-text>
-              <v-btn
-                v-for="icon in icons"
-                :key="icon"
-                class="mx-4 white--text"
-                icon
-              >
-                <v-icon size="24px">{{ icon }}</v-icon>
-              </v-btn>
-            </v-card-text>
-
-            <v-divider></v-divider>
-
-            <v-card-text class="white--text">
-              {{ new Date().getFullYear() }} — <strong>ArtWrk</strong>
-            </v-card-text>
-          </v-card>
-        </v-col>
-      </v-row>
-    </v-footer>
+<FooterComponent/>
   </v-app>
 </template>
 
 <script>
 import Login from '../components/Login'
+import FooterComponent from '../components/FooterComponent';
 
 export default {
   props: {
     source: String
   },
+  components: {FooterComponent},
   data: () => ({
     drawer: null,
-    icons: ['mdi-facebook', 'mdi-twitter', 'mdi-linkedin', 'mdi-instagram'],
+
     items: [
       {
         icon: 'mdi-apps',

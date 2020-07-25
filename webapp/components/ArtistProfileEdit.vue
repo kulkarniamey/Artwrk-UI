@@ -70,7 +70,6 @@ export default {
   name: 'ArtistProfileEdit',
   props: {
     profileData: { type: Object, required: true },
-    eventBus: { type: Object, required: true }
   },
   data: () => ({
     dialog: false,
@@ -89,7 +88,7 @@ export default {
   },
   methods: {
     onSave() {
-      this.eventBus.$emit('save-profile', this.profile)
+      $nuxt.$emit('save-profile', this.profile)
       this.dialog = false
     }
   }

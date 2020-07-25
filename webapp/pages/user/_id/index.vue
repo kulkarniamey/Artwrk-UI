@@ -8,7 +8,7 @@
     <div>
       <v-row>
         <v-col cols="3" class="profile-card">
-          <ArtistProfileCard />
+          <ArtistProfileCardComponent />
         </v-col>
         <v-col cols="9" class="profile-content">
           <imageGrid />
@@ -17,14 +17,13 @@
     </div>
   </div>
 </template>
-
 <script>
-import CoverPic from '../../components/CoverPic'
-import ArtistProfileCard from '../../components/ArtistProfileCard'
-import imageGrid from '../../components/ImageGrid'
+import CoverPic from '../../../components/CoverPic'
+import ArtistProfileCardComponent from '../../../components/ArtistProfileCardComponent'
+import imageGrid from '../../../components/ImageGrid'
 export default {
   value: '_id',
-  components: { CoverPic, imageGrid, ArtistProfileCard },
+  components: { CoverPic, imageGrid, ArtistProfileCardComponent },
   data: () => ({
     user: '',
     profile: {

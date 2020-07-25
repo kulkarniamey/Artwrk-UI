@@ -1,7 +1,7 @@
 <template>
-  <div>
-    <SearchBar> </SearchBar>
-    <h1>Welcome! {{ user }}</h1>
+  <div class="mt-10">
+    <SearchBar > </SearchBar>
+    
   </div>
 </template>
 

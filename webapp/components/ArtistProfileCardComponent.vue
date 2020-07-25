@@ -5,7 +5,7 @@
       <v-spacer />
 
       <v-btn small v-on:click="editContent" icon>
-        <artistProfileEdit :profileData="profile" :event-bus="eventBus" />
+        <artistProfileEdit :profileData="profile" />
 
         <i v-show="isEditing"><v-icon dark>mdi-content-save</v-icon></i>
       </v-btn>
@@ -31,7 +31,6 @@
     <v-list-item-content class="font-weight-black pl-5 pt-10">
       <Skillset
         :skillData="profile.skillset"
-        :event-bus="eventBus"
         :isEdit="false"
       />
     </v-list-item-content>
@@ -49,7 +48,7 @@
 import ArtistProfileEdit from '../components/ArtistProfileEdit'
 import Skillset from '../components/Skillset'
 export default {
-  name: 'ArtistProfileCard',
+  name: 'ArtistProfileCardComponent',
   components: {
     ArtistProfileEdit,
     Skillset
@@ -61,19 +60,18 @@ export default {
       artistScore: '1253',
       connections: '1.2k',
       email: 'abc@xyz.com',
-      skillset: []
+      skillset: [],
     },
     isEditing: false
   }),
   computed: {
-    eventBus() {
-      return this
-    }
   },
   created() {
-    this.eventBus.$on('save-profile', (newProfile) => {
-      this.profile = newProfile
+    this.$nuxt.$on('save-profile',(newProfile) => {
+this.profile = newProfile
     })
+
+
   },
 
   methods: {
