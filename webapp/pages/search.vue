@@ -1,9 +1,11 @@
 <template>
-  <div class="mt-10">
-    <SearchBar > </SearchBar>
-    
   <div>
-    <artistonboardingform />
+    <div class="mt-10">
+      <SearchBar> </SearchBar>
+    </div>
+    <div>
+      <artistonboardingform />
+    </div>
   </div>
 </template>
 
@@ -14,21 +16,21 @@ import artistonboardingform from '../components/Onboarding/artistonboardform'
 export default {
   middleware: 'auth',
   name: 'welcome',
-  components:{SearchBar},
+  components: { SearchBar },
   head() {
     title: 'Welcome page'
   },
   components: {
-    artistonboardingform
+    artistonboardingform,
   },
   data() {
     return {
-      user: undefined
+      user: undefined,
     }
   },
   mounted() {
     this.user = this.$auth.user.name
-  }
+  },
 }
 </script>
 

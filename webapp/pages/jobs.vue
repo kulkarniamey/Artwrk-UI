@@ -1,8 +1,8 @@
 <template>
   <div>
     <div class="hero-text text-center">
-      <h1>Jobs</h1>
-      <h2>Discover Your Next Gig!</h2>
+      <div class="ma-12 text-h1">Jobs</div>
+      <div class="ma-8 text-h3">Discover Your Next Gig!</div>
       <v-btn nuxt to="jobpostform" color="deep-purple white--text">
         Post a job
       </v-btn>
@@ -19,8 +19,8 @@ export default {
     title: 'Jobs'
   },
   components: {
-    JobCard
-  }
+    JobCard,
+  },
 }
 </script>
 
