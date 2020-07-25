@@ -88,7 +88,7 @@ export default {
     }
   },
   mounted() {
-    this.user = this.$auth?.user?.name || null
+    this.user = this.$auth?.user?.username || null
   }
 }
 </script>

@@ -92,6 +92,14 @@ export default {
             operation: operation
           }
         })
+        const token = response.data.token
+        const userPayload = {
+          operation: 'get_profile',
+          authorizationToken: token
+        }
+        let user = await this.$axios.put('/api/profile/', userPayload)
+        console.log(user)
+        this.$auth.setUser(user.data.profile)
 
         console.log(response)
       } catch (err) {

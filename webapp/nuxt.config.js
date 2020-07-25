@@ -51,8 +51,11 @@ export default {
     proxy: true,
   },
   proxy: {
-    '/api': 'https://k32xx6unw3.execute-api.us-east-2.amazonaws.com/test-stage',
-    changeOrigin: true,
+    '/api/': {
+      target:
+        'https://k32xx6unw3.execute-api.us-east-2.amazonaws.com/test-stage/',
+      pathRewrite: { '^/api/': '' },
+    },
   },
   /*
    ** vuetify module configuration
@@ -94,17 +97,17 @@ export default {
       local: {
         endpoints: {
           login: {
-            url: '/api/login',
+            url: '/api/login/',
             method: 'put',
             propertyName: 'token',
           },
           logout: { url: '/api/auth/logout', method: 'delete' },
-          user: { url: '/api/profile', method: 'get', propertyName: 'data' },
+          user: false,
         },
         // tokenRequired: true,
         // tokenType: 'bearer',
         // globalToken: true,
-        // autoFetchUser: true
+        autoFetchUser: false,
       },
     },
   },
