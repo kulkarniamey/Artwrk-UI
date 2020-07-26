@@ -14,7 +14,7 @@
       </v-toolbar-title>
 
       <v-spacer />
-      <v-btn color="indigo accent-4" to="testJobList" rounded> Jobs </v-btn>
+      <v-btn color="indigo accent-4" to="jobs" rounded> Jobs </v-btn>
       <v-btn icon to="/search">
         <v-icon>mdi-magnify</v-icon>
       </v-btn>

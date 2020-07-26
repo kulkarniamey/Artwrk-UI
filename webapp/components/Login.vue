@@ -10,8 +10,8 @@
             <v-col cols="12">
               <v-text-field
                 v-model="userinfo.username"
-                :rules="emailRules"
-                label="E-mail*"
+                :rules="usernameRules"
+                label="Username*"
                 required
               ></v-text-field>
             </v-col>
@@ -73,7 +73,7 @@ export default {
           (v && v.length <= 15) || 'Password must be less than 8 characters'
       ],
 
-      emailRules: [(v) => !!v || 'Username is required'],
+      usernameRules: [(v) => !!v || 'Username is required'],
       userinfo: {
         operation: 'sign_in',
         username: '',
