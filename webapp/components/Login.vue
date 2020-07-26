@@ -21,6 +21,7 @@
                 label="Password*"
                 v-model="userinfo.password"
                 :rules="passRules"
+                type="password"
                 required
               ></v-text-field>
             </v-col>
