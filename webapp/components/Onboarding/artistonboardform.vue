@@ -25,11 +25,12 @@
                       :rules="usernameRules"
                       label="Username"
                       required
+                      disabled
                     ></v-text-field>
                   </v-col>
                   <v-col cols="12">
                     <v-text-field
-                      v-model="formData.artistName"
+                      v-model="profile.name"
                       :rules="artistNameRules"
                       label="Name"
                       required
@@ -37,27 +38,27 @@
                   </v-col>
                   <v-col cols="6" subheading="Social Media">
                     <v-text-field
-                      v-model="formData.fbHandle"
+                      v-model="profile.facebook_link"
                       label="Facebook profile"
                     ></v-text-field>
                   </v-col>
                   <v-col cols="6">
                     <v-text-field
-                      v-model="formData.twitterHandle"
+                      v-model="profile.twitter_link"
                       label="Twitter profile"
                     ></v-text-field>
                   </v-col>
 
                   <v-col cols="12">
                     <v-text-field
-                      v-model="formData.currentEmployer"
+                      v-model="formData.current_employer"
                       label="Current Employer"
                       required
                     ></v-text-field>
                   </v-col>
                   <v-col cols="12">
                     <v-select
-                      v-model="formData.skilltag"
+                      v-model="formData.skill_tag"
                       :items="skilltags"
                       menu-props="auto"
                       label="Skills"
@@ -274,10 +275,11 @@ export default {
       ]
 
       if (this.$refs.firstPageForm.validate()) {
-        if (this.formData.username && this.formData.artistName) {
+        if (this.profile.username && this.profile.name) {
           this.e1 = 2
         }
       }
+      debugger
     },
 
     secondPageValid() {

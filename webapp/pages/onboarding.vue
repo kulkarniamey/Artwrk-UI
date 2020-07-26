@@ -33,12 +33,10 @@ export default {
     getProfile() {
       return this.profile
     }
-
   },
   created() {
     this.user = this.$auth.user.name
     this.profile = this.$auth.user
-    console.log(this.profile)
   }
 }
 </script>
