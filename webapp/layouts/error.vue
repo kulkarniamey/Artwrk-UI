@@ -1,6 +1,6 @@
 <template>
   <v-app dark>
-    <div v-if="isError">
+    <div v-if="error.statusCode === 404">
       <div class="bg">
         <div class="content">
           <h1 class=" custom-size-h1">
@@ -37,13 +37,11 @@ export default {
   data() {
     return {
       pageNotFound: '404 Not Found',
-      otherError: 'An error occurred',
-      isError: true
+      otherError: 'An error occurred'
     }
   },
   methods: {
     goBack() {
-      this.isError = false
       this.$router.push('/comingsoon')
     }
   },
@@ -53,9 +51,6 @@ export default {
     return {
       title
     }
-  },
-  mounted() {
-    this.isError = true
   }
 }
 </script>
