@@ -115,7 +115,7 @@ import FooterComponent from '../components/FooterComponent'
 
 export default {
   props: {
-    source: String,
+    source: String
   },
   components: { FooterComponent },
   data: () => ({
@@ -125,13 +125,13 @@ export default {
       {
         icon: 'mdi-apps',
         title: 'Welcome',
-        to: '/',
+        to: '/'
       },
       {
         icon: 'mdi-chart-bubble',
         title: 'Inspire',
-        to: '/inspire',
-      },
+        to: '/inspire'
+      }
     ],
 
     state: false,
@@ -143,25 +143,25 @@ export default {
       {
         id: 1,
         text: 'This is first',
-        status: 'unread',
+        status: 'unread'
       },
       {
         id: 2,
         text: 'This is second',
-        status: 'unread',
-      },
+        status: 'unread'
+      }
     ],
-    user: undefined,
+    user: undefined
   }),
 
   computed: {
-    isLoggedIn: function () {
+    isLoggedIn: function() {
       return this.$auth.loggedIn
     },
 
-    logOut: function () {
+    logOut: function() {
       this.$auth.logout()
-    },
+    }
   },
   methods: {
     removeNotification(index) {
@@ -170,11 +170,13 @@ export default {
     },
     gotoProfile() {
       this.$router.push('artist/' + this.user)
-    },
+    }
   },
   mounted() {
     this.user = this.$auth?.user?.username || null
-  },
+    const state = this.$auth.getToken('local')
+    console.log(state)
+  }
 }
 </script>
 <style scoped>
