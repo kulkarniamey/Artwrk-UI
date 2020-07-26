@@ -172,10 +172,19 @@ export default {
       this.$router.push('artist/' + this.user)
     }
   },
-  mounted() {
+  async mounted() {
     this.user = this.$auth?.user?.username || null
     const state = this.$auth.getToken('local')
-    console.log(state)
+    const token = state.replace('Bearer ', '')
+    const userPayload = {
+      operation: 'get_profile',
+      authorizationToken: token
+    }
+    let user = await this.$axios.put('/api/profile/', userPayload)
+    //console.log(user)
+    this.$auth.setUser(user.data.profile)
+    this.user = this.$auth?.user?.username || null
+    //console.log(state)
   }
 }
 </script>
