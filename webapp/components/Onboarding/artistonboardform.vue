@@ -21,7 +21,7 @@
                 <v-row>
                   <v-col cols="12">
                     <v-text-field
-                      v-model="formData.username"
+                      v-model="profile.username"
                       :rules="usernameRules"
                       label="Username"
                       required
@@ -182,6 +182,7 @@
 <script>
 export default {
   name: 'artistonboardingform',
+  props: { profileData: { type: Object } },
   data() {
     return {
       formData: {
@@ -193,6 +194,7 @@ export default {
         awards: undefined,
         education: undefined
       },
+      profile: {},
       valid: true,
       e1: 1,
       steps: 4,
@@ -222,7 +224,10 @@ export default {
       ]
     }
   },
-
+  mounted() {
+    this.profile = this.profileData
+    console.log(this.profile)
+  },
   methods: {
     validate() {
       this.companyNameRules = [
