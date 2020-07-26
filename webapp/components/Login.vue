@@ -106,18 +106,20 @@ export default {
             operation: operation
           }
         })
+        if (response?.data?.statusCode === 409) {
+          throw 'error!'
+        }
         const token = response.data.token
         const userPayload = {
           operation: 'get_profile',
           authorizationToken: token
         }
         let user = await this.$axios.put('/api/profile/', userPayload)
-        console.log(user)
+        //console.log(user)
         this.$auth.setUser(user.data.profile)
-
-        console.log(response)
       } catch (err) {
         console.log(err)
+        console.log('Error hua')
       }
     }
   }

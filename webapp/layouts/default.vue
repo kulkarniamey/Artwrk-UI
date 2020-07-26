@@ -174,6 +174,8 @@ export default {
   },
   mounted() {
     this.user = this.$auth?.user?.username || null
+    const state = this.$auth.getToken('local')
+    console.log(state)
   }
 }
 </script>
