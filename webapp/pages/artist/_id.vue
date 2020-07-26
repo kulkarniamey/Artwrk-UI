@@ -30,16 +30,16 @@ export default {
     CoverPic,
     imageGrid,
     ArtistProfileCardComponent,
-    PortfolioButton,
+    PortfolioButton
   },
   data: () => ({
     user: '',
-    profile: {},
+    profile: {}
   }),
   mounted() {
     this.user = this.$route.params.id
     this.profile = this.$auth.user
-  },
+  }
 }
 </script>
 

@@ -4,7 +4,7 @@
       <SearchBar> </SearchBar>
     </div>
     <div>
-      <artistonboardingform />
+      <artistonboardingform :profileData="getProfile"/>
     </div>
   </div>
 </template>
@@ -21,16 +21,23 @@ export default {
     title: 'Welcome page'
   },
   components: {
-    artistonboardingform,
+    artistonboardingform
   },
   data() {
     return {
       user: undefined,
+      profile: {}
     }
   },
-  mounted() {
-    this.user = this.$auth.user.name
+  computed: {
+    getProfile() {
+      return this.profile
+    }
   },
+  created() {
+    this.user = this.$auth.user.name
+    this.profile = this.$auth.user
+  }
 }
 </script>
 
