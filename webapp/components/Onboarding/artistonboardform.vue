@@ -40,12 +40,14 @@
                     <v-text-field
                       v-model="profile.facebook_link"
                       label="Facebook profile"
+                      :rules="fbRules"
                     ></v-text-field>
                   </v-col>
                   <v-col cols="6">
                     <v-text-field
                       v-model="profile.twitter_link"
                       label="Twitter profile"
+                      :rules="tweetRules"
                     ></v-text-field>
                   </v-col>
 
@@ -210,6 +212,8 @@ export default {
       usernameRules: [],
 
       artistNameRules: [],
+      fbRules: [],
+      tweetRules: [],
       jobTypes: ['Full time', 'Part time', 'Freelance'],
       skilltags: [
         'Illustrator',
@@ -248,10 +252,19 @@ export default {
     },
 
     firstPageValid() {
-      this.usernameRules = [
-        (v) => !!v || 'Username is required',
-        (v) => (v && v.length <= 8) || 'Username must be less than 8 characters'
-        // Tentative word limit. Needs to be changed.
+      this.fbRules = [
+        (v) =>
+          (v = RegExp(
+            '(https?:\\/\\/)?((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|((\\d{1,3}\\.){3}\\d{1,3}))(\\:\\d+)?(\\/[-a-z\\d%_.~+@]*)*(\\?[;&a-z\\d%_.~+=-@]*)?(\\#[-a-z\\d_@]*)?$',
+            'i' && this.url.match(regex)
+          )) || 'URL is not valid'
+      ]
+      this.tweetRules = [
+        (v) =>
+          (v = RegExp(
+            '(https?:\\/\\/)?((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|((\\d{1,3}\\.){3}\\d{1,3}))(\\:\\d+)?(\\/[-a-z\\d%_.~+@]*)*(\\?[;&a-z\\d%_.~+=-@]*)?(\\#[-a-z\\d_@]*)?$',
+            'i' && this.url.match(regex)
+          )) || 'URL is not valid'
       ]
 
       this.artistNameRules = [
@@ -261,7 +274,11 @@ export default {
       ]
 
       if (this.$refs.firstPageForm.validate()) {
-        if (this.profile.username && this.profile.name) {
+        if (
+          this.profile.twitter_link &&
+          this.profile.facebook_link &&
+          this.profile.name
+        ) {
           this.e1 = 2
         }
       }
