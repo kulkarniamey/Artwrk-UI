@@ -175,15 +175,18 @@ export default {
   async mounted() {
     this.user = this.$auth?.user?.username || null
     const state = this.$auth.getToken('local')
-    const token = state.replace('Bearer ', '')
-    const userPayload = {
-      operation: 'get_profile',
-      authorizationToken: token
+    if (state !== false) {
+      const token = state.replace('Bearer ', '')
+      const userPayload = {
+        operation: 'get_profile',
+        authorizationToken: token
+      }
+      let user = await this.$axios.put('/api/profile/', userPayload)
+      console.log(user)
+      this.$auth.setUser(user.data.profile)
+      this.user = this.$auth?.user?.username || null
+    } else {
     }
-    let user = await this.$axios.put('/api/profile/', userPayload)
-    //console.log(user)
-    this.$auth.setUser(user.data.profile)
-    this.user = this.$auth?.user?.username || null
     //console.log(state)
   }
 }
