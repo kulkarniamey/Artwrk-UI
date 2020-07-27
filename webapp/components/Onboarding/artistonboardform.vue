@@ -58,7 +58,7 @@
                   </v-col>
                   <v-col cols="12">
                     <v-select
-                      v-model="formData.skill_tag"
+                      v-model="profile.skill_tags"
                       :items="skilltags"
                       menu-props="auto"
                       label="Skills"
@@ -231,34 +231,10 @@ export default {
   },
   methods: {
     validate() {
-      this.companyNameRules = [
-        (v) => !!v || 'Company name is required',
-        (v) =>
-          (v && v.length <= 50) || 'Company name must be less than 25 words'
-        // Tentative word limit. Needs to be changed.
-      ]
-
-      this.usernameRules = [
-        (v) => !!v || 'Username is required',
-        (v) => (v && v.length <= 8) || 'Username must be less than 8 characters'
-        // Tentative word limit. Needs to be changed.
-      ]
-
-      this.artistNameRules = [
-        (v) => !!v || 'Name is required',
-        (v) => (v && v.length <= 50) || 'Name must be less than 25 words'
-        // Tentative word limit. Needs to be changed.
-      ]
-      if (this.$refs.form.validate()) {
-        this.submitForm()
-      } else {
-        this.companyNameRules = []
-        this.usernameRules = []
-        this.artistNameRules = []
-      }
+      this.submitForm()
     },
     submitForm() {
-      console.log('Data Submitted payload:', this.formData)
+      console.log('Data Submitted payload:', this.profile)
     },
 
     firstPageValid() {
