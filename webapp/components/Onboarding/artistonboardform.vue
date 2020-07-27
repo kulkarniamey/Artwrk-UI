@@ -51,7 +51,7 @@
 
                   <v-col cols="12">
                     <v-text-field
-                      v-model="formData.current_employer"
+                      v-model="profile.current_employer"
                       label="Current Employer"
                       required
                     ></v-text-field>
@@ -233,8 +233,18 @@ export default {
     validate() {
       this.submitForm()
     },
-    submitForm() {
+    async submitForm() {
+      this.profile['operation'] = 'update_profile'
+      this.profile['authorizationToken'] = this.$auth
+        .getToken('local')
+        .replace('Bearer ', '')
       console.log('Data Submitted payload:', this.profile)
+      try {
+        const response = await this.$axios.put('/api/profile/', this.profile)
+        console.log(response)
+      } catch (err) {
+        console.log('Error')
+      }
     },
 
     firstPageValid() {
