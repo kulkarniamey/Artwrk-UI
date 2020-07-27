@@ -244,14 +244,14 @@ export default {
         (v) =>
           (v = RegExp(
             '(https?:\\/\\/)?((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|((\\d{1,3}\\.){3}\\d{1,3}))(\\:\\d+)?(\\/[-a-z\\d%_.~+@]*)*(\\?[;&a-z\\d%_.~+=-@]*)?(\\#[-a-z\\d_@]*)?$',
-            'i'
+            'i' && this.url.match(regex)
           )) || 'URL is not valid'
       ]
       this.tweetRules = [
         (v) =>
           (v = RegExp(
             '(https?:\\/\\/)?((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|((\\d{1,3}\\.){3}\\d{1,3}))(\\:\\d+)?(\\/[-a-z\\d%_.~+@]*)*(\\?[;&a-z\\d%_.~+=-@]*)?(\\#[-a-z\\d_@]*)?$',
-            'i'
+            'i' && this.url.match(regex)
           )) || 'URL is not valid'
       ]
 
@@ -262,7 +262,11 @@ export default {
       ]
 
       if (this.$refs.firstPageForm.validate()) {
-        if (this.profile.username && this.profile.name) {
+        if (
+          this.profile.twitter_link &&
+          this.profile.facebook_link &&
+          this.profile.name
+        ) {
           this.e1 = 2
         }
       }
