@@ -40,6 +40,7 @@
                     <v-text-field
                       v-model="profile.facebook_link"
                       label="Facebook profile"
+                      @input="applySocialRules()"
                       :rules="fbRules"
                     ></v-text-field>
                   </v-col>
@@ -47,6 +48,7 @@
                     <v-text-field
                       v-model="profile.twitter_link"
                       label="Twitter profile"
+                      @input="applySocialRules()"
                       :rules="tweetRules"
                     ></v-text-field>
                   </v-col>
@@ -230,7 +232,7 @@ export default {
     }
   },
   mounted() {
-    this.profile = this.profileData
+    this.profile.id = this.profileData.user_id
     console.log(this.profile)
   },
   methods: {
@@ -252,6 +254,21 @@ export default {
     },
 
     firstPageValid() {
+      this.artistNameRules = [
+        (v) => !!v || 'Name is required',
+        (v) => (v && v.length <= 50) || 'Name must be less than 25 words'
+        // Tentative word limit. Needs to be changed.
+      ]
+
+      if (this.$refs.firstPageForm.validate()) {
+        if (this.profile.name) {
+          this.e1 = 2
+        }
+      }
+      debugger
+    },
+    applySocialRules() {
+      debugger
       this.fbRules = [
         (v) =>
           /[(http(s)?):\/\/(www\.)?a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/gi.test(
@@ -264,25 +281,7 @@ export default {
             v
           ) || 'Enter valid link'
       ]
-
-      this.artistNameRules = [
-        (v) => !!v || 'Name is required',
-        (v) => (v && v.length <= 50) || 'Name must be less than 25 words'
-        // Tentative word limit. Needs to be changed.
-      ]
-
-      if (this.$refs.firstPageForm.validate()) {
-        if (
-          this.profile.twitter_link &&
-          this.profile.facebook_link &&
-          this.profile.name
-        ) {
-          this.e1 = 2
-        }
-      }
-      debugger
     },
-
     secondPageValid() {
       if (this.$refs.secondPageForm.validate()) {
         this.e1 = 3
