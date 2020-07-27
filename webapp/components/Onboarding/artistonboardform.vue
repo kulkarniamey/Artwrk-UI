@@ -212,6 +212,8 @@ export default {
       usernameRules: [],
 
       artistNameRules: [],
+      fbRules: [],
+      tweetRules: [],
       jobTypes: ['Full time', 'Part time', 'Freelance'],
       skilltags: [
         'Illustrator',
