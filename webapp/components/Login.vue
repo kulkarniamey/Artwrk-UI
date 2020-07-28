@@ -1,5 +1,5 @@
 <template>
-  <v-card elevation="9" min-height="600" max-width="450" class="mx-auto">
+  <v-card elevation="9" min-height="600" max-width="550" class="mx-auto">
     <v-card-title>
       <span class="headline">Log in</span>
     </v-card-title>
@@ -60,36 +60,22 @@
       >
     </v-card-actions>
 
-    <v-snackbar
-      v-model="snackbar"
-      :timeout="timeout"
-      color="red"
-    >
+    <v-snackbar v-model="snackbar" :timeout="timeout" color="red">
       {{ text }}
 
       <template v-slot:action="{ attrs }">
-        <v-btn
-          color="blue"
-          text
-          v-bind="attrs"
-          @click="snackbar = false"
-        >
+        <v-btn color="blue" text v-bind="attrs" @click="snackbar = false">
           Close
         </v-btn>
       </template>
     </v-snackbar>
-
-    
   </v-card>
 </template>
 
 <script>
 export default {
   data() {
-
-     
     return {
-
       snackbar: false,
       text: 'Invalid Login Credentials',
       timeout: 2000,
@@ -147,8 +133,7 @@ export default {
       } catch (err) {
         console.log(err)
         console.log('Error hua')
-        this.snackbar=true;
-        
+        this.snackbar = true
       }
     }
   }

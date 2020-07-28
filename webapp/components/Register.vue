@@ -1,5 +1,5 @@
 <template>
-  <v-card elevation="9" min-height="600" max-width="450" class="mx-auto">
+  <v-card elevation="9" min-height="600" max-width="550" class="mx-auto">
     <v-card-title>
       <span class="headline">Sign Up!</span>
     </v-card-title>
