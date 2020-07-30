@@ -48,16 +48,15 @@ export default {
    ** See https://axios.nuxtjs.org/options
    */
   axios: {
-    baseURL:
-      'https://k32xx6unw3.execute-api.us-east-2.amazonaws.com/test-stage/',
+    proxy: true,
   },
-  // proxy: {
-  //   '/api/': {
-  //     target:
-  //       'https://k32xx6unw3.execute-api.us-east-2.amazonaws.com/test-stage/',
-  //     pathRewrite: { '^/api/': '' },
-  //   },
-  // },
+  proxy: {
+    '/api/': {
+      target:
+        'https://k32xx6unw3.execute-api.us-east-2.amazonaws.com/test-stage/',
+      pathRewrite: { '^/api/': '' },
+    },
+  },
   /*
    ** vuetify module configuration
    ** https://github.com/nuxt-community/vuetify-module
@@ -98,11 +97,11 @@ export default {
       local: {
         endpoints: {
           login: {
-            url: '/login/',
+            url: '/api/login/',
             method: 'put',
             propertyName: 'token',
           },
-          logout: { url: '/auth/logout', method: 'delete' },
+          logout: { url: '/api/auth/logout', method: 'delete' },
           user: false,
         },
         // tokenRequired: true,
