@@ -86,10 +86,7 @@
 <script>
 export default {
   data() {
-
-     
     return {
-
       snackbar: false,
       text: 'Invalid Login Credentials',
       timeout: 2000,
@@ -141,14 +138,13 @@ export default {
           operation: 'get_profile',
           authorizationToken: token
         }
-        let user = await this.$axios.put('/api/profile/', userPayload)
+        let user = await this.$axios.put('/profile/', userPayload)
         //console.log(user)
         this.$auth.setUser(user.data.profile)
       } catch (err) {
         console.log(err)
         console.log('Error hua')
-        this.snackbar=true;
-        
+        this.snackbar = true
       }
     }
   }
