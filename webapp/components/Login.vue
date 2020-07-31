@@ -127,7 +127,7 @@ export default {
           operation: 'get_profile',
           authorizationToken: token
         }
-        let user = await this.$axios.put('/api/profile/', userPayload)
+        let user = await this.$axios.put('/profile/', userPayload)
         //console.log(user)
         this.$auth.setUser(user.data.profile)
       } catch (err) {
