@@ -76,7 +76,7 @@
           </v-card>
         </v-menu>
 
-        <v-btn nuxt to="/artist/pruthvi2" text large dark>Welcome {{ user }} </v-btn>
+        <v-btn nuxt :to="`/artist/`+user" text large dark>Welcome {{ user }} </v-btn>
         <v-btn text @click="$auth.logout()" dark>Logout</v-btn>
 
         <!-- <v-Snackbars
