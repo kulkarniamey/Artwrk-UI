@@ -1,5 +1,7 @@
 <template>
   <v-app>
+    <div v-if="loading"> Loading...</div>
+    <template v-else>
     <v-app-bar app color="#2b2b2b" dense flat dark>
       <!-- <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon> -->
 
@@ -106,6 +108,7 @@
     </v-main>
 
     <FooterComponent />
+    </template>
   </v-app>
 </template>
 
@@ -120,7 +123,7 @@ export default {
   components: { FooterComponent },
   data: () => ({
     drawer: null,
-
+    loading: true,
     items: [
       {
         icon: 'mdi-apps',
@@ -188,6 +191,7 @@ export default {
       })
     } else {
     }
+    this.loading = false
     //console.log(state)
   }
 }
