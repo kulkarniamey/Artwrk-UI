@@ -37,8 +37,8 @@ export default {
     profile: {}
   }),
   mounted() {
-    this.user = this.$route.params.id
     this.profile = this.$auth.user
+    console.log(this.profile)
   }
 }
 </script>
