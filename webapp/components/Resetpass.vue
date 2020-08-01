@@ -11,7 +11,7 @@
               <div class="condition-div" v-if="isVerified">
                 <v-col cols="12">
                   <v-text-field
-                    v-model="OTP"
+                    v-model="otp"
                     :rules="OTPRules"
                     label="Enter OTP"
                     required
@@ -43,7 +43,7 @@
         </v-container>
       </v-card-text>
       <p class="text-right custom">
-        <v-btn nuxt small text color="black darken-1" to="">
+        <v-btn nuxt small text color="black darken-1" to="" @click="requestOtp">
           Resend
         </v-btn>
       </p>
@@ -95,13 +95,14 @@ export default {
           (v && v.length <= 8) || 'Password must be less than 8 characters',
         (v) => (v && this.checkMatch) || 'Passwords must match'
       ],
-      OTP: '',
+      otp: { resendOtp: '' },
       OTPRules: [
-        (v) => !!v || 'E-mail is required',
-        (v) => /.+@.+\..+/.test(v) || 'E-mail must be valid'
+        (v) => !!v || 'OTP is required',
+        (v) => /\b\d{6}\b/.test(v) || 'Enter valid OTP'
       ]
     }
   },
+
   methods: {
     changeVerified() {
       this.isVerified = false
@@ -112,7 +113,26 @@ export default {
         this.submitForm()
       }
     },
+    requestOtp() {
+      console.log('RensendOTP:', this.otp)
 
+      this.resendOtp(this.otp)
+    },
+    async resendOtp() {
+      const resend = {
+        operation: 'resend_otp',
+        username: userinfo.email, // we need this from Forgotpass here
+        type: ''
+      }
+      try {
+        let response = await this.$axios.put('/resend-otp')
+        // .then(this.$router.push(''))
+        console.log(response)
+      } catch (err) {
+        console.log(err)
+        // this.$router.push('')
+      }
+    },
     submitForm() {
       let payload = {
         OTP: this.OTP,

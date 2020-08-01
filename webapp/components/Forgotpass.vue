@@ -2,7 +2,7 @@
   <div class="contain">
     <v-card elevation="3" class="card">
       <v-card-title>
-        <span class="headline">Reset Password</span>
+        <span class="headline">Forgot Password</span>
       </v-card-title>
       <v-card-text>
         <v-container>
@@ -77,12 +77,12 @@ export default {
         type: 'artist'
       }
       try {
-        let response = await this.$axios
-          .put('/forgot-password', payload)
-          .then(this.$router.push('reset/'))
+        let response = await this.$axios.put('/forgot-password', payload)
+        // .then(this.$router.push('reset/'))
         console.log(response)
       } catch (err) {
         console.log(err)
+        this.$router.push('reset/')
       }
     }
   }
