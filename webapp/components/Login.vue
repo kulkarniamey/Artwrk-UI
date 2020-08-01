@@ -27,6 +27,24 @@
             </v-col>
           </v-row>
         </v-form>
+                <v-btn-toggle
+          v-model="userinfo.type"
+          tile
+          color="indigo accent-3"
+          group
+        >
+          <v-btn value="artist">
+            Artist
+          </v-btn>
+
+          <v-btn value="recruiter">
+            Recruiter
+          </v-btn>
+
+          <v-btn value="admin">
+            Admin
+          </v-btn>
+        </v-btn-toggle>
       </v-container>
       <span class="text-caption text-left inline"
         >*indicates required field

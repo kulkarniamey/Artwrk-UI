@@ -77,7 +77,9 @@ export default {
         type: 'artist'
       }
       try {
-        let response = await this.$axios.put('/forgot-password', payload)
+        let response = await this.$axios
+          .put('/forgot-password', payload)
+          .then(this.$router.push('reset/'))
         console.log(response)
       } catch (err) {
         console.log(err)
