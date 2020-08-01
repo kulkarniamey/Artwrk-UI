@@ -6,20 +6,19 @@
           Welcome to ArtWrk!
         </h1>
         <h3 class="white--text font-weight-regular pa-2" subtitle-1>
-          A responsive and modular web application which would act as a
-          multi-functional social networking, recruitment driven community for
-          all types of artists including media and entertainment related people.
+          {{ message }}
         </h3>
         <v-btn
-          color="white lighten-1"
+          color=""
           absolute
           right
           rounded
           nuxt
           to="../pages/auth/register.vue"
           class="pa-3"
+          dark
         >
-          <h4 class=" font-weight-regular pa-1">Join Us Now!</h4>
+          <h4 class=" font-weight-regular pa-1">Login Now!</h4>
         </v-btn>
       </div>
     </section>
@@ -28,14 +27,20 @@
 
 <script>
 export default {
-  name: 'welcome'
+  name: 'success',
+  data() {
+    return {
+      message:
+        "Congratulations! You've been successfully registered on Artwrk. Please login again to continue."
+    }
+  }
 }
 </script>
 
 <style lang="css" scoped>
 .bg-container {
-  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-    url('../static/welcome.jpg');
+  background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)),
+    url('../static/successbg.jpg');
   background-repeat: no-repeat;
   background-size: cover;
   background-position: top;
