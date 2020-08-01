@@ -66,7 +66,7 @@
                 <v-card-actions>
                   <v-spacer></v-spacer>
 
-                  <v-btn text @click="menu = false">Approve</v-btn>
+                  <v-btn text nuxt :to="notification.actionLink">{{notification.actionText}}</v-btn>
                   <v-btn color="primary" text @click="removeNotification(i)"
                     >Remove</v-btn
                   >
@@ -142,18 +142,7 @@ export default {
     snackbar: false,
     text: 'Hello I am New User',
     timeout: null,
-    notifications: [
-      {
-        id: 1,
-        text: 'This is first',
-        status: 'unread'
-      },
-      {
-        id: 2,
-        text: 'This is second',
-        status: 'unread'
-      }
-    ],
+    notifications: [],
     user: undefined
   }),
 
@@ -185,9 +174,15 @@ export default {
         authorizationToken: token
       }
       let user = await this.$axios.put('profile/', userPayload).then((user) => {
-        console.log(user)
         this.$auth.setUser(user.data.profile)
         this.user = this.$auth?.user?.username || null
+        if (user?.data?.profile?.email_verfication === 'False') {
+          this.notifications.push({
+            text: 'You have not yet verified your email',
+            actionText: 'verify',
+            actionLink: '/auth/verify'
+          })
+        }
       })
     } else {
     }

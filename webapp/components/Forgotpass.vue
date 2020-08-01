@@ -30,8 +30,6 @@
         <v-btn
           color="orange darken-1"
           text
-          nuxt
-          to="/auth/reset"
           class="mx-auto"
           :disabled="!valid"
           @click="validate"
@@ -62,19 +60,24 @@ export default {
   methods: {
     validate() {
       if (this.$refs.form.validate()) {
-        this.login()
+        this.forgot()
       }
     },
-    login() {
+    forgot() {
       console.log('Payload:')
       // var userinfo=JSON.stringify({email:this.email,password:this.pass});
 
-      this.loginUser(this.userinfo)
+      this.sendOtp(this.userinfo)
     },
 
-    async loginUser(userinfo) {
+    async sendOtp(userinfo) {
+      const payload = {
+        operation: 'forgot_password',
+        email: userinfo.email,
+        type: 'artist'
+      }
       try {
-        let response = await this.$auth.loginWith('local', { data: userinfo })
+        let response = await this.$axios.put('/forgot-password', payload)
         console.log(response)
       } catch (err) {
         console.log(err)
