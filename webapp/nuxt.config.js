@@ -103,6 +103,7 @@ export default {
             propertyName: 'token',
           },
           logout: { url: '/auth/logout', method: 'delete' },
+          user: false,
         },
         // tokenRequired: true,
         // tokenType: 'bearer',
