@@ -98,7 +98,7 @@ export default {
         console.log(response)
       } catch (err) {
         console.log(err)
-        this.$router.push('/welcome/')
+        // this.$router.push('/welcome/')   Demo purpose only
       }
     }
   }
