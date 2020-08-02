@@ -16,7 +16,9 @@
       </v-toolbar-title>
 
       <v-spacer />
-      <v-btn color="indigo accent-4" to="jobs" rounded> Jobs </v-btn>
+      <div v-if="$auth.loggedIn">
+      <v-btn color="indigo accent-4" to="/jobs" rounded> Jobs </v-btn>
+      </div>
       <v-btn icon to="/search">
         <v-icon>mdi-magnify</v-icon>
       </v-btn>
@@ -166,26 +168,30 @@ export default {
   },
   async created() {
     this.user = this.$auth?.user?.username || null
-    const state = this.$auth.getToken('local')
-    if (state !== false) {
-      const token = state.replace('Bearer ', '')
-      const userPayload = {
-        operation: 'get_profile',
-        authorizationToken: token
-      }
-      let user = await this.$axios.put('profile/', userPayload).then((user) => {
-        this.$auth.setUser(user.data.profile)
-        this.user = this.$auth?.user?.username || null
-        if (user?.data?.profile?.email_verfication === 'False') {
-          this.notifications.push({
-            text: 'You have not yet verified your email',
-            actionText: 'verify',
-            actionLink: '/auth/verify'
-          })
+    try {
+      const state = this.$auth.getToken('local')
+      if (state !== false) {
+        const token = state.replace('Bearer ', '')
+        const userPayload = {
+          operation: 'get_profile',
+          authorizationToken: token
         }
-      })
-    } else {
-    }
+        let user = await this.$axios
+          .put('profile/', userPayload)
+          .then((user) => {
+            this.$auth.setUser(user.data.profile)
+            this.user = this.$auth?.user?.username || null
+            if (user?.data?.profile?.email_verfication === 'False') {
+              this.notifications.push({
+                text: 'You have not yet verified your email',
+                actionText: 'verify',
+                actionLink: '/auth/verify'
+              })
+            }
+          })
+      } else {
+      }
+    } catch (err) {}
     this.loading = false
     //console.log(state)
   }
