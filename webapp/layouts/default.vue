@@ -1,34 +1,36 @@
 <template>
   <v-app>
-    <div v-if="loading"> Loading...</div>
+    <div v-if="1 == 1">
+      <SiteLoader />
+    </div>
     <template v-else>
-    <v-app-bar app color="#2b2b2b" dense flat dark>
-      <!-- <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon> -->
+      <v-app-bar app color="#2b2b2b" dense flat dark>
+        <!-- <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon> -->
 
-      <!-- <img class="mr-3" :src="require('../assets/v.png')" height="40" /> -->
-      <v-btn icon>
-        <v-icon>mdi-apps</v-icon>
-      </v-btn>
-      <v-toolbar-title class="pl-0"
-        ><nuxt-link to="/" class="text-decoration-none white--text">
-          ArtWrk
-        </nuxt-link>
-      </v-toolbar-title>
+        <!-- <img class="mr-3" :src="require('../assets/v.png')" height="40" /> -->
+        <v-btn icon>
+          <v-icon>mdi-apps</v-icon>
+        </v-btn>
+        <v-toolbar-title class="pl-0"
+          ><nuxt-link to="/" class="text-decoration-none white--text">
+            ArtWrk
+          </nuxt-link>
+        </v-toolbar-title>
 
-      <v-spacer />
-      <div v-if="$auth.loggedIn">
-      <v-btn color="indigo accent-4" to="/jobs" rounded> Jobs </v-btn>
-      </div>
-      <v-btn icon to="/search">
-        <v-icon>mdi-magnify</v-icon>
-      </v-btn>
+        <v-spacer />
+        <div v-if="$auth.loggedIn">
+          <v-btn color="indigo accent-4" to="/jobs" rounded> Jobs </v-btn>
+        </div>
+        <v-btn icon to="/search">
+          <v-icon>mdi-magnify</v-icon>
+        </v-btn>
 
-      <v-btn icon>
-        <v-icon>mdi-arrow-all</v-icon>
-      </v-btn>
+        <v-btn icon>
+          <v-icon>mdi-arrow-all</v-icon>
+        </v-btn>
 
-      <div v-if="$auth.loggedIn">
-        <!-- <v-btn icon dark @click="snackbar = true,messages=0" >
+        <div v-if="$auth.loggedIn">
+          <!-- <v-btn icon dark @click="snackbar = true,messages=0" >
           <v-badge 
         :content="messages"
         :value="messages"
@@ -37,51 +39,60 @@
         <v-icon >mdi-bell-outline</v-icon>    </v-badge>  
         </v-btn> -->
 
-        <v-menu bottom offset-y transition="slide-x-transition">
-          <template v-slot:activator="{ on, attrs }">
-            <v-btn
-              :disabled="notifications.length === 0"
-              dark
-              icon
-              class="ma-2"
-              v-bind="attrs"
-              v-on="on"
-            >
-              <v-badge
-                :content="notifications.length"
-                :value="notifications.length"
-                color="green"
-                overlap
+          <v-menu bottom offset-y transition="slide-x-transition">
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn
+                :disabled="notifications.length === 0"
+                dark
+                icon
+                class="ma-2"
+                v-bind="attrs"
+                v-on="on"
               >
-                <v-icon>mdi-bell-outline</v-icon>
-              </v-badge>
-            </v-btn>
-          </template>
+                <v-badge
+                  :content="notifications.length"
+                  :value="notifications.length"
+                  color="green"
+                  overlap
+                >
+                  <v-icon>mdi-bell-outline</v-icon>
+                </v-badge>
+              </v-btn>
+            </template>
 
-          <v-card>
-            <v-list>
-              <v-subheader>Notifications</v-subheader>
-              <v-divider></v-divider>
+            <v-card>
+              <v-list>
+                <v-subheader>Notifications</v-subheader>
+                <v-divider></v-divider>
 
-              <v-list-item v-for="(notification, i) in notifications" :key="i">
-                <v-list-item-title>{{ notification.text }} </v-list-item-title>
-                <v-card-actions>
-                  <v-spacer></v-spacer>
+                <v-list-item
+                  v-for="(notification, i) in notifications"
+                  :key="i"
+                >
+                  <v-list-item-title
+                    >{{ notification.text }}
+                  </v-list-item-title>
+                  <v-card-actions>
+                    <v-spacer></v-spacer>
 
-                  <v-btn text nuxt :to="notification.actionLink">{{notification.actionText}}</v-btn>
-                  <v-btn color="primary" text @click="removeNotification(i)"
-                    >Remove</v-btn
-                  >
-                </v-card-actions>
-              </v-list-item>
-            </v-list>
-          </v-card>
-        </v-menu>
+                    <v-btn text nuxt :to="notification.actionLink">{{
+                      notification.actionText
+                    }}</v-btn>
+                    <v-btn color="primary" text @click="removeNotification(i)"
+                      >Remove</v-btn
+                    >
+                  </v-card-actions>
+                </v-list-item>
+              </v-list>
+            </v-card>
+          </v-menu>
 
-        <v-btn nuxt :to="`/artist/`+user" text large dark>Welcome {{ user }} </v-btn>
-        <v-btn text @click="$auth.logout()" dark>Logout</v-btn>
+          <v-btn nuxt :to="`/artist/` + user" text large dark
+            >Welcome {{ user }}
+          </v-btn>
+          <v-btn text @click="$auth.logout()" dark>Logout</v-btn>
 
-        <!-- <v-Snackbars
+          <!-- <v-Snackbars
 
 
  v-for="(notification,index) in notifications" v-model="snackbar" :key="index" right top color="indigo lighten-1" :timeout="timeout" >
@@ -96,20 +107,20 @@
                 <v-btn   color=""   text    v-bind="attrs" @click="snackbar = false"  > Close  </v-btn>
               </template>
       </v-Snackbars> -->
-      </div>
+        </div>
 
-      <div v-else>
-        <v-btn text to="/auth/login">Login</v-btn>
+        <div v-else>
+          <v-btn text to="/auth/login">Login</v-btn>
 
-        <v-btn text to="/auth/register">Register</v-btn>
-      </div>
-    </v-app-bar>
+          <v-btn text to="/auth/register">Register</v-btn>
+        </div>
+      </v-app-bar>
 
-    <v-main>
-      <nuxt />
-    </v-main>
+      <v-main>
+        <nuxt />
+      </v-main>
 
-    <FooterComponent />
+      <FooterComponent />
     </template>
   </v-app>
 </template>
@@ -117,12 +128,13 @@
 <script>
 import Login from '../components/Login'
 import FooterComponent from '../components/FooterComponent'
+import SiteLoader from '../components/SiteLoader'
 
 export default {
   props: {
     source: String
   },
-  components: { FooterComponent },
+  components: { FooterComponent, SiteLoader },
   data: () => ({
     drawer: null,
     loading: true,
