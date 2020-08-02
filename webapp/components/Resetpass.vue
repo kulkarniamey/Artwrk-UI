@@ -8,17 +8,17 @@
         <v-container>
           <v-form ref="form" v-model="valid">
             <v-row>
-              <div class="condition-div" v-if="isVerified">
+              <div class="condition-div">
                 <v-col cols="12">
                   <v-text-field
-                    v-model="otp"
+                    v-model="OTP.otp"
                     :rules="OTPRules"
                     label="Enter OTP"
                     required
                   ></v-text-field>
                 </v-col>
               </div>
-              <div class="condition-div" v-else>
+              <div class="condition-div">
                 <v-col cols="12">
                   <v-text-field
                     label="Password*"
@@ -43,8 +43,17 @@
         </v-container>
       </v-card-text>
       <p class="text-right custom">
-        <v-btn nuxt small text color="black darken-1" to="" @click="requestOtp">
-          Resend
+        <v-btn
+          small
+          text
+          color="black darken-1"
+          :disabled="counting"
+          @click="requestOtp"
+        >
+          <countdown v-if="counting" :time="6000" @end="handleCountdownEnd">
+            <template>Resend again in seconds</template>
+          </countdown>
+          <span v-else>Resend OTP</span>
         </v-btn>
       </p>
       <p class="text-right custom">
@@ -54,20 +63,8 @@
       </p>
       <v-card-actions class="mt-8 mx-auto">
         <!-- <v-spacer></v-spacer> -->
-        <v-btn
-          v-if="isVerified"
-          color="orange darken-1"
-          text
-          class="mx-auto"
-          @click="changeVerified"
-          >Verify</v-btn
-        >
-        <v-btn
-          v-else
-          color="orange darken-1"
-          text
-          class="mx-auto"
-          @click="submit"
+        <!-- <v-btn color="orange darken-1" text class="mx-auto">Verify</v-btn> -->
+        <v-btn color="orange darken-1" text class="mx-auto" @click="submit"
           >Change Password</v-btn
         >
       </v-card-actions>
@@ -82,50 +79,61 @@ export default {
     return {
       valid: true,
       isVerified: true,
-
+      counting: false,
+      email: '',
       pass: '',
       pass2: '',
       passRules: [
         (v) => !!v || 'Password is required',
-        (v) => (v && v.length <= 8) || 'Password must be less than 8 characters'
+        (v) =>
+          (v && v.length > 6) || 'Password must be greater than 6 characters'
       ],
       passTwoRules: [
         (v) => !!v || 'Password is required',
         (v) =>
-          (v && v.length <= 8) || 'Password must be less than 8 characters',
+          (v && v.length > 6) || 'Password must be greater than 6 characters',
         (v) => (v && this.checkMatch) || 'Passwords must match'
       ],
-      otp: { resendOtp: '' },
+      OTP: { otp: '' },
       OTPRules: [
         (v) => !!v || 'OTP is required',
         (v) => /\b\d{6}\b/.test(v) || 'Enter valid OTP'
       ]
     }
   },
-
+  created() {
+    this.email = this.$store.state.reset.email
+    this.type = this.$store.state.reset.type
+    console.log(this.email)
+    console.log(this.type)
+  },
   methods: {
     changeVerified() {
       this.isVerified = false
     },
 
-    summit() {
+    submit() {
       if (this.$refs.form.validate()) {
         this.submitForm()
       }
+    },
+    handleCountdownEnd() {
+      this.counting = false
     },
     requestOtp() {
       console.log('RensendOTP:', this.otp)
 
       this.resendOtp(this.otp)
+      this.counting = true
     },
     async resendOtp() {
       const resend = {
         operation: 'resend_otp',
-        username: userinfo.email, // we need this from Forgotpass here
-        type: ''
+        username: this.email,
+        type: this.type
       }
       try {
-        let response = await this.$axios.put('/resend-otp')
+        let response = await this.$axios.put('/resend-otp', resend)
         // .then(this.$router.push(''))
         console.log(response)
       } catch (err) {
@@ -133,13 +141,23 @@ export default {
         // this.$router.push('')
       }
     },
-    submitForm() {
+    async submitForm() {
       let payload = {
-        OTP: this.OTP,
+        operation: 'reset_password',
+        otp: this.OTP.otp,
         password: this.pass,
-        confirmPassword: this.pass2
+        username: this.email,
+        type: this.type
       }
       console.log('Data Submitted payload:', payload)
+      try {
+        let response = await this.$axios.put('/reset-password', payload)
+        // .then(this.$router.push('/welcome/'))
+        console.log(response)
+      } catch (err) {
+        console.log(err)
+        // this.$router.push('')
+      }
     }
   },
   computed: {

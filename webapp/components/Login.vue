@@ -27,7 +27,7 @@
             </v-col>
           </v-row>
         </v-form>
-                <v-btn-toggle
+        <v-btn-toggle
           v-model="userinfo.type"
           tile
           color="indigo accent-3"
