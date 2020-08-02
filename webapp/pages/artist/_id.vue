@@ -26,6 +26,7 @@ import imageGrid from '../../components/ImageGrid'
 import PortfolioButton from '../../components/PortfolioButton'
 export default {
   value: '_id',
+  middleware: 'auth',
   components: {
     CoverPic,
     imageGrid,

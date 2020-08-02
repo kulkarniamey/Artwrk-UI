@@ -20,6 +20,7 @@
 import JobCard from '../components/JobCard'
 export default {
   name: 'testjoblist',
+  middleware: 'auth',
   
   head() {
     title: 'Jobs'
