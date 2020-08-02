@@ -16,7 +16,9 @@
       </v-toolbar-title>
 
       <v-spacer />
-      <v-btn color="indigo accent-4" to="jobs" rounded> Jobs </v-btn>
+      <div v-if="$auth.loggedIn">
+      <v-btn color="indigo accent-4" to="/jobs" rounded> Jobs </v-btn>
+      </div>
       <v-btn icon to="/search">
         <v-icon>mdi-magnify</v-icon>
       </v-btn>

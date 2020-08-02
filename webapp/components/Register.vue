@@ -125,7 +125,7 @@ export default {
       }
       try {
         await this.$axios.$put('/register', payload).then((response) => {
-          console.log('Successfully Logged in')
+         this.$router.push('login')
         })
       } catch (error) {
         console.log(error)
