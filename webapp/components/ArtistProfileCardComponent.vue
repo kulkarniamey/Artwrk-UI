@@ -1,14 +1,17 @@
 <template>
   <v-card class="mx-auto my-12 tile" min-width="374">
     <v-card-actions class="pt-10">
+      <div v-if="!isSelf">
       <v-btn mx-auto rounded color="indigo accent-4" dark> Connect</v-btn>
+      </div>
       <v-spacer></v-spacer>
       <v-list-item-title class="font-weight-bold pl-5"
-        >Connections {{ profile.followers.length }}</v-list-item-title
-      >
+        >Connections {{ profile.followers.length }}  </v-list-item-title  >
+        
       <v-spacer />
+      
 
-      <v-btn small v-on:click="editContent" icon>
+      <v-btn v-if="isSelf" small v-on:click="editContent" icon>
         <artistProfileEdit :profileData="profile" />
 
         <i v-show="isEditing"><v-icon dark>mdi-content-save</v-icon></i>
@@ -82,19 +85,21 @@ export default {
       email: '',
       artist_type: null
     },
-
+    isSelf:false,
     isEditing: false
   }),
   computed: {},
   created() {
-    this.$nuxt.$on('save-profile', (newProfile) => {
-      this.profile = newProfile
-    })
+        this.profile = this.profileData,
+        this.$nuxt.$on('save-profile', (newProfile) => {
+        this.profile = newProfile
+      
+    });
+    
+    this.isSelf = this.$router?.currentRoute?.params?.id ===  this.profileData.username
+    debugger
   },
   props: { profileData: { type: Object } },
-  created() {
-    this.profile = this.profileData
-  },
 
   methods: {
     editContent: function editContent() {
