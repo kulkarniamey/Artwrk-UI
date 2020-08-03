@@ -2,17 +2,25 @@
   <div class="contain">
     <v-card elevation="3" class="card">
       <v-card-title>
-        <span class="headline">Reset Password</span>
+        <span class="headline">Verify Email</span>
       </v-card-title>
       <v-card-text>
         <v-container>
           <v-form ref="form" v-model="valid">
             <v-row>
               <v-col cols="12">
+                <p class="pa-1 fill-height">
+                  We have sent you an otp on your email
+                  <b>{{ profile.email }}</b>
+                  <br />
+                  Please enter the the OTP.
+                </p>
+              </v-col>
+              <v-col cols="12">
                 <v-text-field
-                  v-model="userinfo.email"
-                  :rules="emailRules"
-                  label="E-mail*"
+                  v-model="otpinfo.otp"
+                  :rules="otpRules"
+                  label="Enter OTP"
                   required
                 ></v-text-field>
               </v-col>
@@ -20,11 +28,11 @@
           </v-form>
         </v-container>
 
-        <p class="text-right">
+        <!-- <p class="text-right">
           <v-btn nuxt small text color="orange darken-1" to="/auth/login">
             back
           </v-btn>
-        </p>
+        </p> -->
       </v-card-text>
       <v-card-actions>
         <v-btn
@@ -42,47 +50,55 @@
 
 <script>
 export default {
-  name: 'Forgotpass',
+  name: 'Verify',
 
   data() {
     return {
       valid: true,
-
-      emailRules: [
-        (v) => !!v || 'E-mail is required',
-        (v) => /.+@.+\..+/.test(v) || 'E-mail must be valid'
+      profile: {},
+      otpRules: [
+        (v) => !!v || 'OTP is required',
+        (v) => /\b\d{6}\b/.test(v) || 'Enter valid OTP',
+        (v) => (v && v.length <= 50) || 'Name must be less than 25 words'
       ],
-      userinfo: {
-        email: ''
+      otpinfo: {
+        otp: ''
       }
     }
+  },
+  created() {
+    this.profile = this.$auth.user
   },
   methods: {
     validate() {
       if (this.$refs.form.validate()) {
-        this.forgot()
+        this.verify()
       }
     },
-    forgot() {
-      console.log('Payload:')
+    verify() {
+      console.log('Payload:', this.otpinfo)
       // var userinfo=JSON.stringify({email:this.email,password:this.pass});
 
-      this.sendOtp(this.userinfo)
+      this.verifyOtp(this.otpinfo)
     },
 
-    async sendOtp(userinfo) {
+    async verifyOtp(otpinfo) {
       const payload = {
-        operation: 'forgot_password',
-        email: userinfo.email,
-        type: 'artist'
+        operation: 'verify_account',
+        username: this.profile.username,
+        type: this.profile.type,
+        otp: otpinfo.otp
       }
       try {
         let response = await this.$axios
-          .put('/forgot-password', payload)
-          .then(this.$router.push('reset/'))
+          .put('/verify-account', payload)
+          .then(() => {
+            this.$router.push('/welcome/')
+          })
         console.log(response)
       } catch (err) {
         console.log(err)
+        // this.$router.push('/welcome/')   Demo purpose only
       }
     }
   }

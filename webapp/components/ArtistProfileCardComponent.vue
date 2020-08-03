@@ -4,7 +4,7 @@
       <v-btn mx-auto rounded color="indigo accent-4" dark> Connect</v-btn>
       <v-spacer></v-spacer>
       <v-list-item-title class="font-weight-bold pl-5"
-        >Connections {{ profile.connections }}</v-list-item-title
+        >Connections {{ profile.followers.length }}</v-list-item-title
       >
       <v-spacer />
 
@@ -26,19 +26,27 @@
     <div>
       <div class="display-2 pl-15 pt-5 font-weight-black">Artist Score</div>
       <div class="display-2 pt-5 text-center font-weight-black">
-        {{ profile.artistScore }}
+        {{ profile.artist_score }}
       </div>
     </div>
     <v-list-item-title class="font-weight-black pl-5 pt-10"
       >Skillset</v-list-item-title
     >
-    <v-list-item-content class="font-weight-black pl-5 pt-10">
-      <Skillset :skillData="profile.skillset" :isEdit="false" />
+    <v-list-item-content class="font-weight-black pl-5 ">
+      <Skillset :skillData="profile.skill_tags" :isEdit="false" />
     </v-list-item-content>
 
     <v-list-item-title class="font-weight-black pl-5 pb-10"
       >Contact <br />
-      Email-{{ profile.email }}
+      <span class="social-link  pb-10" v-if="profile.twitter_link"
+        ><a :href="profile.twitter_link" target="_blank"> Twiiter </a></span
+      >
+      <span class="social-link pl-5 pb-10" v-if="profile.facebook_link"
+        ><a :href="`//` + profile.facebook_link" target="_blank">
+          Facebook
+        </a></span
+      ><br />
+      Email- {{ profile.email }}
     </v-list-item-title>
   </v-card>
 </template>
@@ -50,24 +58,42 @@ export default {
   name: 'ArtistProfileCardComponent',
   components: {
     ArtistProfileEdit,
-    Skillset,
+    Skillset
   },
   data: () => ({
     profile: {
-      text: "Hi! I'm an UI/UX Designer based in India. ",
-      address: 'Pune, India',
-      artistScore: '1253',
-      connections: '1.2k',
-      email: 'abc@xyz.com',
-      skillset: [],
+      user_id: '',
+      username: '',
+      artist_score: 0,
+      awards_recognition: [],
+      current_employer: '',
+      education_history: [],
+      email_verfication: '',
+      employer_history: [],
+      facebook_link: '',
+      followers: [],
+      following: [],
+      name: '',
+      type: '',
+      skill_tags: [],
+      twitter_link: '',
+      certificates: [],
+      applied_jobs: [],
+      email: '',
+      artist_type: null
     },
-    isEditing: false,
+
+    isEditing: false
   }),
   computed: {},
   created() {
     this.$nuxt.$on('save-profile', (newProfile) => {
       this.profile = newProfile
     })
+  },
+  props: { profileData: { type: Object } },
+  created() {
+    this.profile = this.profileData
   },
 
   methods: {
@@ -77,9 +103,15 @@ export default {
       } else {
         this.isEditing = !this.isEditing
       }
-    },
-  },
+    }
+  }
 }
 </script>
 
-<style></style>
+<style scoped>
+.social-link a {
+  text-decoration: none;
+  cursor: pointer;
+  color: black;
+}
+</style>

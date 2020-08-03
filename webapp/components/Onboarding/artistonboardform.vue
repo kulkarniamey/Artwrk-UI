@@ -1,7 +1,7 @@
 <template>
   <v-card elevation="0" min-height="600" max-width="500" class="mx-auto">
     <v-card-title>
-      <span class="headline">Complete your profile</span>
+      <span class="headline">Complete your profile {{ profile.username }}</span>
     </v-card-title>
     <v-card-text>
       <v-container>
@@ -20,13 +20,6 @@
               <v-form ref="firstPageForm" v-model="valid">
                 <v-row>
                   <v-col cols="12">
-                    <v-text-field
-                      v-model="profile.username"
-                      :rules="usernameRules"
-                      label="Username"
-                      required
-                      disabled
-                    ></v-text-field>
                   </v-col>
                   <v-col cols="12">
                     <v-text-field
@@ -85,28 +78,46 @@
               <v-form ref="secondPageForm" v-model="valid">
                 <v-row>
                   <v-col cols="12">
-                    <v-textarea
-                      v-model="formData.empHistory"
-                      label="Employer history"
-                      rows="3"
-                      required
-                    ></v-textarea>
+                    Employer History
+                        <v-chip
+        v-for="(names, id) in profile.employer_history"
+        :key="id"
+        class="ma-1"
+        color="blue lighten-4"
+        >{{ names }}
+      </v-chip>  
+            <v-form v-on:submit.prevent="addExperience()">
+        <v-text-field placeholder="Press enter after each entry" required v-model="formData.empHistory" type="text">
+        </v-text-field>
+            </v-form>
                   </v-col>
                   <v-col cols="12">
-                    <v-textarea
-                      v-model="formData.awards"
-                      label="Awards recognition"
-                      rows="3"
-                      required
-                    ></v-textarea>
+                    Awards and Recognitions
+                                        <v-chip
+        v-for="(names, id) in profile.awards_recognition"
+        :key="id"
+        class="ma-1"
+        color="blue lighten-4"
+        >{{ names }}
+      </v-chip>  
+            <v-form v-on:submit.prevent="addAward()">
+        <v-text-field placeholder="Press enter after each entry" required v-model="formData.awards" type="text">
+        </v-text-field>
+            </v-form>
                   </v-col>
                   <v-col cols="12">
-                    <v-textarea
-                      v-model="formData.education"
-                      label="Education"
-                      rows="3"
-                      required
-                    ></v-textarea>
+Education History
+                                        <v-chip
+        v-for="(names, id) in profile.education_history"
+        :key="id"
+        class="ma-1"
+        color="blue lighten-4"
+        >{{ names }}
+      </v-chip>  
+            <v-form v-on:submit.prevent="addEducation()">
+        <v-text-field placeholder="Press enter after each entry" required v-model="formData.education" type="text">
+        </v-text-field>
+            </v-form>
                   </v-col>
                 </v-row>
               </v-form>
@@ -246,10 +257,16 @@ export default {
         .replace('Bearer ', '')
       console.log('Data Submitted payload:', this.profile)
       try {
-        const response = await this.$axios.put('/api/profile/', this.profile)
+        const response = await this.$axios.put('/profile/', this.profile)
         console.log(response)
+        if (response.data.statusCode === 200) {
+          this.$auth.setUser(response.data.profile)
+          const link = `/artist/${response.data.profile.username}`
+          this.$router.push(link)
+        }
+        debugger
       } catch (err) {
-        console.log('Error')
+        console.log(err)
       }
     },
 
@@ -291,6 +308,27 @@ export default {
       if (this.$refs.thirdPageForm.validate()) {
         this.e1 = 4
       }
+    },
+    addExperience() {
+      if (!this.profile.employer_history) {
+        this.profile.employer_history = []
+      }
+      this.profile.employer_history.push(this.formData.empHistory)
+      this.formData.empHistory = ''
+    },
+    addAward() {
+      if (!this.profile.awards_recognition) {
+        this.profile.awards_recognition = []
+      }
+      this.profile.awards_recognition.push(this.formData.awards)
+      this.formData.awards = ''
+    },
+    addEducation() {
+      if (!this.profile.education_history) {
+        this.profile.education_history = []
+      }
+      this.profile.education_history.push(this.formData.education)
+      this.formData.education = ''
     }
   },
   computed: {

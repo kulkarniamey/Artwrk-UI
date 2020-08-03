@@ -36,7 +36,7 @@
 </template>
 
 <script>
-import profileEdit from '../components/ProfileEdit'
+import profileEdit from '../components/profileEdit'
 export default {
   name: 'ProfileCard',
   components: {

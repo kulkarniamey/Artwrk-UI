@@ -14,41 +14,37 @@
         <v-card-text>
           <v-container>
             <v-row>
-              <v-col cols="12" sm="6" md="12">
-                <v-text-field
-                  v-model="profile.text"
-                  label="Description of Company"
-                  required
-                ></v-text-field>
+              <v-col cols="12">
+                                   <v-chip
+        v-for="(names, id) in profile.skill_tags"
+        :key="id"
+        class="ma-1"
+        color="blue lighten-4"
+        >{{ names }}
+      </v-chip>  
+            <v-form v-on:submit.prevent="addSkill()">
+        <v-text-field placeholder="Press enter after each entry" required v-model="formData.skills" type="text">
+        </v-text-field>
+            </v-form>
               </v-col>
 
-              <v-col cols="12">
-                <v-text-field
-                  v-model="profile.address"
-                  label="Location "
-                  required
-                ></v-text-field>
-              </v-col>
+                  <v-col cols="6" subheading="Social Media">
+                    <v-text-field
+                      v-model="profile.facebook_link"
+                      label="Facebook profile"
+                      @input="applySocialRules()"
+                      :rules="fbRules"
+                    ></v-text-field>
+                  </v-col>
+                  <v-col cols="6">
+                    <v-text-field
+                      v-model="profile.twitter_link"
+                      label="Twitter profile"
+                      @input="applySocialRules()"
+                      :rules="tweetRules"
+                    ></v-text-field>
+                  </v-col>
 
-              <v-col cols="12">
-                <v-text-field
-                  v-model="profile.email"
-                  label="Email "
-                  required
-                ></v-text-field>
-              </v-col>
-
-              <v-col cols="12">
-                <v-select
-                  v-model="profile.skillset"
-                  :items="skills"
-                  label="Select"
-                  multiple
-                  chips
-                  hint="What are the target regions"
-                  persistent-hint
-                ></v-select>
-              </v-col>
             </v-row>
           </v-container>
           <small>*indicates required field</small>
@@ -81,16 +77,75 @@ export default {
       'Adobe Xd',
       'After Effects',
       'Blender'
-    ]
+    ],
+    formData:{
+      skills:undefined,
+      
+    },
+    fbRules:[],
+    tweetRules:[],
   }),
   mounted() {
-    this.profile = this.profileData
+    //this.profile = this.profileData
   },
   methods: {
     onSave() {
       $nuxt.$emit('save-profile', this.profile)
+      this.updateProfile()
       this.dialog = false
-    }
+      this.$router.go(this.$router.currentRoute) 
+      
+    },
+    async updateProfile(){
+     
+      this.profile['operation'] = 'update_profile'
+      this.profile['authorizationToken'] = this.$auth
+        .getToken('local')
+        .replace('Bearer ', '')
+      this.profile['id'] = this.$auth.user.user_id
+      console.log('Data Submitted payload:', this.profile)
+      try {
+        const response = await this.$axios.put('/profile/', this.profile)
+        console.log(response)
+        if (response.data.statusCode === 200) {
+          this.$auth.setUser(response.data.profile)
+          const link = `/artist/${response.data.profile.username}`
+          this.$router.push(link)
+        }
+        debugger
+      } catch (err) {
+        console.log(err)
+      }
+    },
+    
+
+    addSkill(){
+
+      if (!this.profile.skill_tags) {
+        this.profile.skill_tags = []
+      }
+      this.profile.skill_tags.push(this.formData.skills)
+      this.formData.skills = ''
+      
+      
+
+    },
+
+    applySocialRules() {
+      debugger
+      this.fbRules = [
+        (v) =>
+          /[(http(s)?):\/\/(www\.)?a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/gi.test(
+            v
+          ) || 'Enter valid link'
+      ]
+      this.tweetRules = [
+        (v) =>
+          /[(http(s)?):\/\/(www\.)?a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/gi.test(
+            v
+          ) || 'Enter valid link'
+      ]
+    },
   }
 }
 </script>

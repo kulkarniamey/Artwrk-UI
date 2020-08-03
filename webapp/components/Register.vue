@@ -124,8 +124,9 @@ export default {
         type: this.userType
       }
       try {
-        await this.$axios.$put('/api/register', payload).then((response) => {
-          console.log('Successfully Logged in')
+        await this.$axios.$put('/register', payload).then((response) => {
+          //console.log('Successfully Logged in')
+          this.$router.push('/auth/login')
         })
       } catch (error) {
         console.log(error)

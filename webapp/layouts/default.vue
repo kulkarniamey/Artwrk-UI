@@ -1,5 +1,7 @@
 <template>
   <v-app>
+    <div v-if="loading"> Loading...</div>
+    <template v-else>
     <v-app-bar app color="#2b2b2b" dense flat dark>
       <!-- <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon> -->
 
@@ -14,7 +16,9 @@
       </v-toolbar-title>
 
       <v-spacer />
-      <v-btn color="indigo accent-4" to="jobs" rounded> Jobs </v-btn>
+      <div v-if="$auth.loggedIn">
+      <v-btn color="indigo accent-4" to="/jobs" rounded> Jobs </v-btn>
+      </div>
       <v-btn icon to="/search">
         <v-icon>mdi-magnify</v-icon>
       </v-btn>
@@ -64,7 +68,7 @@
                 <v-card-actions>
                   <v-spacer></v-spacer>
 
-                  <v-btn text @click="menu = false">Approve</v-btn>
+                  <v-btn text nuxt :to="notification.actionLink">{{notification.actionText}}</v-btn>
                   <v-btn color="primary" text @click="removeNotification(i)"
                     >Remove</v-btn
                   >
@@ -74,7 +78,7 @@
           </v-card>
         </v-menu>
 
-        <v-btn nuxt to="/artist/pruthvi2" text large dark>Welcome {{ user }} </v-btn>
+        <v-btn nuxt :to="`/artist/`+user" text large dark>Welcome {{ user }} </v-btn>
         <v-btn text @click="$auth.logout()" dark>Logout</v-btn>
 
         <!-- <v-Snackbars
@@ -106,6 +110,7 @@
     </v-main>
 
     <FooterComponent />
+    </template>
   </v-app>
 </template>
 
@@ -120,7 +125,7 @@ export default {
   components: { FooterComponent },
   data: () => ({
     drawer: null,
-
+    loading: true,
     items: [
       {
         icon: 'mdi-apps',
@@ -139,18 +144,7 @@ export default {
     snackbar: false,
     text: 'Hello I am New User',
     timeout: null,
-    notifications: [
-      {
-        id: 1,
-        text: 'This is first',
-        status: 'unread'
-      },
-      {
-        id: 2,
-        text: 'This is second',
-        status: 'unread'
-      }
-    ],
+    notifications: [],
     user: undefined
   }),
 
@@ -172,21 +166,33 @@ export default {
       this.$router.push('artist/' + this.user)
     }
   },
-  async mounted() {
+  async created() {
     this.user = this.$auth?.user?.username || null
-    const state = this.$auth.getToken('local')
-    if (state !== false) {
-      const token = state.replace('Bearer ', '')
-      const userPayload = {
-        operation: 'get_profile',
-        authorizationToken: token
+    try {
+      const state = this.$auth.getToken('local')
+      if (state !== false) {
+        const token = state.replace('Bearer ', '')
+        const userPayload = {
+          operation: 'get_profile',
+          authorizationToken: token
+        }
+        let user = await this.$axios
+          .put('profile/', userPayload)
+          .then((user) => {
+            this.$auth.setUser(user.data.profile)
+            this.user = this.$auth?.user?.username || null
+            if (user?.data?.profile?.email_verfication === 'False') {
+              this.notifications.push({
+                text: 'You have not yet verified your email',
+                actionText: 'verify',
+                actionLink: '/auth/verify'
+              })
+            }
+          })
+      } else {
       }
-      let user = await this.$axios.put('/api/profile/', userPayload)
-      console.log(user)
-      this.$auth.setUser(user.data.profile)
-      this.user = this.$auth?.user?.username || null
-    } else {
-    }
+    } catch (err) {}
+    this.loading = false
     //console.log(state)
   }
 }
