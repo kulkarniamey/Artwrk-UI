@@ -2,7 +2,7 @@
   <div class="contain">
     <v-card elevation="3" class="card">
       <v-card-title>
-        <span class="headline">Reset Password</span>
+        <span class="headline">Forgot Password?</span>
       </v-card-title>
       <v-card-text>
         <v-container>
@@ -12,12 +12,27 @@
                 <v-text-field
                   v-model="userinfo.email"
                   :rules="emailRules"
-                  label="E-mail*"
+                  label="Enter E-mail"
                   required
                 ></v-text-field>
               </v-col>
             </v-row>
           </v-form>
+          <p>Select User Type</p>
+          <v-btn-toggle
+            v-model="userinfo.type"
+            tile
+            color="indigo accent-4"
+            group
+          >
+            <v-btn value="artist">
+              Artist
+            </v-btn>
+
+            <v-btn value="recruiter">
+              Recruiter
+            </v-btn>
+          </v-btn-toggle>
         </v-container>
 
         <p class="text-right">
@@ -53,7 +68,8 @@ export default {
         (v) => /.+@.+\..+/.test(v) || 'E-mail must be valid'
       ],
       userinfo: {
-        email: ''
+        email: '',
+        type: 'artist'
       }
     }
   },
@@ -66,15 +82,16 @@ export default {
     forgot() {
       console.log('Payload:')
       // var userinfo=JSON.stringify({email:this.email,password:this.pass});
-
+      this.$store.commit('reset/addEmail', this.userinfo.email)
+      this.$store.commit('reset/addType', this.userinfo.type)
       this.sendOtp(this.userinfo)
     },
 
     async sendOtp(userinfo) {
       const payload = {
         operation: 'forgot_password',
-        email: userinfo.email,
-        type: 'artist'
+        username: userinfo.email,
+        type: userinfo.type
       }
       try {
         let response = await this.$axios
@@ -83,6 +100,7 @@ export default {
         console.log(response)
       } catch (err) {
         console.log(err)
+        this.$router.push('reset/')
       }
     }
   }
