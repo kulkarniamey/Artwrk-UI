@@ -52,17 +52,17 @@ export default {
       colstyle: 'padding:0em; margin:1em',
       dialog: false,
       title: '',
-      imgval: '',
+      imgval: ''
     }
   },
   computed: {
     renderImage() {
       return this.imageurls.filter((p) => p.isActive).length
-    },
+    }
   },
   methods: {
     getManyPussy() {
-      var totalCount = 40
+      var totalCount = 20
       var i = 0
       for (i = 0; i < totalCount; i++) {
         const url = { url: '/coolpost.png' }
@@ -82,11 +82,11 @@ export default {
       this.dialog = false
       this.title = ''
       this.imgval = ''
-    },
+    }
   },
   created() {
     this.getManyPussy()
-  },
+  }
 }
 </script>
 

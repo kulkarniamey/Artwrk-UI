@@ -238,7 +238,6 @@ export default {
   methods: {
     removeNotification(index) {
       this.notifications.splice(index, 1)
-      debugger
     },
     gotoProfile() {
       this.$router.push('artist/' + this.user)
