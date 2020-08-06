@@ -43,17 +43,8 @@
         </v-container>
       </v-card-text>
       <p class="text-right custom">
-        <v-btn
-          small
-          text
-          color="black darken-1"
-          :disabled="counting"
-          @click="requestOtp"
-        >
-          <countdown v-if="counting" :time="6000" @end="handleCountdownEnd">
-            <template>Resend again in seconds</template>
-          </countdown>
-          <span v-else>Resend OTP</span>
+        <v-btn small text color="black darken-1" @click="requestOtp">
+          Resend OTP
         </v-btn>
       </p>
       <p class="text-right custom">
@@ -79,7 +70,7 @@ export default {
     return {
       valid: true,
       isVerified: true,
-      counting: false,
+
       email: '',
       pass: '',
       pass2: '',
@@ -117,14 +108,11 @@ export default {
         this.submitForm()
       }
     },
-    handleCountdownEnd() {
-      this.counting = false
-    },
+
     requestOtp() {
       console.log('RensendOTP:', this.otp)
 
       this.resendOtp(this.otp)
-      this.counting = true
     },
     async resendOtp() {
       const resend = {
