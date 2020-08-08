@@ -89,9 +89,47 @@
         <v-tab-item>
           <v-row align-content="center">
             <v-col cols="12" sm="10">
-              <v-btn dark color="indigo accent-4">
-                Upload Post
-              </v-btn>
+              <v-dialog max-width="300" v-model="dialog" persistent>
+                <template v-slot:activator="{ on, attrs }">
+                  <v-btn
+                    rounded
+                    color="indigo accent-4 mb-3"
+                    dark
+                    v-bind="attrs"
+                    v-on="on"
+                  >
+                    Upload Post
+                  </v-btn>
+                </template>
+                <v-card>
+                  <v-card-title>
+                    Post Details
+                  </v-card-title>
+                  <v-card-text>
+                    <v-form class="px-3">
+                      <v-text-field label="Description" v-model="desc">
+                      </v-text-field>
+                      <v-file-input
+                        prepend-icon="mdi-camera"
+                        label="File input"
+                        @change="handleFile"
+                      ></v-file-input>
+                      <v-card-actions>
+                        <v-spacer></v-spacer>
+                        <v-btn
+                          color="blue darken-1"
+                          text
+                          @click="dialog = false"
+                          >Close</v-btn
+                        >
+                        <v-btn color="blue darken-1" text @click="createPost"
+                          >Save</v-btn
+                        >
+                      </v-card-actions>
+                    </v-form>
+                  </v-card-text>
+                </v-card>
+              </v-dialog>
             </v-col>
             <v-col cols="12" sm="10" class="">
               <imageGrid />

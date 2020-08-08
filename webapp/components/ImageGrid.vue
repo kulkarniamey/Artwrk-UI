@@ -18,11 +18,12 @@
             class=""
           >
             <v-card outlined class="grid-card">
-              <img
+              <v-img
                 :src="x.url"
                 :key="index"
                 alt="pussy"
                 class="img-class"
+                cover
                 @click="showDetail($event, 'Cool Post', x.url)"
               />
             </v-card>
@@ -100,13 +101,13 @@ export default {
 .grid-square:hover {
   cursor: pointer;
 }
-.img-class {
-  max-width: 100%;
-  height: 200px;
-  object-fit: cover;
-  object-position: center;
-  opacity: 1;
-}
+// .img-class {
+//   max-width: 100%;
+//   height: 200px;
+//   object-fit: cover;
+//   object-position: center;
+//   opacity: 1;
+// }
 .grid-card {
   margin: 0.5em;
   border-radius: 0;
