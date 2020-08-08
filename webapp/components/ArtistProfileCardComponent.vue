@@ -1,5 +1,5 @@
 <template>
-  <v-card class="mx-auto my-12 tile" min-width="374" :class="isMobile">
+  <v-card class="artist-card mx-auto my-12 tile" min-width="374">
     <v-card-actions class="pt-10">
       <div v-if="!isSelf">
         <v-btn mx-auto rounded color="indigo accent-4" dark> Connect</v-btn>
@@ -86,8 +86,7 @@ export default {
       artist_type: null
     },
     isSelf: false,
-    isEditing: false,
-    isMobile: 'mobile-card--padding'
+    isEditing: false
   }),
   computed: {
     mobile() {
@@ -140,5 +139,15 @@ export default {
 }
 .mobile-card--padding {
   min-width: 250;
+}
+
+@media only screen and (max-width: 768px) {
+  .v-sheet.v-card:not(.v-sheet--outlined) {
+    box-shadow: 0px !important;
+  }
+
+  .artist-card {
+    max-width: 90% !important;
+  }
 }
 </style>

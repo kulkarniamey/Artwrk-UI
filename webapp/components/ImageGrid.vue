@@ -68,7 +68,6 @@ export default {
         const url = { url: '/coolpost.png' }
 
         this.imageurls.push(url)
-        console.log(this.imageurls)
       }
 
       return this.imageurls

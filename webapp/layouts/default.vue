@@ -247,7 +247,7 @@ export default {
     }
   },
   async created() {
-    this.user = this.$auth?.user?.username || null
+    // this.user = this.$auth?.user?.username || null
     try {
       const state = this.$auth.getToken('local')
       if (state !== false) {
