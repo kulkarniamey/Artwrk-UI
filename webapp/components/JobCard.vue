@@ -20,7 +20,7 @@
               <div class="grey--text">{{ job.info }}</div>
             </v-card-text>
             <v-card-actions>
-              <v-btn color="deep-purple white--text">
+              <v-btn color="deep-purple white--text" v-on:click="apply(job)">
                 Apply for job
               </v-btn>
               <v-spacer></v-spacer>
@@ -77,40 +77,49 @@ export default {
             'Lorem ipsum dolor sit amet, vim eligendi aliquando reprimique in. Qui diam iudicabit consectetuer ea, eos ad dicunt persecuti scriptorem, qui vero putent ad. Regione civibus mnesarchum duo te. Pri veri tollit aperiam in.'
         },
 
-        //**  Extraas (to be deleted) **//
-        {
-          name: 'LogicBlend',
-          avatar: 'mdi-account',
-          info:
-            'Lorem ipsum dolor sit amet, vim eligendi aliquando reprimique in. Qui diam iudicabit consectetuer ea, eos ad dicunt persecuti scriptorem, qui vero putent ad. Regione civibus mnesarchum duo te. Pri veri tollit aperiam in.'
-        },
-        {
-          name: 'SpecDrive',
-          avatar: 'mdi-account-supervisor',
-          info:
-            'Lorem ipsum dolor sit amet, vim eligendi aliquando reprimique in. Qui diam iudicabit consectetuer ea, eos ad dicunt persecuti scriptorem, qui vero putent ad. Regione civibus mnesarchum duo te. Pri veri tollit aperiam in.'
-        },
-        {
-          name: 'CloakSeven',
-          avatar: 'mdi-account-group',
-          info:
-            'Lorem ipsum dolor sit amet, vim eligendi aliquando reprimique in. Qui diam iudicabit consectetuer ea, eos ad dicunt persecuti scriptorem, qui vero putent ad. Regione civibus mnesarchum duo te. Pri veri tollit aperiam in.'
-        },
-        {
-          name: 'Work&Aty',
-          avatar: 'mdi-account-circle',
-          info:
-            'Lorem ipsum dolor sit amet, vim eligendi aliquando reprimique in. Qui diam iudicabit consectetuer ea, eos ad dicunt persecuti scriptorem, qui vero putent ad. Regione civibus mnesarchum duo te. Pri veri tollit aperiam in.'
-        }
-
-        //**  Extraas (to be deleted) **//
-      ]
+        
+      ],
+       applyJobData: {}
     }
+
+ 
   },
   computed: {
     renderCard() {
       return this.jobs.filter((p) => p.isActive).length
     }
+  },
+
+  methods:{
+    apply(job){
+      console.log(job)
+      
+    },
+
+    async apply(){
+     
+      this.applyJobData['operation'] = 'apply_job'
+      
+      
+      this.applyJobData['id'] = this.$auth.user.user_id
+      this.applyJobData['recruiter_id']=this.recruiter_id
+      this.applyJobData['job_id']=this.job_id
+      console.log('Data Submitted payload:', this.applyJobData)
+      
+      try {
+        const response = await this.$axios.put('/login/', this.applyJobData)
+        console.log(response)
+        if (response.data.statusCode === 200) {
+
+        }
+        
+        debugger
+      } catch (err) {
+        console.log(err)
+      }
+      
+    },
+
   }
 }
 </script>

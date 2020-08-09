@@ -93,7 +93,9 @@ export default {
     redirect: {
       login: '/auth/login',
       home: '/comingsoon',
+      callback:'/auth/login',
     },
+    
     strategies: {
       local: {
         endpoints: {
@@ -113,3 +115,5 @@ export default {
     },
   },
 }
+
+
