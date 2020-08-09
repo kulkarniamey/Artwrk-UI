@@ -33,25 +33,6 @@
                 required
               ></v-text-field>
             </v-col>
-            <v-col cols="12">
-              <v-select
-                v-model="formData.artistType"
-                :items="artistTypes"
-                menu-props="auto"
-                label="Artist Type"
-                hide-details
-                single-line
-              ></v-select>
-            </v-col>
-            <v-col cols="12">
-              <v-select
-                v-model="formData.jobType"
-                :items="jobTypes"
-                label="Job Type"
-                hide-details
-                single-line
-              ></v-select>
-            </v-col>
           </v-row>
         </v-form>
       </v-container>
@@ -91,8 +72,6 @@ export default {
         jobTitle: undefined,
         jobDescription: undefined,
         companyName: undefined,
-        artistType: undefined,
-        jobType: undefined
       },
       valid: true,
 
@@ -102,18 +81,7 @@ export default {
 
       jobDescRules: [],
       jobTypes: ['Full time', 'Part time', 'Freelance'],
-      artistTypes: [
-        'Illustrator',
-        'Photoshop artist',
-        'Photographer',
-        'Videographer',
-        'Vfx artist',
-        'Animator',
-        'Logo Designer',
-        'UI/UX Designer',
-        'Dancer',
-        'Musician'
-      ]
+      postJobData: {}
     }
   },
   methods: {
@@ -140,12 +108,13 @@ export default {
       ]
       if (this.$refs.form.validate()) {
         if (
-          this.formData.artistType &&
-          this.formData.jobType &&
+          
+          
           this.formData.jobTitle &&
           this.formData.jobDescription &&
           this.formData.companyName
         ) {
+          this.postJob()
           this.submitForm()
         }
       } else {
@@ -170,16 +139,49 @@ export default {
       this.jobTitleRules = []
 
       this.jobDescRules = []
-    }
-  },
-  computed: {
-    checkMatch() {
-      if (this.pass === this.pass2) {
-        return true
-      } else {
-        return false
+    },
+
+    async postJob(){
+     
+      
+      this.postJobData['User_id'] = this.$auth.user.user_id
+      this.postJobData['type']='job'
+      this.postJobData['decsription']=this.formData.jobDescription
+      this.postJobData['jobTitle']=this.formData.jobTitle
+      this.postJobData['companyTitle']=this.formData.companyTitle
+      this.postJobData['flag']='1'
+      this.postJobData['authorizationToken'] = this.$auth
+        .getToken('local')
+        .replace('Bearer ', '')
+
+
+      console.log('Data Submitted payload:', this.postJobData)
+      
+      try {
+        const response = await this.$axios.put(`https://cuwewf4fsg.execute-api.ap-south-1.amazonaws.com/artwrkInit/upload/${this.postJobData.User_id}/job/${this.postJobData.jobTitle}.jpeg`, this.bodyData,
+        {
+          headers: {
+            'x-amz-meta-upload': JSON.stringify(this.postJobData),
+            'authorizationToken':this.postJobData.authorizationToken
+        }})
+        
+        console.log(response)
+        if (response.data.statusCode === 200) {
+
+        }
+        
+        debugger
+      } catch (err) {
+        console.log(err)
       }
-    }
+
+  },
+  
+
+
+    
+
+  
   }
 }
 </script>

@@ -39,47 +39,10 @@
 export default {
   data() {
     return {
-      jobs: [
-        {
-          name: 'LogicBlend',
-          avatar: 'mdi-account',
-          info:
-            'Lorem ipsum dolor sit amet, vim eligendi aliquando reprimique in. Qui diam iudicabit consectetuer ea, eos ad dicunt persecuti scriptorem, qui vero putent ad. Regione civibus mnesarchum duo te. Pri veri tollit aperiam in.'
-        },
-        {
-          name: 'SpecDrive',
-          avatar: 'mdi-account-supervisor',
-          info:
-            'Lorem ipsum dolor sit amet, vim eligendi aliquando reprimique in. Qui diam iudicabit consectetuer ea, eos ad dicunt persecuti scriptorem, qui vero putent ad. Regione civibus mnesarchum duo te. Pri veri tollit aperiam in.'
-        },
-        {
-          name: 'CloakSeven',
-          avatar: 'mdi-account-group',
-          info:
-            'Lorem ipsum dolor sit amet, vim eligendi aliquando reprimique in. Qui diam iudicabit consectetuer ea, eos ad dicunt persecuti scriptorem, qui vero putent ad. Regione civibus mnesarchum duo te. Pri veri tollit aperiam in.'
-        },
-        {
-          name: 'Work&Aty',
-          avatar: 'mdi-account-circle',
-          info:
-            'Lorem ipsum dolor sit amet, vim eligendi aliquando reprimique in. Qui diam iudicabit consectetuer ea, eos ad dicunt persecuti scriptorem, qui vero putent ad. Regione civibus mnesarchum duo te. Pri veri tollit aperiam in.'
-        },
-        {
-          name: 'Logic&Effiny',
-          avatar: 'mdi-briefcase-account',
-          info:
-            'Lorem ipsum dolor sit amet, vim eligendi aliquando reprimique in. Qui diam iudicabit consectetuer ea, eos ad dicunt persecuti scriptorem, qui vero putent ad. Regione civibus mnesarchum duo te. Pri veri tollit aperiam in.'
-        },
-        {
-          name: 'Clad&Brin',
-          avatar: 'mdi-clipboard-account',
-          info:
-            'Lorem ipsum dolor sit amet, vim eligendi aliquando reprimique in. Qui diam iudicabit consectetuer ea, eos ad dicunt persecuti scriptorem, qui vero putent ad. Regione civibus mnesarchum duo te. Pri veri tollit aperiam in.'
-        },
-
-        
-      ],
-       applyJobData: {}
+      jobs: [],
+      applyJobData:{},
+      jobDetailsData:{}
+       
     }
 
  
@@ -88,6 +51,10 @@ export default {
     renderCard() {
       return this.jobs.filter((p) => p.isActive).length
     }
+  },
+  created(){
+    this.jobDetailsData= this.$axios.put(`https://cuwewf4fsg.execute-api.ap-south-1.amazonaws.com/artwrkInit/jobs/job_1596973848.605142_parimal4567`)
+
   },
 
   methods:{
@@ -99,15 +66,13 @@ export default {
     async apply(){
      
       this.applyJobData['operation'] = 'apply_job'
-      
-      
       this.applyJobData['id'] = this.$auth.user.user_id
       this.applyJobData['recruiter_id']=this.recruiter_id
       this.applyJobData['job_id']=this.job_id
       console.log('Data Submitted payload:', this.applyJobData)
       
       try {
-        const response = await this.$axios.put('/login/', this.applyJobData)
+        const response = await this.$axios.put('https://cuwewf4fsg.execute-api.ap-south-1.amazonaws.com/artwrkInit/jobs/job_1596973848.605142_parimal4567', this.applyJobData)
         console.log(response)
         if (response.data.statusCode === 200) {
 
@@ -119,6 +84,31 @@ export default {
       }
       
     },
+
+    async jobDetails(){
+      this.jobDetailsData['operation'] = 'get_job'
+      this.jobDetailsData['authorizationToken'] = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiYXJ0aXN0X3BydXRodmkyIiwidXNlcl90eXBlIjoiYXJ0aXN0IiwidXNlcm5hbWUiOiJwcnV0aHZpMiIsImV4cCI6MTU5NjU1NTc0Nn0.A0phlyAl4jHsa0lHdE8Lz40pI4Kgdl_870tKA90s0LM'
+        // .getToken('local')
+        // .replace('Bearer ', '')
+      this.jobDetailsData['id'] = 'recruiter_parimal4567'
+      this.jobDetailsData['job_id']='job_1596973848.605142_parimal4567'
+      console.log('Data Submitted payload:', this.jobDetailsData)
+
+
+
+        try {
+        const response = await this.$axios.put(`https://cuwewf4fsg.execute-api.ap-south-1.amazonaws.com/artwrkInit/jobs/job_1596973848.605142_parimal4567`)
+        
+        console.log(response)
+        if (response.data.statusCode === 200) {
+
+        }
+        
+        debugger
+      } catch (err) {
+        console.log(err)
+      }
+    }
 
   }
 }

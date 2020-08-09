@@ -8,8 +8,6 @@
       <v-btn nuxt to="jobpostform" color="deep-purple white--text" >
         Post a job 
       </v-btn>
-
-      <v-btn @click="postJob()" > test  </v-btn>
       
       <!-- </div> -->
 
@@ -65,7 +63,7 @@ export default {
       console.log('Data Submitted payload:', this.postJobData)
       
       try {
-        const response = await this.$axios.put(`https://cuwewf4fsg.execute-api.ap-south-1.amazonaws.com/artwrkInit/upload/${this.postJobData.User_id}/job/`, this.bodyData,
+        const response = await this.$axios.put(`https://cuwewf4fsg.execute-api.ap-south-1.amazonaws.com/artwrkInit/upload/${this.postJobData.User_id}/job/abc.txt`, this.bodyData,
         {
           headers: {
             'x-amz-meta-upload': JSON.stringify(this.postJobData),
