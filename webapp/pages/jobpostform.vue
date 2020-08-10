@@ -144,12 +144,12 @@ export default {
     async postJob(){
      
       
-      this.postJobData['User_id'] = this.$auth.user.user_id
+      this.postJobData['User_Id'] = this.$auth.user.user_id
       this.postJobData['type']='job'
-      this.postJobData['decsription']=this.formData.jobDescription
+      this.postJobData['description']=this.formData.jobDescription
       this.postJobData['jobTitle']=this.formData.jobTitle
-      this.postJobData['companyTitle']=this.formData.companyTitle
-      this.postJobData['flag']='1'
+      this.postJobData['companyTitle']=this.formData.companyName
+      this.postJobData['flag']='0'/*flag 1 if post uploaded */
       this.postJobData['authorizationToken'] = this.$auth
         .getToken('local')
         .replace('Bearer ', '')
@@ -158,7 +158,7 @@ export default {
       console.log('Data Submitted payload:', this.postJobData)
       
       try {
-        const response = await this.$axios.put(`https://cuwewf4fsg.execute-api.ap-south-1.amazonaws.com/artwrkInit/upload/${this.postJobData.User_id}/job/${this.postJobData.jobTitle}.jpeg`, this.bodyData,
+        const response = await this.$axios.put(`https://cuwewf4fsg.execute-api.ap-south-1.amazonaws.com/artwrkInit/upload/${this.postJobData.User_Id}/job/${this.postJobData.jobTitle}.txt`, this.bodyData,
         {
           headers: {
             'x-amz-meta-upload': JSON.stringify(this.postJobData),

@@ -4,12 +4,12 @@
       <div class="ma-12 text-h1">Jobs</div>
       <div class="ma-8 text-h3">Discover Your Next Gig!</div>
 
-      <!-- <div v-if="$store.state.auth.user.type==='recruiter'"> -->
+      <div v-if="$store.state.auth.user.type==='recruiter'">
       <v-btn nuxt to="jobpostform" color="deep-purple white--text" >
         Post a job 
       </v-btn>
       
-      <!-- </div> -->
+      </div>
 
     </div>
     <JobCard></JobCard>
@@ -47,43 +47,43 @@ export default {
 
  
 
-  methods:{
-    async postJob(){
+  // methods:{
+  //   async postJob(){
      
       
-      this.postJobData['User_id'] = this.$auth.user.user_id
-      this.postJobData['type']='job'
-      this.postJobData['decsription']=this.description
-      this.postJobData['flag']='1'
-      this.postJobData['authorizationToken'] = this.$auth
-        .getToken('local')
-        .replace('Bearer ', '')
+  //     this.postJobData['User_Id'] = this.$auth.user.user_id
+  //     this.postJobData['type']='job'
+  //     this.postJobData['decsription']=this.description
+  //     this.postJobData['flag']='0'/*flag 1 if post uploaded */
+  //     this.postJobData['authorizationToken'] = this.$auth
+  //       .getToken('local')
+  //       .replace('Bearer ', '')
 
 
-      console.log('Data Submitted payload:', this.postJobData)
+  //     console.log('Data Submitted payload:', this.postJobData)
       
-      try {
-        const response = await this.$axios.put(`https://cuwewf4fsg.execute-api.ap-south-1.amazonaws.com/artwrkInit/upload/${this.postJobData.User_id}/job/abc.txt`, this.bodyData,
-        {
-          headers: {
-            'x-amz-meta-upload': JSON.stringify(this.postJobData),
-            'authorizationToken':this.postJobData.authorizationToken
-        }})
+  //     try {
+  //       const response = await this.$axios.put(`https://cuwewf4fsg.execute-api.ap-south-1.amazonaws.com/artwrkInit/upload/${this.postJobData.User_id}/job/abc.txt`, this.bodyData,
+  //       {
+  //         headers: {
+  //           'x-amz-meta-upload': JSON.stringify(this.postJobData),
+  //           'authorizationToken':this.postJobData.authorizationToken
+  //       }})
         
-        console.log(response)
-        if (response.data.statusCode === 200) {
+  //       console.log(response)
+  //       if (response.data.statusCode === 200) {
 
-        }
+  //       }
         
-        debugger
-      } catch (err) {
-        console.log(err)
-      }
+  //       debugger
+  //     } catch (err) {
+  //       console.log(err)
+  //     }
       
-    },
+  //   },
 
   
-  }
+  // }
 
   
 
