@@ -161,7 +161,7 @@ export default {
     CoverPic,
     imageGrid,
     ArtistProfileCardComponent,
-    PortfolioButton
+    PortfolioButton,
   },
   data() {
     return {
@@ -186,11 +186,12 @@ export default {
         certificates: [],
         applied_jobs: [],
         email: '',
-        artist_type: null
+        artist_type: null,
       },
       width: 0,
       desc: '',
-      fileData: undefined
+      fileData: undefined,
+      postData: [],
     }
   },
   async created() {
@@ -199,6 +200,16 @@ export default {
 
     window.addEventListener('resize', this.handleResize)
     this.handleResize()
+    const payload = {
+      operation: 'get_posts_by_user',
+      id: this.profile.user_id,
+    }
+    const response = await this.$axios.put(
+      'https://cuwewf4fsg.execute-api.ap-south-1.amazonaws.com/artwrkInit/posts',
+      payload
+    )
+    this.postData = response
+    console.log(this.postData)
   },
 
   destroyed() {
@@ -218,6 +229,7 @@ export default {
       const token = state.replace('Bearer ', '')
       let formData = new FormData()
       formData.append('file', this.fileData)
+      const fname = this.fileData.name
       const id = this.profile.user_id
       const config = {
         headers: {
@@ -226,14 +238,14 @@ export default {
           'x-amz-meta-upload': JSON.stringify({
             User_Id: id,
             type: 'post',
-            description: this.desc
-          })
-        }
+            description: this.desc,
+          }),
+        },
       }
       try {
         let response = await this.$axios
           .put(
-            ` https://cuwewf4fsg.execute-api.ap-south-1.amazonaws.com/artwrkInit/upload/${id}/{upload_type}/${this.desc}`,
+            `https://cuwewf4fsg.execute-api.ap-south-1.amazonaws.com/artwrkInit/upload/${id}/post/${this.desc}`,
             formData,
             config
           )
@@ -243,7 +255,7 @@ export default {
       } catch (err) {
         console.log(err)
       }
-    }
+    },
   },
   computed: {
     mobile() {
@@ -252,8 +264,8 @@ export default {
       }
 
       return false
-    }
-  }
+    },
+  },
 }
 </script>
 

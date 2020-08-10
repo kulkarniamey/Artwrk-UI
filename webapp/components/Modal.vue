@@ -5,13 +5,13 @@
         <v-spacer /><v-spacer />
         <v-btn
           @click="closeModal()"
-          color="blue darken-1"
+          color="white darken-1"
           icon
           class="close-btn justify-right"
           ><v-icon>mdi-close</v-icon></v-btn
         >
         <v-img
-          class=" white--text align-end"
+          class="white--text align-end"
           :src="postImg"
           gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
           cotain
@@ -42,8 +42,8 @@ export default {
   methods: {
     closeModal(e) {
       this.$emit('closedModal')
-    }
-  }
+    },
+  },
 }
 </script>
 
@@ -60,8 +60,10 @@ export default {
   flex-direction: column;
 }
 .close-btn {
-  float: right;
-  clear: both;
+  position: absolute;
+  right: 0;
+  z-index: 2;
+  background: rgba(0, 0, 0, 0.05);
 }
 .image-content {
   display: flex;
