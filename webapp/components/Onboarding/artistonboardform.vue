@@ -19,8 +19,7 @@
             <v-stepper-content step="1">
               <v-form ref="firstPageForm" v-model="valid">
                 <v-row>
-                  <v-col cols="12">
-                  </v-col>
+                  <v-col cols="12"> </v-col>
                   <v-col cols="12">
                     <v-text-field
                       v-model="profile.name"
@@ -79,45 +78,60 @@
                 <v-row>
                   <v-col cols="12">
                     Employer History
-                        <v-chip
-        v-for="(names, id) in profile.employer_history"
-        :key="id"
-        class="ma-1"
-        color="blue lighten-4"
-        >{{ names }}
-      </v-chip>  
-            <v-form v-on:submit.prevent="addExperience()">
-        <v-text-field placeholder="Press enter after each entry" required v-model="formData.empHistory" type="text">
-        </v-text-field>
-            </v-form>
+                    <v-chip
+                      v-for="(names, id) in profile.employer_history"
+                      :key="id"
+                      class="ma-1"
+                      color="blue lighten-4"
+                      >{{ names }}
+                    </v-chip>
+                    <v-form v-on:submit.prevent="addExperience()">
+                      <v-text-field
+                        placeholder="Press enter after each entry"
+                        required
+                        v-model="formData.empHistory"
+                        type="text"
+                      >
+                      </v-text-field>
+                    </v-form>
                   </v-col>
                   <v-col cols="12">
                     Awards and Recognitions
-                                        <v-chip
-        v-for="(names, id) in profile.awards_recognition"
-        :key="id"
-        class="ma-1"
-        color="blue lighten-4"
-        >{{ names }}
-      </v-chip>  
-            <v-form v-on:submit.prevent="addAward()">
-        <v-text-field placeholder="Press enter after each entry" required v-model="formData.awards" type="text">
-        </v-text-field>
-            </v-form>
+                    <v-chip
+                      v-for="(names, id) in profile.awards_recognition"
+                      :key="id"
+                      class="ma-1"
+                      color="blue lighten-4"
+                      >{{ names }}
+                    </v-chip>
+                    <v-form v-on:submit.prevent="addAward()">
+                      <v-text-field
+                        placeholder="Press enter after each entry"
+                        required
+                        v-model="formData.awards"
+                        type="text"
+                      >
+                      </v-text-field>
+                    </v-form>
                   </v-col>
                   <v-col cols="12">
-Education History
-                                        <v-chip
-        v-for="(names, id) in profile.education_history"
-        :key="id"
-        class="ma-1"
-        color="blue lighten-4"
-        >{{ names }}
-      </v-chip>  
-            <v-form v-on:submit.prevent="addEducation()">
-        <v-text-field placeholder="Press enter after each entry" required v-model="formData.education" type="text">
-        </v-text-field>
-            </v-form>
+                    Education History
+                    <v-chip
+                      v-for="(names, id) in profile.education_history"
+                      :key="id"
+                      class="ma-1"
+                      color="blue lighten-4"
+                      >{{ names }}
+                    </v-chip>
+                    <v-form v-on:submit.prevent="addEducation()">
+                      <v-text-field
+                        placeholder="Press enter after each entry"
+                        required
+                        v-model="formData.education"
+                        type="text"
+                      >
+                      </v-text-field>
+                    </v-form>
                   </v-col>
                 </v-row>
               </v-form>

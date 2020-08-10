@@ -18,11 +18,12 @@
             class=""
           >
             <v-card outlined class="grid-card">
-              <img
+              <v-img
                 :src="x.url"
                 :key="index"
                 alt="pussy"
                 class="img-class"
+                cover
                 @click="showDetail($event, 'Cool Post', x.url)"
               />
             </v-card>
@@ -52,23 +53,22 @@ export default {
       colstyle: 'padding:0em; margin:1em',
       dialog: false,
       title: '',
-      imgval: '',
+      imgval: ''
     }
   },
   computed: {
     renderImage() {
       return this.imageurls.filter((p) => p.isActive).length
-    },
+    }
   },
   methods: {
     getManyPussy() {
-      var totalCount = 40
+      var totalCount = 20
       var i = 0
       for (i = 0; i < totalCount; i++) {
         const url = { url: '/coolpost.png' }
 
         this.imageurls.push(url)
-        console.log(this.imageurls)
       }
 
       return this.imageurls
@@ -82,11 +82,11 @@ export default {
       this.dialog = false
       this.title = ''
       this.imgval = ''
-    },
+    }
   },
   created() {
     this.getManyPussy()
-  },
+  }
 }
 </script>
 
@@ -101,13 +101,13 @@ export default {
 .grid-square:hover {
   cursor: pointer;
 }
-.img-class {
-  max-width: 100%;
-  height: 200px;
-  object-fit: cover;
-  object-position: center;
-  opacity: 1;
-}
+// .img-class {
+//   max-width: 100%;
+//   height: 200px;
+//   object-fit: cover;
+//   object-position: center;
+//   opacity: 1;
+// }
 .grid-card {
   margin: 0.5em;
   border-radius: 0;

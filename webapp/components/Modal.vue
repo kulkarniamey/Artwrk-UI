@@ -1,13 +1,35 @@
 <template>
   <div>
-    <v-dialog v-model="showModal" persistent max-width="620px">
+    <v-dialog v-model="showModal" persistent max-width="960">
       <v-card class="modal-card">
-        <v-img class="modal-img" :src="postImg"></v-img>
+        <v-spacer /><v-spacer />
+        <v-btn
+          @click="closeModal()"
+          color="blue darken-1"
+          icon
+          class="close-btn justify-right"
+          ><v-icon>mdi-close</v-icon></v-btn
+        >
+        <v-img
+          class=" white--text align-end"
+          :src="postImg"
+          gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
+          cotain
+          width="960px"
+          height="480px"
+        >
+          <div class="image-content">
+            <v-card-title>
+              {{ postTitle }}
+            </v-card-title>
 
-        <v-card-title>
-          {{ postTitle }}
-        </v-card-title>
-        <v-btn @click="closeModal()">Close</v-btn>
+            <v-spacer></v-spacer>
+
+            <v-btn icon class="white--text align-end">
+              <v-icon left>mdi-heart</v-icon>
+            </v-btn>
+          </div>
+        </v-img>
       </v-card>
     </v-dialog>
   </div>
@@ -33,8 +55,15 @@ export default {
   margin: 2em auto;
 }
 
-// .modal-card {
-//   width: 80%;
-//   height: 90%;
-// }
+.modal-card {
+  display: flex;
+  flex-direction: column;
+}
+.close-btn {
+  float: right;
+  clear: both;
+}
+.image-content {
+  display: flex;
+}
 </style>

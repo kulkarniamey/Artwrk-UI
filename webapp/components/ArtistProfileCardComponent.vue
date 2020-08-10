@@ -1,15 +1,15 @@
 <template>
-  <v-card class="mx-auto my-12 tile" min-width="374">
+  <v-card class="artist-card mx-auto my-12 tile" min-width="374">
     <v-card-actions class="pt-10">
       <div v-if="!isSelf">
-      <v-btn mx-auto rounded color="indigo accent-4" dark> Connect</v-btn>
+        <v-btn mx-auto rounded color="indigo accent-4" dark> Connect</v-btn>
       </div>
       <v-spacer></v-spacer>
       <v-list-item-title class="font-weight-bold pl-5"
-        >Connections {{ profile.followers.length }}  </v-list-item-title  >
-        
+        >Connections {{ profile.followers.length }}
+      </v-list-item-title>
+
       <v-spacer />
-      
 
       <v-btn v-if="isSelf" small v-on:click="editContent" icon>
         <artistProfileEdit :profileData="profile" />
@@ -85,21 +85,35 @@ export default {
       email: '',
       artist_type: null
     },
-    isSelf:false,
+    isSelf: false,
     isEditing: false
   }),
-  computed: {},
+  computed: {
+    mobile() {
+      if (this.width <= 960) {
+        return true
+      }
+
+      return false
+    }
+  },
   created() {
-        this.profile = this.profileData,
-        this.$nuxt.$on('save-profile', (newProfile) => {
+    ;(this.profile = this.profileData),
+      this.$nuxt.$on('save-profile', (newProfile) => {
         this.profile = newProfile
-      
-    });
-    
-    this.isSelf = this.$router?.currentRoute?.params?.id ===  this.profileData.username
-    debugger
+      })
+
+    this.isSelf =
+      this.$router?.currentRoute?.params?.id === this.profileData.username
+
+    window.addEventListener('resize', this.handleResize)
+    this.handleResize()
   },
   props: { profileData: { type: Object } },
+
+  destroyed() {
+    window.removeEventListener('resize', this.handleResize)
+  },
 
   methods: {
     editContent: function editContent() {
@@ -108,6 +122,10 @@ export default {
       } else {
         this.isEditing = !this.isEditing
       }
+    },
+
+    handleResize() {
+      this.width = window.innerWidth
     }
   }
 }
@@ -118,5 +136,18 @@ export default {
   text-decoration: none;
   cursor: pointer;
   color: black;
+}
+.mobile-card--padding {
+  min-width: 250;
+}
+
+@media only screen and (max-width: 768px) {
+  .v-sheet.v-card:not(.v-sheet--outlined) {
+    box-shadow: 0px !important;
+  }
+
+  .artist-card {
+    max-width: 90% !important;
+  }
 }
 </style>
