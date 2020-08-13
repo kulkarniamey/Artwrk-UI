@@ -3,7 +3,7 @@
     <v-container>
       <div class="flexdisplay">
         <v-btn nuxt to="/" fab dark color="indigo accent-4">
-          <v-icon dark size="36" color="white">mdi-chevron-left</v-icon>
+          <v-icon dark size="32" color="white">mdi-chevron-left</v-icon>
         </v-btn>
         <div class="flextext">
           <span class="art">
@@ -18,12 +18,12 @@
           class="d-none d-sm-flex"
           cols="6"
           min-height="600"
-          max-width="550"
+          max-width="450"
         >
           <h1
             class="white--text legend-text mx-auto"
             min-height="600"
-            max-width="550"
+            max-width="450"
           >
             We Inspire an Artist to Aspire!
           </h1>
@@ -56,7 +56,7 @@ export default {
 .legend-text {
   margin: auto;
   font-weight: 700;
-  font-size: 3.5em;
+  font-size: 2.5em;
 }
 .flexdisplay {
   display: flex;

@@ -1,5 +1,5 @@
 <template>
-  <v-card elevation="9" min-height="600" max-width="550" class="mx-auto">
+  <v-card elevation="9" min-height="600" max-width="450" class="mx-auto">
     <v-card-title>
       <span class="headline">Sign Up!</span>
     </v-card-title>
@@ -146,4 +146,16 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="css" scoped>
+.v-text-field {
+  padding-top: 0;
+}
+
+.v-card__title {
+  padding: 16px 16px 0 16px;
+}
+
+.v-application p {
+  margin-bottom: 0;
+}
+</style>
