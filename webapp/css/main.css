@@ -34,6 +34,14 @@
   height: 100%;
   overflow: hidden;
 }
+.surveyboard {
+  background-image: url('/survey.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  height: 100%;
+  overflow: hidden;
+}
 
 .auth-body {
   padding-top: 4em;
