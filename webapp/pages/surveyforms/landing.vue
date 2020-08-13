@@ -135,12 +135,13 @@ export default {
 .legend-text {
   margin: auto;
   font-weight: 700;
-  font-size: 2.5em;
+  font-size: 3em;
 }
 .flexdisplay {
   display: flex;
   color: #fff;
   justify-content: flex-start;
+  margin-bottom: 3.5em;
 }
 .flextext {
   padding-left: 1em;
