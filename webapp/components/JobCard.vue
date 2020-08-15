@@ -10,13 +10,11 @@
           <v-card class="text-sm-center ma-2">
             <v-responsive class="pt-3 justify-center">
               <v-avatar color="deep-purple" size="100">
-                <v-icon size="80" color="white" v-text="job.jobTitle"></v-icon>
+                <span class="white--text headline">{{job.companyTitle}}</span>
               </v-avatar>
             </v-responsive>
             <v-card-text>
-              <v-card-title class="justify-center headline">{{
-                job.jobTitle
-              }}</v-card-title>
+              <v-card-title class="justify-center headline">{{job.jobTitle }}</v-card-title>
               <div class="grey--text">{{ job.description }}</div>
             </v-card-text>
             <v-card-actions>
@@ -64,12 +62,15 @@ export default {
      
       this.applyJobData['operation'] = 'apply_job'
       this.applyJobData['id'] = this.$auth.user.user_id
-      this.applyJobData['recruiter_id']='recruiter_pruthvi5'
+      this.applyJobData['recruiter_id']=job.recruiter_id
       this.applyJobData['job_id']=job.jobId
+       this.applyJobData['authorizationToken'] = this.$auth
+        .getToken('local')
+        .replace('Bearer ', '')
       console.log('Data Submitted payload:', this.applyJobData)
       
       try {
-        const response = await this.$axios.put('https://cuwewf4fsg.execute-api.ap-south-1.amazonaws.com/artwrkInit/jobs/job_1596973848.605142_parimal4567', this.applyJobData)
+        const response = await this.$axios.post(`https://cuwewf4fsg.execute-api.ap-south-1.amazonaws.com/artwrkInit/jobs/${this.applyJobData.jobId}/apply`, this.applyJobData)
         console.log(response)
         if (response.data.statusCode === 200) {
 

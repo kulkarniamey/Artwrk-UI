@@ -158,7 +158,7 @@ export default {
       console.log('Data Submitted payload:', this.postJobData)
       
       try {
-        const response = await this.$axios.put(`https://cuwewf4fsg.execute-api.ap-south-1.amazonaws.com/artwrkInit/upload/${this.postJobData.User_Id}/job/${this.postJobData.jobTitle}.txt`, this.bodyData,
+        const response = await this.$axios.put(`https://cuwewf4fsg.execute-api.ap-south-1.amazonaws.com/artwrkInit/upload/${this.postJobData.User_Id}/job/${this.postJobData.jobTitle.replace(/\s/g, "")}.jpeg`, this.bodyData,
         {
           headers: {
             'x-amz-meta-upload': JSON.stringify(this.postJobData),
