@@ -112,7 +112,10 @@
                   Our Mission: To create an economic opportunity for each and
                   every artist at home in India by providing a professional
                   community platform of "Showcase, Discover, Connect and Sell
-                  Artwork" .
+                  Artwork" . <br />A community platform where right people would
+                  critique/rate your Artwork which would help you to thrive as
+                  an artist and also this evaluation would be maintained by your
+                  "ARTIST SCORE" on your profile.
                 </p>
               </v-container>
             </v-card-text>
@@ -193,7 +196,7 @@
                       class="survey-btn"
                       dark
                       ><a
-                        href="https://forms.gle/v7XVnF3RH2hLHbxQ9"
+                        href="https://forms.gle/rCjgDrfiZP6F1c2c8"
                         target="_blank"
                         >Take survey as a Recruiter</a
                       ></v-btn
@@ -228,13 +231,13 @@ export default {
       dialog: false,
       items: [
         {
-          src: '/landingcarousel/community.jpg'
+          src: '/landingcarousel/community.png'
         },
         {
           src: '/landingcarousel/recruiter.png'
         },
         {
-          src: '/landingcarousel/artistscore.jpg'
+          src: '/landingcarousel/artistscore.png'
         },
         {
           src: '/landingcarousel/timeline.jpg'
