@@ -144,11 +144,13 @@ export default {
     async postJob(){
      
       
-      this.postJobData['User_Id'] = this.$auth.user.user_id
-      this.postJobData['type']='job'
+      this.postJobData['user_id'] = this.$auth.user.user_id
+      this.postJobData['upload_type']='job'
       this.postJobData['description']=this.formData.jobDescription
-      this.postJobData['jobTitle']=this.formData.jobTitle
-      this.postJobData['companyTitle']=this.formData.companyName
+      this.postJobData['job_title']=this.formData.jobTitle
+      this.postJobData['company_title']=this.formData.companyName
+      this.postJobData['filename']='abc.jpeg'
+      this.postJobData['date_time']='15/8/20_5:30'
       this.postJobData['flag']='0'/*flag 1 if post uploaded */
       this.postJobData['authorizationToken'] = this.$auth
         .getToken('local')
@@ -158,12 +160,14 @@ export default {
       console.log('Data Submitted payload:', this.postJobData)
       
       try {
-        const response = await this.$axios.put(`https://cuwewf4fsg.execute-api.ap-south-1.amazonaws.com/artwrkInit/upload/${this.postJobData.User_Id}/job/${this.postJobData.jobTitle.replace(/\s/g, "")}.jpeg`, this.bodyData,
+        const response = await this.$axios.put(`https://cuwewf4fsg.execute-api.ap-south-1.amazonaws.com/artwrkInit/uploadcontent`,
         {
           headers: {
-            'x-amz-meta-upload': JSON.stringify(this.postJobData),
-            'authorizationToken':this.postJobData.authorizationToken
-        }})
+            'metadata:': JSON.stringify(this.postJobData),
+            'authorizationToken':this.postJobData.authorizationToken,
+            'Content-Type': 'multipart/form-data'
+                  }
+        })
         
         console.log(response)
         if (response.data.statusCode === 200) {

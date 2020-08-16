@@ -20,10 +20,10 @@ export default {
   },
   mounted() {
     const profile = this.$auth.user
-    if(profile?.type===admin){ this.$router.push('admin/')}
+    if(profile?.type=== 'admin'){ this.$router.push('')}
     else{
     if (profile?.name === null) {
-      consile.console.log(this.$auth.user);
+      console.log(this.$auth.user);
       this.$router.push('onboarding/')
     }
 
