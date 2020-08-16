@@ -6,7 +6,7 @@
         md="4"
         sm="6"
         cols="12"
-        v-for="(x, index) in imageurls"
+        v-for="(x, index) in images"
         :key="index"
         align="center"
         no-gutters
@@ -53,8 +53,12 @@ export default {
       colstyle: 'padding:0em; margin:1em',
       dialog: false,
       title: '',
-      imgval: ''
+      imgval: '',
+      images: []
     }
+  },
+  props: {
+    postData: { type: Array, required: true }
   },
   computed: {
     renderImage() {
@@ -84,8 +88,8 @@ export default {
       this.imgval = ''
     }
   },
-  created() {
-    this.getManyPussy()
+  mounted() {
+    this.images = this.postData
   }
 }
 </script>

@@ -59,7 +59,13 @@
               </v-dialog>
             </v-col>
           </v-row>
-          <imageGrid />
+          <imageGrid v-if="!isPostsNull" :postData="postData.posts" />
+          <div class="flex" v-else>
+            <v-img class="splash" contain src="/noposts.svg" />
+            <h4 class="text-grey text-center">
+              Seems like you have no posts...
+            </h4>
+          </div>
         </v-col>
       </v-row>
     </template>
@@ -161,11 +167,12 @@ export default {
     CoverPic,
     imageGrid,
     ArtistProfileCardComponent,
-    PortfolioButton,
+    PortfolioButton
   },
   data() {
     return {
       user: '',
+      isPostsNull: false,
       dialog: false,
       profile: {
         user_id: '',
@@ -186,12 +193,12 @@ export default {
         certificates: [],
         applied_jobs: [],
         email: '',
-        artist_type: null,
+        artist_type: null
       },
       width: 0,
       desc: '',
       fileData: undefined,
-      postData: [],
+      postData: []
     }
   },
   async created() {
@@ -202,13 +209,20 @@ export default {
     this.handleResize()
     const payload = {
       operation: 'get_posts_by_user',
-      id: this.profile.user_id,
+      id: this.profile.user_id
     }
     const response = await this.$axios.put(
       'https://cuwewf4fsg.execute-api.ap-south-1.amazonaws.com/artwrkInit/posts',
       payload
     )
-    this.postData = response
+    this.postData = response.data
+    console.log(this.postData.posts.length)
+    if (this.postData.posts.length) {
+      this.isPostsNull = false
+    } else {
+      this.isPostsNull = true
+    }
+    debugger
     console.log(this.postData)
   },
 
@@ -231,31 +245,39 @@ export default {
       formData.append('file', this.fileData)
       const fname = this.fileData.name
       const id = this.profile.user_id
+      const a = new Date()
+      const time =
+        a.getHours() +
+        ':' +
+        a.getMinutes() +
+        ':' +
+        a.getSeconds() +
+        ':' +
+        a.getMilliseconds()
+      const date = a.getDate() + '/' + a.getMonth() + '/' + a.getFullYear()
       const config = {
         headers: {
           'Content-Type': 'multipart/form-data',
           authorizationToken: token,
-          'x-amz-meta-upload': JSON.stringify({
-            User_Id: id,
-            type: 'post',
+          metadata: JSON.stringify({
+            user_id: id,
+            upload_type: 'post',
             description: this.desc,
-          }),
-        },
+            filename: fname + '_' + time,
+            date_time: date + '_' + time
+          })
+        }
       }
       try {
         let response = await this.$axios
-          .put(
-            `https://cuwewf4fsg.execute-api.ap-south-1.amazonaws.com/artwrkInit/upload/${id}/post/${this.desc}`,
-            formData,
-            config
-          )
+          .put(`uploadcontent`, formData, config)
           .then((resp) => {
             console.log(resp)
           })
       } catch (err) {
         console.log(err)
       }
-    },
+    }
   },
   computed: {
     mobile() {
@@ -264,8 +286,8 @@ export default {
       }
 
       return false
-    },
-  },
+    }
+  }
 }
 </script>
 
@@ -363,5 +385,8 @@ export default {
 
 .tabs-control {
   margin-top: 10em;
+}
+.splash {
+  max-height: 20rem;
 }
 </style>
