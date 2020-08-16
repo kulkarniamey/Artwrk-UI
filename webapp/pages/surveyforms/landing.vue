@@ -92,7 +92,7 @@
                 color="indigo accent-4"
                 class="survey-btn"
                 dark
-                ><a href="https://forms.gle/v7XVnF3RH2hLHbxQ9" target="_blank"
+                ><a href="https://forms.gle/rCjgDrfiZP6F1c2c8" target="_blank"
                   >Take survey as a Recruiter</a
                 ></v-btn
               >
@@ -109,13 +109,11 @@
             <v-card-text>
               <v-container>
                 <p>
-                  Our Mission: To create an economic opportunity for each and
-                  every artist at home in India by providing a professional
-                  community platform of "Showcase, Discover, Connect and Sell
-                  Artwork" . <br />A community platform where right people would
-                  critique/rate your Artwork which would help you to thrive as
-                  an artist and also this evaluation would be maintained by your
-                  "ARTIST SCORE" on your profile.
+                  Product Vision: Initially our aim is to provide artists a
+                  platform where they would create their portfolio and connect
+                  to the recruiters of their industry.The community would be
+                  following guidelines and artist score metric so as to
+                  hand-pick the exacting artists for the industry.
                 </p>
               </v-container>
             </v-card-text>
@@ -147,29 +145,34 @@
                     <v-spacer></v-spacer>
                   </v-toolbar>
                   <h3 class="pa-4">We Inspire an Artist to Aspire</h3>
-                  <!-- <v-divider></v-divider> -->
+
                   <p class="px-4 align">
                     A responsive and modular web application which would act as
                     a multi-functional social networking, recruitment driven
                     community for all types of artists including media and
                     entertainment related people.
                   </p>
-                  <p class="px-4 align">
+                  <p class="px-4">
                     This product would be a platform for all forms of artists
-                    who can create their own portfolio, maintain their art
-                    timeline, be seen by the right people of the industry,
-                    monetize their art by selling products and prints
-                    online.Taking advantage of these features of the application
-                    and by being part of this huge community of artists would
-                    help each and every artist to grow and thrive as an artist.
+                    who can <br />
+                    1) Create their own portfolio <br />
+                    2) Maintain their art timeline <br />
+                    3) Be seen by the right people of the industry <br />
+                    4) Apply for job opportunities <br />
+                    5) Monetize their art by selling personal product
+                    merchandise and prints online.
                   </p>
                   <p class="px-4 align">
-                    The Community would be scrupulous and is to be followed by
-                    some guidelines like only writers can write a post and other
+                    Taking advantage of these features of the application and by
+                    being part of this huge community of artists would help each
+                    and every artist to grow and thrive as an artist. The
+                    Community would be scrupulous and is to be followed by some
+                    guidelines like only writers can write a post and other
                     artists such as photographers, media and entertainment
                     artists could only post photos and videos on the community
                     and much more for different types of artists.
                   </p>
+                  <v-divider></v-divider>
                   <div class="pa-6">
                     <strong> Got 5 mins? </strong><br />
                     <small>
@@ -202,6 +205,55 @@
                       ></v-btn
                     >
                   </div>
+                  <v-divider></v-divider>
+                  <h4 class="px-4">FEATURES:</h4>
+                  <br />
+                  <p class="px-4 align">
+                    1) COMMUNITY- A platform for the artists for professional
+                    networking, discovering and showcasing their
+                    artwork.Discover and nourish your artist network. <br />
+                    <br />
+                    2) MARKETPLACE- Artwrk application supports local artists
+                    and provides a feature to create and sell their own artwork
+                    as a personal merchandise-which helps to create an economic
+                    opportunity for non-digital media artists such as
+                    photographers, painters, graphic designers and many more.
+                    <br />
+                    <br />
+                    3) POST A JOB- feature that will help recruiters to post a
+                    job opening for the respective industry. <br />
+                    <br />
+                    4) APPLY FOR A JOB- feature that will help artists to stay
+                    updated about the job openings posted by recruiter companies
+                    and also apply for the jobs online. <br />
+                    <br />
+                    5) ARTIST SCORE -This is the most important and distinctive
+                    feature of the application which is used to perform most of
+                    the analysis and flow of the application.This feature will
+                    help in matching perfect requirements of the candidate
+                    (based on tools, skills, work-ex, etc. Demanded by
+                    recruiter). <br />
+                    There are four steps used to critique a work of art: <br />
+                    1. Look at the obvious. <br />
+                    2. Analyze the artwork. <br />
+                    3. Decide on an interpretation. <br />
+                    4. Make a judgment call and Rate the Artwork. <br />
+                    <br />
+                    6) PORTFOLIO - feature in the web application where artists
+                    can create and maintain their portfolio, which is seen by
+                    the right persons of their industry. <br />
+                    <br />
+                    7) TIMELINE - feature in the application that helps artists
+                    to maintain their artwork details in graphical visual, which
+                    helps them to track the artworks in the future. <br />
+                    <br />
+                    8) PROFILE- feature that helps artists to maintain their
+                    resume, certificates, skill tags and employer history.<br />
+                    <br />
+                    9) POST AN ADVERTISEMENT- feature where artists can post an
+                    advertisement for collaboration. <br />
+                    <br />
+                  </p>
                 </v-card>
               </v-dialog>
               <v-spacer />
