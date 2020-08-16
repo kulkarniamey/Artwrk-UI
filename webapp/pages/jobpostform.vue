@@ -56,7 +56,7 @@
         </v-form>
       </v-container>
 
-      <p class="text-lg-right ">
+      <p class="text-lg-right">
         Have queries?<v-btn
           text
           nuxt
@@ -92,7 +92,7 @@ export default {
         jobDescription: undefined,
         companyName: undefined,
         artistType: undefined,
-        jobType: undefined
+        jobType: undefined,
       },
       valid: true,
 
@@ -112,8 +112,9 @@ export default {
         'Logo Designer',
         'UI/UX Designer',
         'Dancer',
-        'Musician'
-      ]
+        'Musician',
+        'Magician',
+      ],
     }
   },
   methods: {
@@ -121,13 +122,13 @@ export default {
       this.companyNameRules = [
         (v) => !!v || 'Company name is required',
         (v) =>
-          (v && v.length <= 50) || 'Company name must be less than 25 words'
+          (v && v.length <= 50) || 'Company name must be less than 25 words',
         // Tentative word limit. Needs to be changed.
       ]
 
       this.jobTitleRules = [
         (v) => !!v || 'Job title is required',
-        (v) => (v && v.length <= 50) || 'Job title must be less than 25 words'
+        (v) => (v && v.length <= 50) || 'Job title must be less than 25 words',
         // Tentative word limit. Needs to be changed.
       ]
 
@@ -135,7 +136,7 @@ export default {
         (v) => !!v || 'Job description is required',
         (v) =>
           (v && v.length <= 3000) ||
-          'Job description must be less than 500 words'
+          'Job description must be less than 500 words',
         // Tentative word limit. Needs to be changed.
       ]
       if (this.$refs.form.validate()) {
@@ -163,14 +164,14 @@ export default {
         jobDescription: undefined,
         companyName: undefined,
         artistType: undefined,
-        jobType: undefined
+        jobType: undefined,
       }
       this.companyNameRules = []
 
       this.jobTitleRules = []
 
       this.jobDescRules = []
-    }
+    },
   },
   computed: {
     checkMatch() {
@@ -179,8 +180,8 @@ export default {
       } else {
         return false
       }
-    }
-  }
+    },
+  },
 }
 </script>
 
