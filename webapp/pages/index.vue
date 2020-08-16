@@ -80,7 +80,7 @@
                 block
                 rounded
                 color="indigo accent-4"
-                class="survey-btn"
+                class="survey-btn white--text"
                 dark
                 ><a href="https://forms.gle/v7XVnF3RH2hLHbxQ9" target="_blank"
                   >Take survey as an Artist</a
@@ -90,7 +90,7 @@
                 block
                 rounded
                 color="indigo accent-4"
-                class="survey-btn"
+                class="survey-btn white--text"
                 dark
                 ><a href="https://forms.gle/rCjgDrfiZP6F1c2c8" target="_blank"
                   >Take survey as a Recruiter</a
@@ -258,13 +258,15 @@
               </v-dialog>
               <v-spacer />
               <v-btn
-                v-for="icon in icons"
-                :key="icon"
+                v-for="i in links"
+                :key="i"
                 class="mx-1"
                 color="blue lighten-1"
                 icon
               >
-                <v-icon right size="18">{{ icon }}</v-icon>
+                <a class="social" :href="i.href" target="_blank"
+                  ><v-icon right size="18">{{ i.icon }}</v-icon></a
+                >
               </v-btn>
             </v-card-actions>
           </v-card>
@@ -295,7 +297,17 @@ export default {
           src: '/landingcarousel/timeline.jpg'
         }
       ],
-      icons: ['mdi-facebook', 'mdi-twitter', 'mdi-linkedin', 'mdi-instagram']
+      icons: ['mdi-facebook', 'mdi-twitter', 'mdi-linkedin', 'mdi-instagram'],
+      links: [
+        {
+          icon: 'mdi-facebook',
+          href: 'https://fb.me/artwrk.official'
+        },
+        {
+          icon: 'mdi-instagram',
+          href: 'https://www.instagram.com/artwrk_official/'
+        }
+      ]
     }
   }
 }
@@ -350,7 +362,10 @@ export default {
 
 a {
   text-decoration: none;
-  color: #fff;
+  color: #fff !important ;
   cursor: pointer;
+}
+.social {
+  color: unset !important;
 }
 </style>
