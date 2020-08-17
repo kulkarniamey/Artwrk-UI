@@ -104,7 +104,8 @@ export default {
       username: '',
       usernameRules: [
         (v) => !!v || 'Username is required',
-        (v) => (v && v.length <= 8) || 'Username must be less than 8 characters'
+        (v) =>
+          (v && v.length <= 50) || 'Username must be less than 25 characters'
       ],
       items: ['artist', 'recruiter']
     }
