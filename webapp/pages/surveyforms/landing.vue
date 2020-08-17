@@ -2,16 +2,16 @@
   <div>
     <v-container>
       <div class="flexdisplay">
-        <v-btn nuxt to="/" fab dark color="indigo accent-4">
+        <!-- <v-btn nuxt to="/" fab dark color="indigo accent-4">
           <v-icon dark size="36" color="white">mdi-chevron-left</v-icon>
-        </v-btn>
+        </v-btn> -->
         <div class="flextext">
           <!-- <span class="art">
             Art
           </span>
           <span class="wrk">Wrk</span>
           <span class="dot">.</span> -->
-          <v-img src="/logo-white.png" max-height="120" max-width="120"></v-img>
+          <v-img src="/logo-white.svg" max-height="130" max-width="130"></v-img>
         </div>
       </div>
       <v-row>
@@ -40,7 +40,7 @@
             <v-card-title class="flexdisplay-title">
               <span class="headline">What is </span>
               <v-img
-                src="/logo-black.png"
+                src="/logo-black.svg"
                 max-height="100"
                 max-width="100"
               ></v-img>
@@ -48,7 +48,7 @@
             <v-carousel
               :show-arrows="false"
               hide-delimiters
-              height="200"
+              :height="customHeight"
               cycle
               interval="3000"
             >
@@ -68,7 +68,7 @@
                 </p>
                 <p>
                   Excited to be a part of India's first Artist Community?<br />
-                  We are coming soon!
+                  <span class="soon-text">We are coming soon!</span>
                 </p>
                 <strong> Got 5 mins? </strong><br />
                 <small>
@@ -101,7 +101,7 @@
             <v-card-title class="flexdisplay-title">
               <span class="headline">About </span>
               <v-img
-                src="/logo-black.png"
+                src="/logo-black.svg"
                 max-height="100"
                 max-width="100"
               ></v-img>
@@ -259,7 +259,7 @@
               <v-spacer />
               <v-btn
                 v-for="i in links"
-                :key="i"
+                :key="i.href"
                 class="mx-1"
                 color="blue lighten-1"
                 icon
@@ -307,7 +307,13 @@ export default {
           icon: 'mdi-instagram',
           href: 'https://www.instagram.com/artwrk_official/'
         }
-      ]
+      ],
+      customHeight: 200
+    }
+  },
+  mounted() {
+    if (screen.width > 463) {
+      this.customHeight = 230
     }
   }
 }
@@ -359,7 +365,10 @@ export default {
   margin-top: 0.5em;
   margin-bottom: 0.5em;
 }
-
+.soon-text {
+  font-weight: 700;
+  color: #000;
+}
 a {
   text-decoration: none;
   color: #fff !important ;

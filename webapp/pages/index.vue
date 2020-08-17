@@ -11,7 +11,7 @@
           </span>
           <span class="wrk">Wrk</span>
           <span class="dot">.</span> -->
-          <v-img src="/logo-white.svg" max-height="120" max-width="120"></v-img>
+          <v-img src="/logo-white.svg" max-height="130" max-width="130"></v-img>
         </div>
       </div>
       <v-row>
@@ -48,7 +48,7 @@
             <v-carousel
               :show-arrows="false"
               hide-delimiters
-              height="200"
+              :height="customHeight"
               cycle
               interval="3000"
             >
@@ -259,7 +259,7 @@
               <v-spacer />
               <v-btn
                 v-for="i in links"
-                :key="i"
+                :key="i.href"
                 class="mx-1"
                 color="blue lighten-1"
                 icon
@@ -307,7 +307,13 @@ export default {
           icon: 'mdi-instagram',
           href: 'https://www.instagram.com/artwrk_official/'
         }
-      ]
+      ],
+      customHeight: 200
+    }
+  },
+  mounted() {
+    if (screen.width > 463) {
+      this.customHeight = 230
     }
   }
 }
