@@ -150,7 +150,7 @@ export default {
       this.postJobData['job_title']=this.formData.jobTitle
       this.postJobData['company_title']=this.formData.companyName
       this.postJobData['filename']='abc.jpeg'
-      this.postJobData['date_time']='15/8/20_5:30'
+      this.postJobData['date_time']= new Date().toLocaleString();
       this.postJobData['flag']='0'/*flag 1 if post uploaded */
       this.postJobData['authorizationToken'] = this.$auth
         .getToken('local')
@@ -160,12 +160,12 @@ export default {
       console.log('Data Submitted payload:', this.postJobData)
       
       try {
-        const response = await this.$axios.put(`https://cuwewf4fsg.execute-api.ap-south-1.amazonaws.com/artwrkInit/uploadcontent`,
+        const response = await this.$axios.put(`https://cuwewf4fsg.execute-api.ap-south-1.amazonaws.com/artwrkInit/uploadcontent`,this.postJobData.filename,
         {
           headers: {
-            'metadata:': JSON.stringify(this.postJobData),
+            'metadata': JSON.stringify(this.postJobData),
             'authorizationToken':this.postJobData.authorizationToken,
-            'Content-Type': 'multipart/form-data'
+            'content-type': 'multipart/form-data'
                   }
         })
         
