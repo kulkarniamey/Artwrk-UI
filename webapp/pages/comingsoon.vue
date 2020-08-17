@@ -17,11 +17,22 @@ export default {
     return {
       image: { backgroundImage: 'url(https://source.unsplash.com/random)' }
     }
+  },
+  mounted() {
+    const profile = this.$auth.user
+    if(profile?.type=== 'admin'){ this.$router.push('')}
+    else{
+    if (profile?.name === null) {
+      console.log(this.$auth.user);
+      this.$router.push('onboarding/')
+    }
+
+    }
   }
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="css" scoped>
 .bg-container {
   background-repeat: no-repeat;
   background-size: cover;

@@ -1,5 +1,5 @@
 <template>
-  <v-card elevation="9" min-height="600" max-width="450" class="mx-auto">
+  <v-card elevation="9" min-height="600" max-width="550" class="mx-auto">
     <v-card-title>
       <span class="headline">Sign Up!</span>
     </v-card-title>
@@ -106,7 +106,7 @@ export default {
         (v) => !!v || 'Username is required',
         (v) => (v && v.length <= 8) || 'Username must be less than 8 characters'
       ],
-      items: ['Artist', 'Recruiter']
+      items: ['artist', 'recruiter']
     }
   },
   methods: {
@@ -115,11 +115,21 @@ export default {
         this.submitForm()
       }
     },
-    submitForm() {
+    async submitForm() {
       let payload = {
+        operation: 'create_user',
+        username: this.username,
         email: this.email,
         password: this.pass,
         type: this.userType
+      }
+      try {
+        await this.$axios.$put('/register', payload).then((response) => {
+          //console.log('Successfully Logged in')
+          this.$router.push('/auth/login')
+        })
+      } catch (error) {
+        console.log(error)
       }
       console.log('Data Submitted payload:', payload)
     }

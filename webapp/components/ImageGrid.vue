@@ -6,12 +6,11 @@
         md="4"
         sm="6"
         cols="12"
-        v-for="(x, index) in caturls"
+        v-for="(x, index) in imageurls"
         :key="index"
         align="center"
         no-gutters
         ><div class="grid-square">
-          {{ x }}
           <v-lazy
             v-model="x.isActive"
             :options="{ threshold: 0.5 }"
@@ -20,12 +19,12 @@
           >
             <v-card outlined class="grid-card">
               <img
-                :src="x"
+                :src="x.url"
                 :key="index"
                 alt="pussy"
                 class="img-class"
-                @click="showDetail($event, 'Cool Post', x[0].url)"
-              />{{ x }}
+                @click="showDetail($event, 'Cool Post', x.url)"
+              />
             </v-card>
           </v-lazy>
         </div>
@@ -49,34 +48,30 @@ export default {
   components: { Modal },
   data() {
     return {
-      caturls: [],
+      imageurls: [],
       colstyle: 'padding:0em; margin:1em',
       dialog: false,
       title: '',
-      imgval: ''
+      imgval: '',
     }
   },
   computed: {
     renderImage() {
-      return this.caturls.filter((p) => p.isActive).length
-    }
+      return this.imageurls.filter((p) => p.isActive).length
+    },
   },
   methods: {
     getManyPussy() {
-      var totalCount = 10
+      var totalCount = 40
       var i = 0
       for (i = 0; i < totalCount; i++) {
-        axios
-          .get('https://api.thecatapi.com/v1/images/search')
-          .then((response) => {
-            var catPic = response.data[0].url
+        const url = { url: '/coolpost.png' }
 
-            this.caturls.push(catPic)
-            console.log(this.caturls)
-          })
+        this.imageurls.push(url)
+        console.log(this.imageurls)
       }
 
-      return this.caturls
+      return this.imageurls
     },
     showDetail(e, dTitle, dImg) {
       this.title = dTitle
@@ -87,11 +82,11 @@ export default {
       this.dialog = false
       this.title = ''
       this.imgval = ''
-    }
+    },
   },
   created() {
     this.getManyPussy()
-  }
+  },
 }
 </script>
 
@@ -100,7 +95,7 @@ export default {
   width: 100%;
   height: 100%;
   padding: 0;
-  background: #fff;
+  background: transparent;
   margin: 0;
 }
 .grid-square:hover {

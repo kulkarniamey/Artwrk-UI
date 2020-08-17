@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-layout row wrap>
-      <v-flex xs12 sm6 md4 lg3 v-for="job in jobs" :key="job.name">
+      <v-flex xs12 sm6 md4 lg3 v-for="job in jobDetailsData" :key="job.name">
         <v-lazy
           v-model="job.isActive"
           :options="{ threshold: 0.5 }"
@@ -10,17 +10,15 @@
           <v-card class="text-sm-center ma-2">
             <v-responsive class="pt-3 justify-center">
               <v-avatar color="deep-purple" size="100">
-                <v-icon size="80" color="white" v-text="job.avatar"></v-icon>
+                <span class="white--text headline">{{job.companyTitle}}</span>
               </v-avatar>
             </v-responsive>
             <v-card-text>
-              <v-card-title class="justify-center headline">{{
-                job.name
-              }}</v-card-title>
-              <div class="grey--text">{{ job.info }}</div>
+              <v-card-title class="justify-center headline">{{job.jobTitle }}</v-card-title>
+              <div class="grey--text">{{ job.description }}</div>
             </v-card-text>
             <v-card-actions>
-              <v-btn color="deep-purple white--text">
+              <v-btn color="deep-purple white--text" v-on:click="apply(job)">
                 Apply for job
               </v-btn>
               <v-spacer></v-spacer>
@@ -39,78 +37,74 @@
 export default {
   data() {
     return {
-      jobs: [
-        {
-          name: 'LogicBlend',
-          avatar: 'mdi-account',
-          info:
-            'Lorem ipsum dolor sit amet, vim eligendi aliquando reprimique in. Qui diam iudicabit consectetuer ea, eos ad dicunt persecuti scriptorem, qui vero putent ad. Regione civibus mnesarchum duo te. Pri veri tollit aperiam in.'
-        },
-        {
-          name: 'SpecDrive',
-          avatar: 'mdi-account-supervisor',
-          info:
-            'Lorem ipsum dolor sit amet, vim eligendi aliquando reprimique in. Qui diam iudicabit consectetuer ea, eos ad dicunt persecuti scriptorem, qui vero putent ad. Regione civibus mnesarchum duo te. Pri veri tollit aperiam in.'
-        },
-        {
-          name: 'CloakSeven',
-          avatar: 'mdi-account-group',
-          info:
-            'Lorem ipsum dolor sit amet, vim eligendi aliquando reprimique in. Qui diam iudicabit consectetuer ea, eos ad dicunt persecuti scriptorem, qui vero putent ad. Regione civibus mnesarchum duo te. Pri veri tollit aperiam in.'
-        },
-        {
-          name: 'Work&Aty',
-          avatar: 'mdi-account-circle',
-          info:
-            'Lorem ipsum dolor sit amet, vim eligendi aliquando reprimique in. Qui diam iudicabit consectetuer ea, eos ad dicunt persecuti scriptorem, qui vero putent ad. Regione civibus mnesarchum duo te. Pri veri tollit aperiam in.'
-        },
-        {
-          name: 'Logic&Effiny',
-          avatar: 'mdi-briefcase-account',
-          info:
-            'Lorem ipsum dolor sit amet, vim eligendi aliquando reprimique in. Qui diam iudicabit consectetuer ea, eos ad dicunt persecuti scriptorem, qui vero putent ad. Regione civibus mnesarchum duo te. Pri veri tollit aperiam in.'
-        },
-        {
-          name: 'Clad&Brin',
-          avatar: 'mdi-clipboard-account',
-          info:
-            'Lorem ipsum dolor sit amet, vim eligendi aliquando reprimique in. Qui diam iudicabit consectetuer ea, eos ad dicunt persecuti scriptorem, qui vero putent ad. Regione civibus mnesarchum duo te. Pri veri tollit aperiam in.'
-        },
-
-        //**  Extraas (to be deleted) **//
-        {
-          name: 'LogicBlend',
-          avatar: 'mdi-account',
-          info:
-            'Lorem ipsum dolor sit amet, vim eligendi aliquando reprimique in. Qui diam iudicabit consectetuer ea, eos ad dicunt persecuti scriptorem, qui vero putent ad. Regione civibus mnesarchum duo te. Pri veri tollit aperiam in.'
-        },
-        {
-          name: 'SpecDrive',
-          avatar: 'mdi-account-supervisor',
-          info:
-            'Lorem ipsum dolor sit amet, vim eligendi aliquando reprimique in. Qui diam iudicabit consectetuer ea, eos ad dicunt persecuti scriptorem, qui vero putent ad. Regione civibus mnesarchum duo te. Pri veri tollit aperiam in.'
-        },
-        {
-          name: 'CloakSeven',
-          avatar: 'mdi-account-group',
-          info:
-            'Lorem ipsum dolor sit amet, vim eligendi aliquando reprimique in. Qui diam iudicabit consectetuer ea, eos ad dicunt persecuti scriptorem, qui vero putent ad. Regione civibus mnesarchum duo te. Pri veri tollit aperiam in.'
-        },
-        {
-          name: 'Work&Aty',
-          avatar: 'mdi-account-circle',
-          info:
-            'Lorem ipsum dolor sit amet, vim eligendi aliquando reprimique in. Qui diam iudicabit consectetuer ea, eos ad dicunt persecuti scriptorem, qui vero putent ad. Regione civibus mnesarchum duo te. Pri veri tollit aperiam in.'
-        }
-
-        //**  Extraas (to be deleted) **//
-      ]
+      jobs: [],
+      applyJobData:{},
+      jobDetailsData:{}
+       
     }
+
+ 
   },
   computed: {
     renderCard() {
       return this.jobs.filter((p) => p.isActive).length
     }
+  },
+  async mounted(){
+    this.jobDetails()
+    
+  },
+
+  methods:{
+
+
+    async apply(job){
+     
+      this.applyJobData['operation'] = 'apply_job'
+      this.applyJobData['id'] = this.$auth.user.user_id
+      this.applyJobData['recruiter_id']=job.recruiter_id
+      this.applyJobData['job_id']=job.jobId
+       this.applyJobData['authorizationToken'] = this.$auth
+        .getToken('local')
+        .replace('Bearer ', '')
+      console.log('Data Submitted payload:', this.applyJobData)
+      
+      try {
+        const response = await this.$axios.post(`https://cuwewf4fsg.execute-api.ap-south-1.amazonaws.com/artwrkInit/jobs/${this.applyJobData.jobId}/apply`, this.applyJobData)
+        console.log(response)
+        if (response.data.statusCode === 200) {
+
+        }
+        
+        debugger
+      } catch (err) {
+        console.log(err)
+      }
+      finally{
+        this.applyJobData={};
+      }
+      
+    },
+
+    async jobDetails(){
+      const payload ={
+      operation: "get_all_jobs",
+       authorizationToke: this.$auth
+        .getToken('local')
+        .replace('Bearer ', '')
+
+    }
+    try{
+    const response= await this.$axios.put(`https://cuwewf4fsg.execute-api.ap-south-1.amazonaws.com/artwrkInit/jobs`,payload);
+    console.log(response);
+    if (response.data.jobs){
+      this.jobDetailsData = response.data.jobs;
+    }
+}catch(err){
+  console.log(err);
+}
+    }
+
   }
 }
 </script>

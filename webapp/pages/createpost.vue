@@ -1,18 +1,20 @@
 <template>
   <div>
-    <SearchBar> </SearchBar>
-    <h1>Welcome! {{ user }}</h1>
+    <CreatePost />
   </div>
 </template>
 
 <script>
-import SearchBar from '../components/SearchBar'
+import CreatePost from '../components/CreatePost'
+
 export default {
   middleware: 'auth',
-  name: 'welcome',
-  components:{SearchBar},
+  name: 'createpost',
   head() {
-    title: 'Welcome page'
+    title: 'Post your project'
+  },
+  components: {
+    CreatePost
   },
   data() {
     return {

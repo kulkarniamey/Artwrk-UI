@@ -1,19 +1,33 @@
 <template>
   <v-app>
-    <v-app-bar app color="indigo lighten-1" dense flat>
+    <div v-if="loading"> Loading...</div>
+    <template v-else>
+    <v-app-bar app color="#2b2b2b" dense flat dark>
       <!-- <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon> -->
 
-      <img class="mr-3" :src="require('../assets/v.png')" height="40" />
-      <v-toolbar-title>ArtWrk</v-toolbar-title>
+      <!-- <img class="mr-3" :src="require('../assets/v.png')" height="40" /> -->
+      <v-btn icon>
+        <v-icon>mdi-apps</v-icon>
+      </v-btn>
+      <v-toolbar-title class="pl-0"
+        ><nuxt-link to="/" class="text-decoration-none white--text">
+          ArtWrk
+        </nuxt-link>
+      </v-toolbar-title>
 
       <v-spacer />
+      <div v-if="$auth.loggedIn">
+      <v-btn color="indigo accent-4" to="/jobs" rounded> Jobs </v-btn>
+      </div>
+      <v-btn icon to="/search">
+        <v-icon>mdi-magnify</v-icon>
+      </v-btn>
+
+      <v-btn icon>
+        <v-icon>mdi-arrow-all</v-icon>
+      </v-btn>
 
       <div v-if="$auth.loggedIn">
-        
-             
-             
-      
-        
         <!-- <v-btn icon dark @click="snackbar = true,messages=0" >
           <v-badge 
         :content="messages"
@@ -23,61 +37,51 @@
         <v-icon >mdi-bell-outline</v-icon>    </v-badge>  
         </v-btn> -->
 
-        <v-menu bottom offset-y transition="slide-x-transition" >
-
-          <template v-slot:activator="{ on, attrs }" >
-
-            
-            <v-btn :disabled="notifications.length === 0" dark  icon class="ma-2" v-bind="attrs" v-on="on"  > 
-                  <v-badge 
-                                      :content="notifications.length"
-                                      :value="notifications.length"
-                                      color="green"
-                                      overlap> 
-                            <v-icon >mdi-bell-outline</v-icon>  
-                    </v-badge>   
-            
+        <v-menu bottom offset-y transition="slide-x-transition">
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn
+              :disabled="notifications.length === 0"
+              dark
+              icon
+              class="ma-2"
+              v-bind="attrs"
+              v-on="on"
+            >
+              <v-badge
+                :content="notifications.length"
+                :value="notifications.length"
+                color="green"
+                overlap
+              >
+                <v-icon>mdi-bell-outline</v-icon>
+              </v-badge>
             </v-btn>
-
           </template>
 
           <v-card>
+            <v-list>
+              <v-subheader>Notifications</v-subheader>
+              <v-divider></v-divider>
 
-          <v-list>
+              <v-list-item v-for="(notification, i) in notifications" :key="i">
+                <v-list-item-title>{{ notification.text }} </v-list-item-title>
+                <v-card-actions>
+                  <v-spacer></v-spacer>
 
-            <v-list-item
-              v-for="(notification, i) in notifications"
-              :key="i"
-              
-            >
-                 <v-list-item-title>{{ notification.text }} </v-list-item-title>
-                 <v-card-actions>
-          <v-spacer></v-spacer>
-
-          <v-btn text @click="menu = false">Approve</v-btn>
-          <v-btn color="primary" text @click="removeNotification(i)">Remove</v-btn>
-        </v-card-actions>
-            </v-list-item>
-          </v-list>
-
-           
-
+                  <v-btn text nuxt :to="notification.actionLink">{{notification.actionText}}</v-btn>
+                  <v-btn color="primary" text @click="removeNotification(i)"
+                    >Remove</v-btn
+                  >
+                </v-card-actions>
+              </v-list-item>
+            </v-list>
           </v-card>
-
         </v-menu>
 
-     
-        
-        <v-btn text large dark>Welcome {{ user }} </v-btn>
+        <v-btn nuxt :to="`/artist/`+user" text large dark>Welcome {{ user }} </v-btn>
         <v-btn text @click="$auth.logout()" dark>Logout</v-btn>
 
-        
-       
-        
-  
-          
-        
-    <!-- <v-Snackbars
+        <!-- <v-Snackbars
 
 
  v-for="(notification,index) in notifications" v-model="snackbar" :key="index" right top color="indigo lighten-1" :timeout="timeout" >
@@ -92,19 +96,12 @@
                 <v-btn   color=""   text    v-bind="attrs" @click="snackbar = false"  > Close  </v-btn>
               </template>
       </v-Snackbars> -->
-
-
-       
-
-
-
-
       </div>
 
       <div v-else>
         <v-btn text to="/auth/login">Login</v-btn>
 
-        <v-btn text to="/auth/testregi">Register</v-btn>
+        <v-btn text to="/auth/register">Register</v-btn>
       </div>
     </v-app-bar>
 
@@ -112,43 +109,23 @@
       <nuxt />
     </v-main>
 
-    <v-footer dark padless>
-      <v-row justify="center" no-gutters>
-        <v-col>
-          <v-card flat tile class="indigo lighten-1 white--text text-center">
-            <v-card-text>
-              <v-btn
-                v-for="icon in icons"
-                :key="icon"
-                class="mx-4 white--text"
-                icon
-              >
-                <v-icon size="24px">{{ icon }}</v-icon>
-              </v-btn>
-            </v-card-text>
-
-            <v-divider></v-divider>
-
-            <v-card-text class="white--text">
-              {{ new Date().getFullYear() }} — <strong>ArtWrk</strong>
-            </v-card-text>
-          </v-card>
-        </v-col>
-      </v-row>
-    </v-footer>
+    <FooterComponent />
+    </template>
   </v-app>
 </template>
 
 <script>
 import Login from '../components/Login'
+import FooterComponent from '../components/FooterComponent'
 
 export default {
   props: {
     source: String
   },
+  components: { FooterComponent },
   data: () => ({
     drawer: null,
-    icons: ['mdi-facebook', 'mdi-twitter', 'mdi-linkedin', 'mdi-instagram'],
+    loading: true,
     items: [
       {
         icon: 'mdi-apps',
@@ -163,20 +140,11 @@ export default {
     ],
 
     state: false,
-    messages:"4",
+    messages: '4',
     snackbar: false,
     text: 'Hello I am New User',
-    timeout:null,
-    notifications: [{
-      id:1,
-      text:"This is first",
-      status: "unread"
-    },
-    {
-      id:2,
-      text:"This is second",
-      status:"unread"
-    }],
+    timeout: null,
+    notifications: [],
     user: undefined
   }),
 
@@ -190,20 +158,50 @@ export default {
     }
   },
   methods: {
-    removeNotification(index){
-      
-      this.notifications.splice(index,1);
-      debugger;
+    removeNotification(index) {
+      this.notifications.splice(index, 1)
+      debugger
+    },
+    gotoProfile() {
+      this.$router.push('artist/' + this.user)
     }
- 
-},
- mounted() {
-    this.user = this.$auth?.user?.name || null
+  },
+  async created() {
+    this.user = this.$auth?.user?.username || null
+    try {
+      const state = this.$auth.getToken('local')
+      if (state !== false) {
+        const token = state.replace('Bearer ', '')
+        const userPayload = {
+          operation: 'get_profile',
+          authorizationToken: token
+        }
+        let user = await this.$axios
+          .put('profile/', userPayload)
+          .then((user) => {
+            this.$auth.setUser(user.data.profile)
+            this.user = this.$auth?.user?.username || null
+            if (user?.data?.profile?.email_verfication === 'False') {
+              this.notifications.push({
+                text: 'You have not yet verified your email',
+                actionText: 'verify',
+                actionLink: '/auth/verify'
+              })
+            }
+          })
+      } else {
+      }
+    } catch (err) {}
+    this.loading = false
+    //console.log(state)
   }
 }
 </script>
 <style scoped>
 .v-btn {
   height: 10px;
+}
+.foot {
+  display: flex;
 }
 </style>
