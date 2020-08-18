@@ -311,10 +311,22 @@ export default {
       customHeight: 200
     }
   },
+  methods: {
+    yourCallBackFunction() {
+      this.dialog = false
+    }
+  },
+
   mounted() {
     if (screen.width > 463) {
       this.customHeight = 230
     }
+
+    document.addEventListener('backbutton', this.yourCallBackFunction, false)
+  },
+
+  beforeDestroy() {
+    document.removeEventListener('backbutton', this.yourCallBackFunction)
   }
 }
 </script>
