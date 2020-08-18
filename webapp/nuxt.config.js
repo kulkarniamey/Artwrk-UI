@@ -49,7 +49,7 @@ export default {
    */
   axios: {
     baseURL:
-      'https://k32xx6unw3.execute-api.us-east-2.amazonaws.com/test-stage/',
+      'https://cuwewf4fsg.execute-api.ap-south-1.amazonaws.com/artwrkInit/',
   },
   // proxy: {
   //   '/api/': {
