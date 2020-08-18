@@ -20,8 +20,13 @@ export default {
   },
   mounted() {
     const profile = this.$auth.user
+
     if (profile?.name === null) {
-      this.$router.push('onboarding/')
+      if (profile?.type === 'artist') {
+        this.$router.push('onboarding/artist')
+      } else if (profile?.type === 'recruiter') {
+        this.$router.push('onboarding/recruiter')
+      }
     }
   }
 }

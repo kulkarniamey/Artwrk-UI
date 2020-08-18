@@ -110,25 +110,6 @@
                       </v-text-field>
                     </v-form>
                   </v-col>
-                  <v-col cols="12">
-                    Education History
-                    <v-chip
-                      v-for="(names, id) in profile.education_history"
-                      :key="id"
-                      class="ma-1"
-                      color="blue lighten-4"
-                      >{{ names }}
-                    </v-chip>
-                    <v-form v-on:submit.prevent="addEducation()">
-                      <v-text-field
-                        placeholder="Press enter after each entry"
-                        required
-                        v-model="formData.education"
-                        type="text"
-                      >
-                      </v-text-field>
-                    </v-form>
-                  </v-col>
                 </v-row>
               </v-form>
               <v-btn color="warning" @click="e1 = 1">
@@ -215,8 +196,9 @@ export default {
         username: undefined,
         companyName: undefined,
         employerHistory: undefined,
-        awards: undefined,
-        companyType: undefined
+        awards_recognition: undefined,
+        company_type: undefined,
+        address: undefined
       },
       profile: {},
       valid: true,
