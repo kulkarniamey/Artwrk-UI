@@ -167,12 +167,12 @@ export default {
     CoverPic,
     imageGrid,
     ArtistProfileCardComponent,
-    PortfolioButton
+    PortfolioButton,
   },
   data() {
     return {
       user: '',
-      isPostsNull: false,
+      isPostsNull: true,
       dialog: false,
       profile: {
         user_id: '',
@@ -193,12 +193,12 @@ export default {
         certificates: [],
         applied_jobs: [],
         email: '',
-        artist_type: null
+        artist_type: null,
       },
       width: 0,
       desc: '',
       fileData: undefined,
-      postData: []
+      postData: [],
     }
   },
   async created() {
@@ -209,15 +209,15 @@ export default {
     this.handleResize()
     const payload = {
       operation: 'get_posts_by_user',
-      id: this.profile.user_id
+      id: this.profile.user_id,
     }
     const response = await this.$axios.put(
       'https://cuwewf4fsg.execute-api.ap-south-1.amazonaws.com/artwrkInit/posts',
       payload
     )
     this.postData = response.data
-    console.log(this.postData.posts.length)
-    if (this.postData.posts.length) {
+    console.log(this.postData?.posts?.length)
+    if (this.postData?.posts?.length) {
       this.isPostsNull = false
     } else {
       this.isPostsNull = true
@@ -264,9 +264,9 @@ export default {
             upload_type: 'post',
             description: this.desc,
             filename: fname + '_' + time,
-            date_time: date + '_' + time
-          })
-        }
+            date_time: date + '_' + time,
+          }),
+        },
       }
       try {
         let response = await this.$axios
@@ -277,7 +277,7 @@ export default {
       } catch (err) {
         console.log(err)
       }
-    }
+    },
   },
   computed: {
     mobile() {
@@ -286,8 +286,8 @@ export default {
       }
 
       return false
-    }
-  }
+    },
+  },
 }
 </script>
 

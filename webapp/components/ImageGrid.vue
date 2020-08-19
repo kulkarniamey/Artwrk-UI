@@ -24,7 +24,7 @@
                 alt="pussy"
                 class="img-class"
                 cover
-                @click="showDetail($event, 'Cool Post', x.url)"
+                @click="showDetail($event, x.description, x.url)"
               />
             </v-card>
           </v-lazy>
@@ -54,16 +54,16 @@ export default {
       dialog: false,
       title: '',
       imgval: '',
-      images: []
+      images: [],
     }
   },
   props: {
-    postData: { type: Array, required: true }
+    postData: { type: Array, required: true },
   },
   computed: {
     renderImage() {
       return this.imageurls.filter((p) => p.isActive).length
-    }
+    },
   },
   methods: {
     getManyPussy() {
@@ -86,11 +86,11 @@ export default {
       this.dialog = false
       this.title = ''
       this.imgval = ''
-    }
+    },
   },
   mounted() {
     this.images = this.postData
-  }
+  },
 }
 </script>
 

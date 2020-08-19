@@ -25,7 +25,7 @@
 
             <v-spacer></v-spacer>
 
-            <v-btn icon class="white--text align-end">
+            <v-btn icon @click="" class="white--text align-end">
               <v-icon left>mdi-heart</v-icon>
             </v-btn>
           </div>
@@ -38,7 +38,7 @@
 <script>
 export default {
   name: 'Modal',
-  props: ['showModal', 'postTitle', 'postImg'],
+  props: ['showModal', 'singlePost'],
   methods: {
     closeModal(e) {
       this.$emit('closedModal')
