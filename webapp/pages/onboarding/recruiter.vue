@@ -1,27 +1,23 @@
 <template>
   <div>
-    <div class="mt-10">
-      <SearchBar> </SearchBar>
-    </div>
+    <div class="mt-10"></div>
     <div>
-      <artistonboardingform :profileData="getProfile"/>
+      <recruiteronboardingform :profileData="getProfile" />
     </div>
   </div>
 </template>
 
 <script>
-import SearchBar from '../components/SearchBar'
-import artistonboardingform from '../components/Onboarding/artistonboardform'
+import recruiteronboardingform from '~/components/Onboarding/recruiteronboardingform'
 
 export default {
   middleware: 'auth',
   name: 'welcome',
-  components: { SearchBar },
   head() {
     title: 'Welcome page'
   },
   components: {
-    artistonboardingform
+    recruiteronboardingform
   },
   data() {
     return {

@@ -23,7 +23,7 @@
                   <v-col cols="12">
                     <v-text-field
                       v-model="profile.name"
-                      :rules="artistNameRules"
+                      :rules="companyNameRules"
                       label="Name"
                       required
                     ></v-text-field>
@@ -73,7 +73,7 @@
               <v-form ref="secondPageForm" v-model="valid">
                 <v-row>
                   <v-col cols="12">
-                    Employer History
+                    Employer Info
                     <v-chip
                       v-for="(names, id) in profile.employer_history"
                       :key="id"
@@ -105,25 +105,6 @@
                         placeholder="Press enter after each entry"
                         required
                         v-model="formData.awards"
-                        type="text"
-                      >
-                      </v-text-field>
-                    </v-form>
-                  </v-col>
-                  <v-col cols="12">
-                    Education History
-                    <v-chip
-                      v-for="(names, id) in profile.education_history"
-                      :key="id"
-                      class="ma-1"
-                      color="blue lighten-4"
-                      >{{ names }}
-                    </v-chip>
-                    <v-form v-on:submit.prevent="addEducation()">
-                      <v-text-field
-                        placeholder="Press enter after each entry"
-                        required
-                        v-model="formData.education"
                         type="text"
                       >
                       </v-text-field>
@@ -207,18 +188,17 @@
 
 <script>
 export default {
-  name: 'artistonboardingform',
+  name: 'recruiteronboardingform',
   props: { profileData: { type: Object } },
   data() {
     return {
       formData: {
         username: undefined,
-        artistName: undefined,
-        currentEmployer: undefined,
-        skilltag: undefined,
-        empHistory: undefined,
-        awards: undefined,
-        education: undefined
+        companyName: undefined,
+        employerHistory: undefined,
+        awards_recognition: undefined,
+        company_type: undefined,
+        address: undefined
       },
       profile: {},
       valid: true,
@@ -234,7 +214,6 @@ export default {
 
       usernameRules: [],
 
-      artistNameRules: [],
       fbRules: [],
       tweetRules: [],
       jobTypes: ['Full time', 'Part time', 'Freelance'],
@@ -274,14 +253,13 @@ export default {
           const link = `/artist/${response.data.profile.username}`
           this.$router.push(link)
         }
-        debugger
       } catch (err) {
         console.log(err)
       }
     },
 
     firstPageValid() {
-      this.artistNameRules = [
+      this.companyNameRules = [
         (v) => !!v || 'Name is required',
         (v) => (v && v.length <= 50) || 'Name must be less than 25 words'
         // Tentative word limit. Needs to be changed.
@@ -292,10 +270,8 @@ export default {
           this.e1 = 2
         }
       }
-      debugger
     },
     applySocialRules() {
-      debugger
       this.fbRules = [
         (v) =>
           /[(http(s)?):\/\/(www\.)?a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/gi.test(
