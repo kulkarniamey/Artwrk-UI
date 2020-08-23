@@ -26,10 +26,21 @@
                 <v-icon>mdi-share-variant</v-icon>
               </v-btn>
             </v-card-actions>
+
+
           </v-card>
         </v-lazy>
       </v-flex>
     </v-layout>
+       <v-snackbar v-model="snackbar" :timeout="timeout" color="success">
+                           {{ text }}
+
+                      <template v-slot:action="{ attrs }">
+                <v-btn color="white" text v-bind="attrs" @click="snackbar = false">
+                        Close
+                </v-btn>
+                        </template>
+                 </v-snackbar>
   </div>
 </template>
 
@@ -39,7 +50,12 @@ export default {
     return {
       jobs: [],
       applyJobData:{},
-      jobDetailsData:{}
+      jobDetailsData:{},
+      snackbar: false,
+      text: 'Job Apllied Succesufully ',
+      timeout: 2000,
+      valid: true,
+    
        
     }
 
@@ -73,8 +89,10 @@ export default {
         const response = await this.$axios.post(`https://cuwewf4fsg.execute-api.ap-south-1.amazonaws.com/artwrkInit/jobs/${this.applyJobData.jobId}/apply`, this.applyJobData)
         console.log(response)
         if (response.data.statusCode === 200) {
+          
 
         }
+        this.snackbar=true
         
         debugger
       } catch (err) {
