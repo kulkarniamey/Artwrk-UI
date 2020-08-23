@@ -20,14 +20,14 @@ export default {
   },
   mounted() {
     const profile = this.$auth.user
-
+if(profile?.type=== 'admin'){ this.$router.push('')}
     if (profile?.name === null) {
       if (profile?.type === 'artist') {
         this.$router.push('onboarding/artist')
       } else if (profile?.type === 'recruiter') {
         this.$router.push('onboarding/recruiter')
       }
-    }
+
   }
 }
 </script>
