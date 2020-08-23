@@ -138,7 +138,13 @@
               </v-dialog>
             </v-col>
             <v-col cols="12" sm="10" class="">
-              <imageGrid />
+              <imageGrid v-if="!isPostsNull" :postData="postData.posts" />
+              <div class="flex" v-else>
+                <v-img class="splash" contain src="/noposts.svg" />
+                <h4 class="text-grey text-center">
+                  Seems like you have no posts...
+                </h4>
+              </div>
             </v-col>
           </v-row>
         </v-tab-item>
@@ -167,7 +173,7 @@ export default {
     CoverPic,
     imageGrid,
     ArtistProfileCardComponent,
-    PortfolioButton,
+    PortfolioButton
   },
   data() {
     return {
@@ -193,12 +199,12 @@ export default {
         certificates: [],
         applied_jobs: [],
         email: '',
-        artist_type: null,
+        artist_type: null
       },
       width: 0,
       desc: '',
       fileData: undefined,
-      postData: [],
+      postData: []
     }
   },
   async created() {
@@ -209,7 +215,7 @@ export default {
     this.handleResize()
     const payload = {
       operation: 'get_posts_by_user',
-      id: this.profile.user_id,
+      id: this.profile.user_id
     }
     const response = await this.$axios.put(
       'https://cuwewf4fsg.execute-api.ap-south-1.amazonaws.com/artwrkInit/posts',
@@ -264,9 +270,9 @@ export default {
             upload_type: 'post',
             description: this.desc,
             filename: fname + '_' + time,
-            date_time: date + '_' + time,
-          }),
-        },
+            date_time: date + '_' + time
+          })
+        }
       }
       try {
         let response = await this.$axios
@@ -277,7 +283,7 @@ export default {
       } catch (err) {
         console.log(err)
       }
-    },
+    }
   },
   computed: {
     mobile() {
@@ -286,8 +292,8 @@ export default {
       }
 
       return false
-    },
-  },
+    }
+  }
 }
 </script>
 
