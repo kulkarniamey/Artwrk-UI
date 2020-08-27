@@ -18,9 +18,11 @@
               <div class="grey--text">{{ job.description }}</div>
             </v-card-text>
             <v-card-actions>
+              <div v-if="$store.state.auth.user.type==='artist'">
               <v-btn color="deep-purple white--text" v-on:click="apply(job)">
                 Apply for job
               </v-btn>
+              </div>
               <v-spacer></v-spacer>
               <v-btn icon>
                 <v-icon>mdi-share-variant</v-icon>
@@ -52,7 +54,7 @@ export default {
       applyJobData:{},
       jobDetailsData:{},
       snackbar: false,
-      text: 'Job Apllied Succesufully ',
+      text: 'Job Applied Succesufully ',
       timeout: 2000,
       valid: true,
     
@@ -89,10 +91,11 @@ export default {
         const response = await this.$axios.post(`https://cuwewf4fsg.execute-api.ap-south-1.amazonaws.com/artwrkInit/jobs/${this.applyJobData.jobId}/apply`, this.applyJobData)
         console.log(response)
         if (response.data.statusCode === 200) {
+          this.snackbar=true
           
 
         }
-        this.snackbar=true
+        
         
         debugger
       } catch (err) {

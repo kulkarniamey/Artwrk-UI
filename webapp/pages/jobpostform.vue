@@ -60,6 +60,15 @@
         >Post Job</v-btn
       >
     </v-card-actions>
+      <v-snackbar v-model="snackbar" :timeout="timeout" color="success">
+                           {{ text }}
+
+                      <template v-slot:action="{ attrs }">
+                <v-btn color="white" text v-bind="attrs" @click="snackbar = false">
+                        Close
+                </v-btn>
+                        </template>
+                 </v-snackbar>
   </v-card>
 </template>
 
@@ -73,6 +82,10 @@ export default {
         jobDescription: undefined,
         companyName: undefined,
       },
+      valid: true,
+          snackbar: false,
+      text: 'Job Applied Succesufully ',
+      timeout: 4000,
       valid: true,
 
       companyNameRules: [],
@@ -170,7 +183,10 @@ export default {
         })
         
         console.log(response)
+        console.log(response.data.statusCode)
         if (response.data.statusCode === 200) {
+          
+           this.snackbar=true;
 
         }
         

@@ -64,7 +64,7 @@
               <v-divider></v-divider>
 
               <v-list-item v-for="(notification, i) in notifications" :key="i">
-                <v-list-item-title>{{ notification.text }} </v-list-item-title>
+                <v-list-item-title>{{ notification.notification }} </v-list-item-title>
                 <v-card-actions>
                   <v-spacer></v-spacer>
 
@@ -145,7 +145,8 @@ export default {
     text: 'Hello I am New User',
     timeout: null,
     notifications: [],
-    user: undefined
+    user: undefined,
+    
   }),
 
   computed: {
@@ -167,6 +168,7 @@ export default {
     }
   },
   async created() {
+    
     this.user = this.$auth?.user?.username || null
     try {
       const state = this.$auth.getToken('local')
@@ -183,7 +185,7 @@ export default {
             this.user = this.$auth?.user?.username || null
             if (user?.data?.profile?.email_verfication === 'False') {
               this.notifications.push({
-                text: 'You have not yet verified your email',
+                notification: 'You have not yet verified your email',
                 actionText: 'verify',
                 actionLink: '/auth/verify'
               })
@@ -194,6 +196,38 @@ export default {
     } catch (err) {}
     this.loading = false
     //console.log(state)
+
+    const payload ={
+          operation: "get_all_notifications",
+          id: this.$auth?.user?.user_id,
+          authorizationToken: this.$auth
+        .getToken('local')
+        .replace('Bearer ', '')
+
+    }
+    try{
+    const response= await this.$axios.put(`https://cuwewf4fsg.execute-api.ap-south-1.amazonaws.com/artwrkInit/notifications`,payload);
+    console.log(response.data.notifications);
+    if (response.data.notifications){
+      this.notifications= this.notifications.concat(response.data.notifications)
+      debugger
+      console.log(this.notifications)
+            
+      
+    }
+      }
+    catch(err){
+  console.log(err);
+}
+
+
+  },
+
+  async getNotifications(){
+
+      
+
+
   }
 }
 </script>
