@@ -183,7 +183,7 @@ import SiteLoader from '../components/SiteLoader'
 
 export default {
   props: {
-    source: String
+    source: String,
   },
   components: { FooterComponent, SiteLoader },
   data: () => ({
@@ -194,13 +194,13 @@ export default {
       {
         icon: 'mdi-apps',
         title: 'Welcome',
-        to: '/'
+        to: '/',
       },
       {
         icon: 'mdi-chart-bubble',
         title: 'Inspire',
-        to: '/inspire'
-      }
+        to: '/inspire',
+      },
     ],
     icons: [],
 
@@ -211,19 +211,19 @@ export default {
     text: 'Hello I am New User',
     timeout: null,
     notifications: [],
-    user: undefined
+    user: undefined,
   }),
   watch: {
     group() {
       this.drawer = false
-    }
+    },
   },
   computed: {
-    isLoggedIn: function() {
+    isLoggedIn: function () {
       return this.$auth.loggedIn
     },
 
-    logOut: function() {
+    logOut: function () {
       this.$auth.logout()
     },
 
@@ -233,7 +233,7 @@ export default {
       }
 
       return false
-    }
+    },
   },
   methods: {
     removeNotification(index) {
@@ -244,9 +244,9 @@ export default {
     },
     handleResize() {
       this.width = window.innerWidth
-    }
+    },
   },
-  async created() {
+  async mounted() {
     // this.user = this.$auth?.user?.username || null
     try {
       const state = this.$auth.getToken('local')
@@ -254,7 +254,7 @@ export default {
         const token = state.replace('Bearer ', '')
         const userPayload = {
           operation: 'get_profile',
-          authorizationToken: token
+          authorizationToken: token,
         }
         let user = await this.$axios
           .put('profile/', userPayload)
@@ -265,7 +265,7 @@ export default {
               this.notifications.push({
                 text: 'You have not yet verified your email',
                 actionText: 'verify',
-                actionLink: '/auth/verify'
+                actionLink: '/auth/verify',
               })
             }
           })
@@ -279,7 +279,7 @@ export default {
   },
   destroyed() {
     window.removeEventListener('resize', this.handleResize)
-  }
+  },
 }
 </script>
 <style scoped>

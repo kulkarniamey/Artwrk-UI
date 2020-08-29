@@ -15,12 +15,14 @@ export default {
   name: 'comingsoon',
   data() {
     return {
-      image: { backgroundImage: 'url(https://source.unsplash.com/random)' }
+      image: { backgroundImage: 'url(https://source.unsplash.com/random)' },
     }
   },
   mounted() {
     const profile = this.$auth.user
-
+    if (profile?.type === 'admin') {
+      this.$router.push('')
+    }
     if (profile?.name === null) {
       if (profile?.type === 'artist') {
         this.$router.push('onboarding/artist')
@@ -28,7 +30,7 @@ export default {
         this.$router.push('onboarding/recruiter')
       }
     }
-  }
+  },
 }
 </script>
 

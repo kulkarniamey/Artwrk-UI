@@ -25,8 +25,8 @@
 
             <v-spacer></v-spacer>
 
-            <v-btn icon class="white--text align-end">
-              <v-icon left>mdi-heart</v-icon>
+            <v-btn icon @click="changeColor" class="white--text align-end">
+              <v-icon :color="liked" left>mdi-heart</v-icon>
             </v-btn>
           </div>
         </v-img>
@@ -38,10 +38,21 @@
 <script>
 export default {
   name: 'Modal',
-  props: ['showModal', 'singlePost'],
+  props: ['showModal', 'postTitle', 'postImg'],
+  data() {
+    return {
+      liked: ''
+    }
+  },
+  mounted() {
+    this.liked = ''
+  },
   methods: {
     closeModal(e) {
       this.$emit('closedModal')
+    },
+    changeColor() {
+      this.liked = 'red'
     }
   }
 }
