@@ -61,10 +61,10 @@
                 </v-btn>
               </template>
 
-              <v-card>
-                <v-list>
-                  <v-subheader>Notifications</v-subheader>
-                  <v-divider></v-divider>
+              <v-list-item v-for="(notification, i) in notifications" :key="i">
+                <v-list-item-title>{{ notification.notification }} </v-list-item-title>
+                <v-card-actions>
+                  <v-spacer></v-spacer>
 
                   <v-list-item
                     v-for="(notification, i) in notifications"
@@ -212,6 +212,7 @@ export default {
     timeout: null,
     notifications: [],
     user: undefined,
+    
   }),
   watch: {
     group() {
@@ -246,8 +247,9 @@ export default {
       this.width = window.innerWidth
     },
   },
-  async mounted() {
-    // this.user = this.$auth?.user?.username || null
+  async created() {
+    
+    this.user = this.$auth?.user?.username || null
     try {
       const state = this.$auth.getToken('local')
       if (state !== false) {
@@ -263,7 +265,7 @@ export default {
             this.user = this.$auth?.user?.username || null
             if (user?.data?.profile?.email_verfication === 'False') {
               this.notifications.push({
-                text: 'You have not yet verified your email',
+                notification: 'You have not yet verified your email',
                 actionText: 'verify',
                 actionLink: '/auth/verify',
               })
@@ -276,10 +278,39 @@ export default {
     window.addEventListener('resize', this.handleResize)
     this.handleResize()
     //console.log(state)
+
+    const payload ={
+          operation: "get_all_notifications",
+          id: this.$auth?.user?.user_id,
+          authorizationToken: this.$auth
+        .getToken('local')
+        .replace('Bearer ', '')
+
+    }
+    try{
+    const response= await this.$axios.put(`https://cuwewf4fsg.execute-api.ap-south-1.amazonaws.com/artwrkInit/notifications`,payload);
+    console.log(response.data.notifications);
+    if (response.data.notifications){
+      this.notifications= this.notifications.concat(response.data.notifications)
+      debugger
+      console.log(this.notifications)
+            
+      
+    }
+      }
+    catch(err){
+  console.log(err);
+}
+
+
   },
-  destroyed() {
-    window.removeEventListener('resize', this.handleResize)
-  },
+
+  async getNotifications(){
+
+      
+
+
+  }
 }
 </script>
 <style scoped>
