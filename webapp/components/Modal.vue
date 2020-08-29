@@ -25,7 +25,7 @@
 
             <v-spacer></v-spacer>
 
-            <v-btn icon @click="" class="white--text align-end">
+            <v-btn icon class="white--text align-end">
               <v-icon left>mdi-heart</v-icon>
             </v-btn>
           </div>
@@ -42,8 +42,8 @@ export default {
   methods: {
     closeModal(e) {
       this.$emit('closedModal')
-    },
-  },
+    }
+  }
 }
 </script>
 
