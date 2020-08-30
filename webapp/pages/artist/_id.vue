@@ -210,26 +210,9 @@ export default {
   async created() {
     this.profile = this.$auth.user
     console.log(this.profile)
-
     window.addEventListener('resize', this.handleResize)
     this.handleResize()
-    const payload = {
-      operation: 'get_posts_by_user',
-      id: this.profile.user_id
-    }
-    const response = await this.$axios.put(
-      'https://cuwewf4fsg.execute-api.ap-south-1.amazonaws.com/artwrkInit/posts',
-      payload
-    )
-    this.postData = response.data
-    console.log(this.postData?.posts?.length)
-    if (this.postData?.posts?.length) {
-      this.isPostsNull = false
-    } else {
-      this.isPostsNull = true
-    }
-    debugger
-    console.log(this.postData)
+    this.fetchPosts()
   },
 
   destroyed() {
@@ -243,7 +226,25 @@ export default {
     handleFile(file) {
       this.fileData = file
     },
+    async fetchPosts() {
+      const payload = {
+        operation: 'get_posts_by_user',
+        id: this.profile.user_id
+      }
+      const response = await this.$axios.put(
+        'https://cuwewf4fsg.execute-api.ap-south-1.amazonaws.com/artwrkInit/posts',
+        payload
+      )
+      this.postData = response.data
+      console.log(this.postData?.posts?.length)
+      if (this.postData?.posts?.length) {
+        this.isPostsNull = false
+      } else {
+        this.isPostsNull = true
+      }
 
+      console.log(this.postData)
+    },
     async createPost() {
       const state = this.$auth.getToken('local')
       const token = state.replace('Bearer ', '')
@@ -282,9 +283,10 @@ export default {
           })
       } catch (err) {
         console.log(err)
+      } finally {
+        this.dialog = false
+        this.fetchPosts()
       }
-
-      this.dialog = false
     }
   },
   computed: {

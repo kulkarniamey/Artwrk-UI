@@ -60,12 +60,17 @@
                   </v-badge>
                 </v-btn>
               </template>
-
-              <v-list-item v-for="(notification, i) in notifications" :key="i">
-                <v-list-item-title>{{ notification.notification }} </v-list-item-title>
-                <v-card-actions>
-                  <v-spacer></v-spacer>
-
+              <v-card>
+                <v-list-item
+                  v-for="(notification, i) in notifications"
+                  :key="i"
+                >
+                  <v-list-item-title
+                    >{{ notification.notification }}
+                  </v-list-item-title>
+                  <v-card-actions>
+                    <v-spacer></v-spacer>
+                  </v-card-actions>
                   <v-list-item
                     v-for="(notification, i) in notifications"
                     :key="i"
@@ -73,6 +78,7 @@
                     <v-list-item-title
                       >{{ notification.text }}
                     </v-list-item-title>
+
                     <v-card-actions>
                       <v-spacer></v-spacer>
 
@@ -84,7 +90,7 @@
                       >
                     </v-card-actions>
                   </v-list-item>
-                </v-list>
+                </v-list-item>
               </v-card>
             </v-menu>
 
@@ -183,7 +189,7 @@ import SiteLoader from '../components/SiteLoader'
 
 export default {
   props: {
-    source: String,
+    source: String
   },
   components: { FooterComponent, SiteLoader },
   data: () => ({
@@ -194,13 +200,13 @@ export default {
       {
         icon: 'mdi-apps',
         title: 'Welcome',
-        to: '/',
+        to: '/'
       },
       {
         icon: 'mdi-chart-bubble',
         title: 'Inspire',
-        to: '/inspire',
-      },
+        to: '/inspire'
+      }
     ],
     icons: [],
 
@@ -211,20 +217,19 @@ export default {
     text: 'Hello I am New User',
     timeout: null,
     notifications: [],
-    user: undefined,
-    
+    user: undefined
   }),
   watch: {
     group() {
       this.drawer = false
-    },
+    }
   },
   computed: {
-    isLoggedIn: function () {
+    isLoggedIn: function() {
       return this.$auth.loggedIn
     },
 
-    logOut: function () {
+    logOut: function() {
       this.$auth.logout()
     },
 
@@ -234,7 +239,7 @@ export default {
       }
 
       return false
-    },
+    }
   },
   methods: {
     removeNotification(index) {
@@ -245,10 +250,9 @@ export default {
     },
     handleResize() {
       this.width = window.innerWidth
-    },
+    }
   },
   async created() {
-    
     this.user = this.$auth?.user?.username || null
     try {
       const state = this.$auth.getToken('local')
@@ -256,7 +260,7 @@ export default {
         const token = state.replace('Bearer ', '')
         const userPayload = {
           operation: 'get_profile',
-          authorizationToken: token,
+          authorizationToken: token
         }
         let user = await this.$axios
           .put('profile/', userPayload)
@@ -267,7 +271,7 @@ export default {
               this.notifications.push({
                 notification: 'You have not yet verified your email',
                 actionText: 'verify',
-                actionLink: '/auth/verify',
+                actionLink: '/auth/verify'
               })
             }
           })
@@ -279,38 +283,30 @@ export default {
     this.handleResize()
     //console.log(state)
 
-    const payload ={
-          operation: "get_all_notifications",
-          id: this.$auth?.user?.user_id,
-          authorizationToken: this.$auth
-        .getToken('local')
-        .replace('Bearer ', '')
-
+    const payload = {
+      operation: 'get_all_notifications',
+      id: this.$auth?.user?.user_id,
+      authorizationToken: this.$auth.getToken('local').replace('Bearer ', '')
     }
-    try{
-    const response= await this.$axios.put(`https://cuwewf4fsg.execute-api.ap-south-1.amazonaws.com/artwrkInit/notifications`,payload);
-    console.log(response.data.notifications);
-    if (response.data.notifications){
-      this.notifications= this.notifications.concat(response.data.notifications)
-      debugger
-      console.log(this.notifications)
-            
-      
-    }
+    try {
+      const response = await this.$axios.put(
+        `https://cuwewf4fsg.execute-api.ap-south-1.amazonaws.com/artwrkInit/notifications`,
+        payload
+      )
+      console.log(response.data.notifications)
+      if (response.data.notifications) {
+        this.notifications = this.notifications.concat(
+          response.data.notifications
+        )
+        debugger
+        console.log(this.notifications)
       }
-    catch(err){
-  console.log(err);
-}
-
-
+    } catch (err) {
+      console.log(err)
+    }
   },
 
-  async getNotifications(){
-
-      
-
-
-  }
+  async getNotifications() {}
 }
 </script>
 <style scoped>

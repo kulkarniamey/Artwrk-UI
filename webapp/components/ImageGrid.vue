@@ -54,16 +54,21 @@ export default {
       dialog: false,
       title: '',
       imgval: '',
-      images: [],
+      images: this.postData
     }
   },
   props: {
-    postData: { type: Array, required: true },
+    postData: { type: Array, required: true }
+  },
+  watch: {
+    postData() {
+      this.images = this.postData
+    }
   },
   computed: {
     renderImage() {
       return this.imageurls.filter((p) => p.isActive).length
-    },
+    }
   },
   methods: {
     getManyPussy() {
@@ -86,11 +91,11 @@ export default {
       this.dialog = false
       this.title = ''
       this.imgval = ''
-    },
+    }
   },
   mounted() {
     this.images = this.postData
-  },
+  }
 }
 </script>
 
