@@ -77,7 +77,7 @@
             </v-list>
           </v-card>
         </v-menu>
-
+       
         <v-btn nuxt :to="`/artist/`+user" text large dark>Welcome {{ user }} </v-btn>
         <v-btn text @click="$auth.logout()" dark>Logout</v-btn>
 
@@ -207,7 +207,7 @@ export default {
     }
     try{
     const response= await this.$axios.put(`https://cuwewf4fsg.execute-api.ap-south-1.amazonaws.com/artwrkInit/notifications`,payload);
-    console.log(response.data.notifications);
+    // console.log(response.data.notifications);
     if (response.data.notifications){
       this.notifications= this.notifications.concat(response.data.notifications)
       debugger

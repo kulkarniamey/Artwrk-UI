@@ -145,9 +145,16 @@ export default {
           operation: 'get_profile',
           authorizationToken: token
         }
+        if(type==='admin'){
+      let user = await this.$axios.put('/profile/', userPayload)
+        //console.log(user)
+        this.$auth.setUser(user.data.profile)
+        }
+        else{
         let user = await this.$axios.put('/profile/', userPayload)
         //console.log(user)
         this.$auth.setUser(user.data.profile)
+        }
       } catch (err) {
         console.log(err)
         console.log('Error hua')

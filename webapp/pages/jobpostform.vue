@@ -187,13 +187,21 @@ export default {
         if (response.data.statusCode === 200) {
           
            this.snackbar=true;
+          
+           setTimeout(()=>{
+                this.$router.push('/jobs')
+                    },1000);
+           debugger
+
 
         }
         
-        debugger
+       
       } catch (err) {
         console.log(err)
       }
+
+      
 
   },
   
