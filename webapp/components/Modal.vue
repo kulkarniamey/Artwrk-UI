@@ -41,7 +41,7 @@ export default {
   props: ['showModal', 'postTitle', 'postImg'],
   data() {
     return {
-      liked: '',
+      liked: ''
     }
   },
   mounted() {
@@ -53,8 +53,8 @@ export default {
     },
     changeColor() {
       this.liked = 'red'
-    },
-  },
+    }
+  }
 }
 </script>
 
