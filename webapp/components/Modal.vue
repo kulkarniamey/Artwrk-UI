@@ -41,11 +41,11 @@ export default {
   props: ['showModal', 'postData'],
   data() {
     return {
-      liked: '',
+      liked: ''
     }
   },
   mounted() {
-    if (this.postData.votes.includes(this.$auth.user.name)) {
+    if (this.postData.voters.includes(this.$auth.user.name)) {
       this.liked = 'red'
     }
     this.liked = ''
@@ -57,8 +57,17 @@ export default {
     changeColor() {
       this.liked = 'red'
     },
-    likePost() {},
-  },
+    async upvotePost() {
+      const payload = {
+        operation: 'vote',
+        id: this.$auth.user.user_id,
+        post_id: this.postData.postid,
+        other_id: this.$auth.user.user_id
+      }
+      const resp = await this.$axios.put('login', payload)
+      console.log(resp)
+    }
+  }
 }
 </script>
 

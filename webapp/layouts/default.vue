@@ -61,27 +61,15 @@
                 </v-btn>
               </template>
               <v-card>
-                <v-list-item
-                  v-for="(notification, i) in notifications"
-                  :key="i"
-                >
-                  <v-list-item-title
-                    >{{ notification.notification }}
-                  </v-list-item-title>
-                  <v-card-actions>
-                    <v-spacer></v-spacer>
-                  </v-card-actions>
+                <v-list>
                   <v-list-item
                     v-for="(notification, i) in notifications"
                     :key="i"
                   >
                     <v-list-item-title
-                      >{{ notification.text }}
+                      >{{ notification.notification }}
                     </v-list-item-title>
-
                     <v-card-actions>
-                      <v-spacer></v-spacer>
-
                       <v-btn text nuxt :to="notification.actionLink">{{
                         notification.actionText
                       }}</v-btn>
@@ -90,7 +78,7 @@
                       >
                     </v-card-actions>
                   </v-list-item>
-                </v-list-item>
+                </v-list>
               </v-card>
             </v-menu>
 
@@ -293,7 +281,7 @@ export default {
         `https://cuwewf4fsg.execute-api.ap-south-1.amazonaws.com/artwrkInit/notifications`,
         payload
       )
-      console.log(response.data.notifications)
+      // console.log(response.data.notifications);
       if (response.data.notifications) {
         this.notifications = this.notifications.concat(
           response.data.notifications
@@ -301,12 +289,26 @@ export default {
         debugger
         console.log(this.notifications)
       }
+      try {
+        const response = await this.$axios.put(
+          `https://cuwewf4fsg.execute-api.ap-south-1.amazonaws.com/artwrkInit/notifications`,
+          payload
+        )
+        console.log(response.data.notifications)
+        if (response.data.notifications) {
+          this.notifications = this.notifications.concat(
+            response.data.notifications
+          )
+          debugger
+          console.log(this.notifications)
+        }
+      } catch (err) {
+        console.log(err)
+      }
     } catch (err) {
       console.log(err)
     }
-  },
-
-  async getNotifications() {}
+  }
 }
 </script>
 <style scoped>

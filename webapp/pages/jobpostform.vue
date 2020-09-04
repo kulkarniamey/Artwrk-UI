@@ -184,9 +184,12 @@ export default {
         console.log(response.data.statusCode)
         if (response.data.statusCode === 200) {
           this.snackbar = true
-        }
 
-        debugger
+          setTimeout(() => {
+            this.$router.push('/jobs')
+          }, 1000)
+          debugger
+        }
       } catch (err) {
         console.log(err)
       }
