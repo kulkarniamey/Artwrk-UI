@@ -50,7 +50,7 @@
               hide-delimiters
               :height="customHeight"
               cycle
-              interval="3000"
+              interval="8000"
             >
               <v-carousel-item
                 v-for="(item, i) in items"
