@@ -27,21 +27,29 @@
       </v-list-item-title>
     </v-list-item-content>
     <div>
-      <div class="display-2 pl-15 pt-5 font-weight-black">Artist Score</div>
-      <div class="display-2 pt-5 text-center font-weight-black">
+      <div
+        v-if="profile.type === 'artist'"
+        class="display-2 pl-15 pt-5 font-weight-black"
+      >
+        Artist Score
+      </div>
+      <div
+        v-if="profile.type === 'artist'"
+        class="display-2 pt-5 text-center font-weight-black"
+      >
         {{ profile.artist_score }}
       </div>
     </div>
     <v-list-item-title class="font-weight-black pl-5 pt-10"
       >Skillset</v-list-item-title
     >
-    <v-list-item-content class="font-weight-black pl-5 ">
+    <v-list-item-content class="font-weight-black pl-5">
       <Skillset :skillData="profile.skill_tags" :isEdit="false" />
     </v-list-item-content>
 
     <v-list-item-title class="font-weight-black pl-5 pb-10"
       >Contact <br />
-      <span class="social-link  pb-10" v-if="profile.twitter_link"
+      <span class="social-link pb-10" v-if="profile.twitter_link"
         ><a :href="profile.twitter_link" target="_blank"> Twiiter </a></span
       >
       <span class="social-link pl-5 pb-10" v-if="profile.facebook_link"
@@ -61,7 +69,7 @@ export default {
   name: 'ArtistProfileCardComponent',
   components: {
     ArtistProfileEdit,
-    Skillset
+    Skillset,
   },
   data: () => ({
     profile: {
@@ -83,10 +91,10 @@ export default {
       certificates: [],
       applied_jobs: [],
       email: '',
-      artist_type: null
+      artist_type: null,
     },
     isSelf: false,
-    isEditing: false
+    isEditing: false,
   }),
   computed: {
     mobile() {
@@ -95,7 +103,7 @@ export default {
       }
 
       return false
-    }
+    },
   },
   created() {
     ;(this.profile = this.profileData),
@@ -126,8 +134,8 @@ export default {
 
     handleResize() {
       this.width = window.innerWidth
-    }
-  }
+    },
+  },
 }
 </script>
 

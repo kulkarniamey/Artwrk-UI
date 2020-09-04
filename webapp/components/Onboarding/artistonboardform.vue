@@ -152,9 +152,10 @@
                       placeholder="Pick an avatar!"
                       prepend-icon="mdi-camera"
                       label="Profile Picture"
+                      @change="handlefile"
                     ></v-file-input>
                   </v-col>
-                  <v-col cols="12">
+                  <!-- <v-col cols="12">
                     <v-file-input
                       :rules="rules"
                       accept="image/png, image/jpeg, image/bmp"
@@ -162,7 +163,7 @@
                       prepend-icon="mdi-camera"
                       label="Cover Photo"
                     ></v-file-input>
-                  </v-col>
+                  </v-col> -->
                 </v-row>
               </v-form>
               <v-btn color="warning" @click="e1 = 2">
@@ -194,7 +195,7 @@
         </v-stepper>
       </v-container>
 
-      <p class="text-lg-right ">
+      <p class="text-lg-right">
         Have queries?<v-btn
           text
           nuxt
@@ -222,7 +223,7 @@ export default {
         skilltag: undefined,
         empHistory: undefined,
         awards: undefined,
-        education: undefined
+        education: undefined,
       },
       profile: {},
       valid: true,
@@ -232,7 +233,7 @@ export default {
         (value) =>
           !value ||
           value.size < 20000000 ||
-          'Picture size should be less than 20 MB!'
+          'Picture size should be less than 20 MB!',
       ],
       companyNameRules: [],
 
@@ -252,8 +253,9 @@ export default {
         'Logo Designer',
         'UI/UX Designer',
         'Dancer',
-        'Musician'
-      ]
+        'Musician',
+      ],
+      fileData: undefined,
     }
   },
   mounted() {
@@ -283,11 +285,43 @@ export default {
         console.log(err)
       }
     },
-
+    handlefile(file) {
+      this.fileData = file
+    },
+    async uploadProfilepic() {
+      const state = this.$auth.getToken('local')
+      const token = state.replace('Bearer ', '')
+      let formData = new FormData()
+      formData.append('file', this.fileData)
+      const fname = this.fileData.name
+      const id = this.profile.id
+      const config = {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          authorizationToken: token,
+          metadata: JSON.stringify({
+            user_id: id,
+            upload_type: 'profile_pic',
+            filename: fname,
+          }),
+        },
+      }
+      try {
+        const response = await this.$axios.put(
+          `uploadcontent`,
+          formData,
+          config
+        )
+        debugger
+        console.log(response)
+      } catch (err) {
+        console.log(err)
+      }
+    },
     firstPageValid() {
       this.artistNameRules = [
         (v) => !!v || 'Name is required',
-        (v) => (v && v.length <= 50) || 'Name must be less than 25 words'
+        (v) => (v && v.length <= 50) || 'Name must be less than 25 words',
         // Tentative word limit. Needs to be changed.
       ]
 
@@ -304,13 +338,13 @@ export default {
         (v) =>
           /[(http(s)?):\/\/(www\.)?a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/gi.test(
             v
-          ) || 'Enter valid link'
+          ) || 'Enter valid link',
       ]
       this.tweetRules = [
         (v) =>
           /[(http(s)?):\/\/(www\.)?a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/gi.test(
             v
-          ) || 'Enter valid link'
+          ) || 'Enter valid link',
       ]
     },
     secondPageValid() {
@@ -318,7 +352,11 @@ export default {
         this.e1 = 3
       }
     },
-    thirdPageValid() {
+    async thirdPageValid() {
+      if (this.fileData) {
+        this.uploadProfilepic()
+      }
+
       if (this.$refs.thirdPageForm.validate()) {
         this.e1 = 4
       }
@@ -343,7 +381,7 @@ export default {
       }
       this.profile.education_history.push(this.formData.education)
       this.formData.education = ''
-    }
+    },
   },
   computed: {
     checkMatch() {
@@ -352,8 +390,8 @@ export default {
       } else {
         return false
       }
-    }
-  }
+    },
+  },
 }
 </script>
 

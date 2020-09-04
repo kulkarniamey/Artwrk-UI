@@ -24,7 +24,7 @@
                 alt="pussy"
                 class="img-class"
                 cover
-                @click="showDetail($event, x.description, x.url)"
+                @click="showDetail($event, x)"
               />
             </v-card>
           </v-lazy>
@@ -32,9 +32,9 @@
       </v-col>
     </v-row>
     <Modal
+      v-if="selectedPost"
       :showModal="dialog"
-      :postTitle="title"
-      :postImg="imgval"
+      :postData="selectedPost"
       @closedModal="clearModalValues()"
     />
   </div>
@@ -52,23 +52,23 @@ export default {
       imageurls: [],
       colstyle: 'padding:0em; margin:1em',
       dialog: false,
-      title: '',
+      selectedPost: undefined,
       imgval: '',
-      images: this.postData
+      images: this.postData,
     }
   },
   props: {
-    postData: { type: Array, required: true }
+    postData: { type: Array, required: true },
   },
   watch: {
     postData() {
       this.images = this.postData
-    }
+    },
   },
   computed: {
     renderImage() {
       return this.imageurls.filter((p) => p.isActive).length
-    }
+    },
   },
   methods: {
     getManyPussy() {
@@ -82,20 +82,19 @@ export default {
 
       return this.imageurls
     },
-    showDetail(e, dTitle, dImg) {
-      this.title = dTitle
-      this.imgval = dImg
+    showDetail(e, data) {
+      this.selectedPost = data
       this.dialog = true
     },
     clearModalValues() {
       this.dialog = false
       this.title = ''
       this.imgval = ''
-    }
+    },
   },
   mounted() {
     this.images = this.postData
-  }
+  },
 }
 </script>
 

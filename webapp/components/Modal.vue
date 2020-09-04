@@ -12,7 +12,7 @@
         >
         <v-img
           class="white--text align-end"
-          :src="postImg"
+          :src="postData.url"
           gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
           cotain
           width="960px"
@@ -20,12 +20,12 @@
         >
           <div class="image-content">
             <v-card-title>
-              {{ postTitle }}
+              {{ postData.description }}
             </v-card-title>
 
             <v-spacer></v-spacer>
-
-            <v-btn icon @click="changeColor" class="white--text align-end">
+            <span class="px-4 mt-3">{{ postData.voters.length }}</span>
+            <v-btn icon @click="upvotePost" class="white--text align-end">
               <v-icon :color="liked" left>mdi-heart</v-icon>
             </v-btn>
           </div>
@@ -38,13 +38,16 @@
 <script>
 export default {
   name: 'Modal',
-  props: ['showModal', 'postTitle', 'postImg'],
+  props: ['showModal', 'postData'],
   data() {
     return {
-      liked: ''
+      liked: '',
     }
   },
   mounted() {
+    if (this.postData.votes.includes(this.$auth.user.name)) {
+      this.liked = 'red'
+    }
     this.liked = ''
   },
   methods: {
@@ -53,8 +56,9 @@ export default {
     },
     changeColor() {
       this.liked = 'red'
-    }
-  }
+    },
+    likePost() {},
+  },
 }
 </script>
 
