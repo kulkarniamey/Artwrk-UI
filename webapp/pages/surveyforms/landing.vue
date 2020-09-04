@@ -11,7 +11,12 @@
           </span>
           <span class="wrk">Wrk</span>
           <span class="dot">.</span> -->
-          <v-img src="/logo-white.svg" max-height="130" max-width="130"></v-img>
+          <v-img
+            class="font"
+            src="/logo-white.svg"
+            max-height="130"
+            max-width="130"
+          ></v-img>
         </div>
       </div>
       <v-row>
@@ -40,6 +45,7 @@
             <v-card-title class="flexdisplay-title">
               <span class="headline">What is </span>
               <v-img
+                class="font"
                 src="/logo-black.svg"
                 max-height="100"
                 max-width="100"
@@ -50,7 +56,7 @@
               hide-delimiters
               :height="customHeight"
               cycle
-              interval="8000"
+              interval="1000"
             >
               <v-carousel-item
                 v-for="(item, i) in items"
@@ -101,6 +107,7 @@
             <v-card-title class="flexdisplay-title">
               <span class="headline">About </span>
               <v-img
+                class="font"
                 src="/logo-black.svg"
                 max-height="100"
                 max-width="100"
@@ -332,6 +339,14 @@ export default {
 </script>
 
 <style lang="css" scoped>
+@font-face {
+  font-family: Montserrat;
+  src: url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap');
+}
+.font {
+  font-family: Montserrat;
+}
+
 .legend-text {
   margin: auto;
   font-weight: 700;
