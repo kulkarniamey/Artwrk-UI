@@ -2,8 +2,12 @@
   <div>
     <div class="text-center cover">
       <v-avatar color="indigo" size="64"
-        ><v-icon dark size="40">mdi-account</v-icon></v-avatar
-      >
+        ><v-icon v-if="!profileData.profile_pic" dark size="40"
+          >mdi-account</v-icon
+        >
+        <v-img v-else :src="profileData.profile_pic"></v-img>
+      </v-avatar>
+
       <h3 class="white--text">{{ profile.username }}</h3>
       <p class="white--text">{{ profile.name }}</p>
     </div>
@@ -20,28 +24,6 @@ export default {
   props: { profileData: { type: Object } },
   mounted() {
     this.profile = this.profileData
-    this.fetchDp()
-  },
-  methods: {
-    async fetchDp() {
-      const payload = {
-        operation: 'get_posts_by_user',
-        id: this.profile.user_id
-      }
-      const response = await this.$axios.put(
-        'https://cuwewf4fsg.execute-api.ap-south-1.amazonaws.com/artwrkInit/profile-picture',
-        payload
-      )
-      this.postData = response.data
-      console.log(this.postData?.posts?.length)
-      if (this.postData?.posts?.length) {
-        this.isPostsNull = false
-      } else {
-        this.isPostsNull = true
-      }
-
-      console.log(this.postData)
-    }
   }
 }
 </script>

@@ -17,7 +17,7 @@
       </template>
       <v-list>
         <v-list-item>
-          <v-dialog max-width="600" persistent  v-model="dialogOne">
+          <v-dialog max-width="600" persistent v-model="dialogOne">
             <template v-slot:activator="{ on, attrs }">
               <v-btn text v-bind="attrs" v-on="on">Resume</v-btn>
             </template>
@@ -27,13 +27,21 @@
                   <i><v-icon dark>mdi-folder-upload</v-icon></i>
                 </v-btn></v-card-title
               >
-
-              <v-card-text>You have not uploaded your Resume yet!</v-card-text>
-              <v-img
-                src="/information_flow.png"
-                aspect-ratio="1.7"
-                contain
-              ></v-img>
+              <template v-if="profile.resume === null">
+                <v-card-text
+                  >You have not uploaded your Resume yet!</v-card-text
+                >
+                <v-img
+                  src="/information_flow.png"
+                  aspect-ratio="1.7"
+                  contain
+                ></v-img
+              ></template>
+              <template v-else>
+                <a class="link " :href="profile.resume"
+                  ><v-btn text> Download Resume</v-btn></a
+                >
+              </template>
               <v-card-actions>
                 <v-spacer></v-spacer>
                 <v-btn color="blue darken-1" text @click="dialogOne = false"
@@ -53,19 +61,39 @@
             </template>
             <v-card>
               <v-card-title class="headline"
-                >Certificates <v-spacer /><v-btn @click="showModal('Certificate')" icon>
+                >Certificates <v-spacer /><v-btn
+                  @click="showModal('Certificate')"
+                  icon
+                >
                   <i><v-icon dark>mdi-folder-upload</v-icon></i>
                 </v-btn></v-card-title
               >
+              <template v-if="profile.certificates === null">
+                <v-card-text
+                  >You have not uploaded any Certificates yet!</v-card-text
+                >
+                <v-img
+                  src="/data_processing.png"
+                  aspect-ratio="1.7"
+                  contain
+                ></v-img>
+              </template>
+              <template v-else>
+                <v-list shaped>
+                  <v-list-item
+                    v-for="(certificate, i) in profile.certificates"
+                    :key="i"
+                  >
+                    {{ Object.keys(certificate)[0] }}
 
-              <v-card-text
-                >You have not uploaded any Certificates yet!</v-card-text
-              >
-              <v-img
-                src="/data_processing.png"
-                aspect-ratio="1.7"
-                contain
-              ></v-img>
+                    <v-spacer />
+
+                    <a class="link " :href="Object.values(certificate)[0]"
+                      ><v-btn text> Download Certificate</v-btn></a
+                    >
+                  </v-list-item>
+                </v-list>
+              </template>
               <v-card-actions>
                 <v-spacer></v-spacer>
                 <v-btn color="blue darken-1" text @click="dialogTwo = false"
@@ -79,13 +107,16 @@
           </v-dialog>
         </v-list-item>
         <v-list-item>
-          <v-dialog max-width="600"  persistent v-model="dialogThree">
+          <v-dialog max-width="600" persistent v-model="dialogThree">
             <template v-slot:activator="{ on, attrs }">
               <v-btn text v-bind="attrs" v-on="on">Awards & Recognition</v-btn>
             </template>
             <v-card>
               <v-card-title class="headline"
-                >Awards & Recognition <v-spacer /><v-btn icon @click="showModal('Certificate')">
+                >Awards & Recognition <v-spacer /><v-btn
+                  icon
+                  @click="showModal('Certificate')"
+                >
                   <i><v-icon dark>mdi-folder-upload</v-icon></i>
                 </v-btn></v-card-title
               >
@@ -109,36 +140,35 @@
       </v-list>
     </v-menu>
     <v-dialog max-width="600" v-model="showUploadModal" persistent>
-                <v-card class="pa-6">
-                  <v-card-title v-if="document === 'Certificate'">
-                    Details
-                  </v-card-title>
-                  <v-card-text>
-                    <v-form class="px-3 ma-6">
-                      <v-text-field v-if="document === 'Certificate'" label="Description" v-model="desc">
-                      </v-text-field>
-                      <v-file-input
-                        prepend-icon="mdi-file-document"
-                        label="File input"
-                        @change="handleFile"
-                      ></v-file-input>
-                      <v-card-actions>
-                        <v-spacer></v-spacer>
-                        <v-btn
-                          color="blue darken-1"
-                          text
-                          @click="showUploadModal = false"
-                          >Close</v-btn
-                        >
-                        <v-btn color="blue darken-1" text @click="uploadContent"
-                          >Upload {{document}}</v-btn
-                        >
-                      </v-card-actions>
-                    </v-form>
-                  </v-card-text>
-                </v-card>
-              </v-dialog>
-
+      <v-card class="pa-6">
+        <v-card-title v-if="document === 'Certificate'">
+          Details
+        </v-card-title>
+        <v-card-text>
+          <v-form class="px-3 ma-6">
+            <v-text-field
+              v-if="document === 'Certificate'"
+              label="Description"
+              v-model="desc"
+            >
+            </v-text-field>
+            <v-file-input
+              prepend-icon="mdi-file-document"
+              label="File input"
+              @change="handleFile"
+            ></v-file-input>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn color="blue darken-1" text @click="showUploadModal = false"
+                >Close</v-btn
+              >
+              <v-btn color="blue darken-1" text @click="uploadContent"
+                >Upload {{ document }}</v-btn
+              >
+            </v-card-actions>
+          </v-form>
+        </v-card-text>
+      </v-card>
     </v-dialog>
   </div>
 </template>
@@ -151,14 +181,15 @@ export default {
       dialogOne: false,
       dialogTwo: false,
       dialogThree: false,
-      document:undefined,
-      showUploadModal:false,
-      desc:'',
-      fileData:undefined
+      document: undefined,
+      showUploadModal: false,
+      desc: '',
+      fileData: undefined
     }
   },
-  methods:{
-    async uploadContent(){
+  props: { profile: { type: Object, required: true } },
+  methods: {
+    async uploadContent() {
       const state = this.$auth.getToken('local')
       const token = state.replace('Bearer ', '')
       let formData = new FormData()
@@ -166,7 +197,8 @@ export default {
       const fname = this.fileData.name
       const id = this.$auth.user.user_id
       const uploadType = this.document.toLowerCase()
-      const description= uploadType==='certificate' ? this.desc : undefined
+      const description = uploadType === 'certificate' ? this.desc : undefined
+      debugger
       const config = {
         headers: {
           'Content-Type': 'multipart/form-data',
@@ -175,8 +207,9 @@ export default {
             user_id: id,
             upload_type: `${uploadType}`,
             filename: fname,
-          }),
-        },
+            description: description
+          })
+        }
       }
       try {
         const response = await this.$axios.put(
@@ -184,23 +217,27 @@ export default {
           formData,
           config
         )
-        debugger
+
         console.log(response)
         this.fileData = null
-        this.showUploadModal= false
+        this.showUploadModal = false
       } catch (err) {
         console.log(err)
       }
     },
-    handleFile(file){
+    handleFile(file) {
       this.fileData = file
     },
-    showModal(docType){
-      this.showUploadModal=true
-      this.document= docType
+    showModal(docType) {
+      this.showUploadModal = true
+      this.document = docType
     }
   }
 }
 </script>
 
-<style lang="css" scoped></style>
+<style lang="css" scoped>
+.link {
+  text-decoration: none;
+}
+</style>

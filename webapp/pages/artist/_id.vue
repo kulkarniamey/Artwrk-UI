@@ -13,7 +13,7 @@
         <v-col cols="9" class="profile-content">
           <v-row>
             <v-col cols="4">
-              <PortfolioButton />
+              <PortfolioButton :profile="profile" />
             </v-col>
             <v-col cols="4">
               <v-dialog max-width="600" v-model="dialog" persistent>
@@ -152,7 +152,7 @@
         <v-tab-item>
           <v-row>
             <v-col cols="12" sm="10" class="profile-content">
-              <PortfolioButton />
+              <PortfolioButton :profile="profile" />
             </v-col>
           </v-row>
         </v-tab-item>
