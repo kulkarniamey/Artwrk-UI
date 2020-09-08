@@ -165,6 +165,15 @@ export default {
     },
     gotoProfile() {
       this.$router.push('artist/' + this.user)
+    },
+
+    checkAdmin(){
+      if(this.$auth?.user?.user_id ==='admin_admin'){
+        return 'admin'
+      }
+      else{
+        return this.$auth?.user?.user_id
+      }
     }
   },
   async created() {
@@ -199,7 +208,7 @@ export default {
 
     const payload ={
           operation: "get_all_notifications",
-          id: this.$auth?.user?.user_id,
+          id: this.checkAdmin(),
           authorizationToken: this.$auth
         .getToken('local')
         .replace('Bearer ', '')
@@ -207,7 +216,7 @@ export default {
     }
     try{
     const response= await this.$axios.put(`https://cuwewf4fsg.execute-api.ap-south-1.amazonaws.com/artwrkInit/notifications`,payload);
-    // console.log(response.data.notifications);
+    console.log(payload);
     if (response.data.notifications){
       this.notifications= this.notifications.concat(response.data.notifications)
       debugger
