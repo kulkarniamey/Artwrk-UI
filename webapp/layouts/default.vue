@@ -179,7 +179,7 @@ export default {
           authorizationToken: token
         }
         let user = await this.$axios
-          .put('profile/', userPayload)
+          .put('https://cuwewf4fsg.execute-api.ap-south-1.amazonaws.com/artwrkInit/profile/', userPayload)
           .then((user) => {
             this.$auth.setUser(user.data.profile)
             this.user = this.$auth?.user?.username || null
