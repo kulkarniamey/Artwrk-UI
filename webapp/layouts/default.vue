@@ -177,7 +177,7 @@ import SiteLoader from '../components/SiteLoader'
 
 export default {
   props: {
-    source: String
+    source: String,
   },
   components: { FooterComponent, SiteLoader },
   data: () => ({
@@ -188,13 +188,13 @@ export default {
       {
         icon: 'mdi-apps',
         title: 'Welcome',
-        to: '/'
+        to: '/',
       },
       {
         icon: 'mdi-chart-bubble',
         title: 'Inspire',
-        to: '/inspire'
-      }
+        to: '/inspire',
+      },
     ],
     icons: [],
 
@@ -205,29 +205,21 @@ export default {
     text: 'Hello I am New User',
     timeout: null,
     notifications: [],
-    user: undefined
+    user: undefined,
   }),
   watch: {
     group() {
       this.drawer = false
-    }
+    },
   },
   computed: {
-    isLoggedIn: function() {
+    isLoggedIn: function () {
       return this.$auth.loggedIn
     },
 
-    logOut: function() {
+    logOut: function () {
       this.$auth.logout()
     },
-
-    mobile() {
-      if (this.width <= 720) {
-        return true
-      }
-
-      return false
-    }
   },
   methods: {
     removeNotification(index) {
@@ -242,7 +234,7 @@ export default {
       } else {
         return this.$auth?.user?.user_id
       }
-    }
+    },
   },
   async created() {
     this.user = this.$auth?.user?.username || null
@@ -252,7 +244,7 @@ export default {
         const token = state.replace('Bearer ', '')
         const userPayload = {
           operation: 'get_profile',
-          authorizationToken: token
+          authorizationToken: token,
         }
         let user = await this.$axios
           .put(
@@ -266,7 +258,7 @@ export default {
               this.notifications.push({
                 notification: 'You have not yet verified your email',
                 actionText: 'verify',
-                actionLink: '/auth/verify'
+                actionLink: '/auth/verify',
               })
             }
           })
@@ -279,7 +271,7 @@ export default {
     const payload = {
       operation: 'get_all_notifications',
       id: this.checkAdmin(),
-      authorizationToken: this.$auth.getToken('local').replace('Bearer ', '')
+      authorizationToken: this.$auth.getToken('local').replace('Bearer ', ''),
     }
     try {
       const response = await this.$axios.put(
@@ -326,7 +318,10 @@ export default {
         console.log(err)
       }
     } catch (err) {}
-  }
+  },
+  mounted() {
+    this.mobile = screen.width > 760 ? false : true
+  },
 }
 </script>
 <style scoped>
