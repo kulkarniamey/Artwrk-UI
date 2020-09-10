@@ -75,6 +75,15 @@
         >Sign up</v-btn
       >
     </v-card-actions>
+    <v-snackbar v-model="snackbar" :timeout="timeout" color="red">
+      {{ errorMsg }}
+
+      <template v-slot:action="{ attrs }">
+        <v-btn color="blue" text v-bind="attrs" @click="snackbar = false">
+          Close
+        </v-btn>
+      </template>
+    </v-snackbar>
   </v-card>
 </template>
 
@@ -88,26 +97,30 @@ export default {
       pass2: '',
       passRules: [
         (v) => !!v || 'Password is required',
-        (v) => (v && v.length <= 8) || 'Password must be less than 8 characters'
+        (v) =>
+          (v && v.length <= 8) || 'Password must be less than 8 characters',
       ],
       passTwoRules: [
         (v) => !!v || 'Password is required',
         (v) =>
           (v && v.length <= 8) || 'Password must be less than 8 characters',
-        (v) => (v && this.checkMatch) || 'Passwords must match'
+        (v) => (v && this.checkMatch) || 'Passwords must match',
       ],
       email: '',
       emailRules: [
         (v) => !!v || 'E-mail is required',
-        (v) => /.+@.+\..+/.test(v) || 'E-mail must be valid'
+        (v) => /.+@.+\..+/.test(v) || 'E-mail must be valid',
       ],
       username: '',
       usernameRules: [
         (v) => !!v || 'Username is required',
         (v) =>
-          (v && v.length <= 50) || 'Username must be less than 25 characters'
+          (v && v.length <= 50) || 'Username must be less than 25 characters',
       ],
-      items: ['artist', 'recruiter']
+      items: ['artist', 'recruiter'],
+      snackbar: false,
+      timeout: 2000,
+      errorMsg: '',
     }
   },
   methods: {
@@ -122,18 +135,24 @@ export default {
         username: this.username,
         email: this.email,
         password: this.pass,
-        type: this.userType
+        type: this.userType,
       }
       try {
         await this.$axios.$put('/register', payload).then((response) => {
           //console.log('Successfully Logged in')
-          this.$router.push('/auth/login')
+
+          if (response.statusCode === 200) {
+            this.$router.push('/auth/login')
+          } else {
+            this.errorMsg = response.message
+            this.snackbar = true
+          }
         })
       } catch (error) {
         console.log(error)
       }
       console.log('Data Submitted payload:', payload)
-    }
+    },
   },
   computed: {
     checkMatch() {
@@ -142,8 +161,8 @@ export default {
       } else {
         return false
       }
-    }
-  }
+    },
+  },
 }
 </script>
 
