@@ -75,6 +75,15 @@
         >Sign up</v-btn
       >
     </v-card-actions>
+    <v-snackbar v-model="snackbar" :timeout="timeout" color="red">
+      {{ errorMsg }}
+
+      <template v-slot:action="{ attrs }">
+        <v-btn color="blue" text v-bind="attrs" @click="snackbar = false">
+          Close
+        </v-btn>
+      </template>
+    </v-snackbar>
   </v-card>
 </template>
 
@@ -112,6 +121,9 @@ export default {
         { text: 'Artist', value: 'artist' },
         { text: 'Recruiter', value: 'recruiter' },
       ],
+      snackbar: false,
+      timeout: 2000,
+      errorMsg: '',
     }
   },
   methods: {
@@ -131,7 +143,13 @@ export default {
       try {
         await this.$axios.$put('/register', payload).then((response) => {
           //console.log('Successfully Logged in')
-          this.$router.push('/auth/login')
+
+          if (response.statusCode === 200) {
+            this.$router.push('/auth/login')
+          } else {
+            this.errorMsg = response.message
+            this.snackbar = true
+          }
         })
       } catch (error) {
         console.log(error)

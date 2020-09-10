@@ -102,7 +102,7 @@ export default {
       passRules: [
         (v) => !!v || 'Password is required',
         (v) =>
-          (v && v.length <= 15) || 'Password must be less than 8 characters'
+          (v && v.length <= 15) || 'Password must be less than 8 characters',
       ],
 
       usernameRules: [(v) => !!v || 'Username is required'],
@@ -110,8 +110,8 @@ export default {
         operation: 'sign_in',
         username: '',
         password: '',
-        type: 'artist'
-      }
+        type: 'artist',
+      },
     }
   },
   methods: {
@@ -134,34 +134,34 @@ export default {
             username: username,
             password: password,
             type: type,
-            operation: operation
-          }
+            operation: operation,
+          },
         })
-        if (response?.data?.statusCode === 409) {
+        if (response?.data?.statusCode !== 200) {
+          this.text = response.data.message
           throw 'error!'
         }
         const token = response.data.token
         const userPayload = {
           operation: 'get_profile',
-          authorizationToken: token
+          authorizationToken: token,
         }
-        if(type==='admin'){
-      let user = await this.$axios.put('/profile/', userPayload)
-        //console.log(user)
-        this.$auth.setUser(user.data.profile)
-        }
-        else{
-        let user = await this.$axios.put('/profile/', userPayload)
-        //console.log(user)
-        this.$auth.setUser(user.data.profile)
+        if (type === 'admin') {
+          let user = await this.$axios.put('/profile/', userPayload)
+          //console.log(user)
+          this.$auth.setUser(user.data.profile)
+        } else {
+          let user = await this.$axios.put('/profile/', userPayload)
+          //console.log(user)
+          this.$auth.setUser(user.data.profile)
         }
       } catch (err) {
         console.log(err)
         console.log('Error hua')
         this.snackbar = true
       }
-    }
-  }
+    },
+  },
 }
 </script>
 
