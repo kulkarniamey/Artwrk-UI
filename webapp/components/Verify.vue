@@ -35,6 +35,9 @@
         </p> -->
       </v-card-text>
       <v-card-actions>
+        <v-btn text color="black darken-1" @click="requestOtp">
+          Resend OTP
+        </v-btn>
         <v-btn
           color="orange darken-1"
           text
@@ -58,8 +61,7 @@ export default {
       profile: {},
       otpRules: [
         (v) => !!v || 'OTP is required',
-        (v) => /\b\d{6}\b/.test(v) || 'Enter valid OTP',
-        (v) => (v && v.length <= 50) || 'Name must be less than 25 words'
+        (v) => /\b\d{6}\b/.test(v) || 'Enter valid OTP'
       ],
       otpinfo: {
         otp: ''
@@ -73,6 +75,28 @@ export default {
     validate() {
       if (this.$refs.form.validate()) {
         this.verify()
+      }
+    },
+    requestOtp() {
+      console.log('RensendOTP:', this.otp)
+
+      this.resendOtp()
+    },
+    async resendOtp() {
+      const { email, type } = this.profile
+      debugger
+      const resend = {
+        operation: 'resend_otp',
+        username: email,
+        type: type
+      }
+      try {
+        let response = await this.$axios.put('/resend-otp', resend)
+        // .then(this.$router.push(''))
+        console.log(response)
+      } catch (err) {
+        console.log(err)
+        // this.$router.push('')
       }
     },
     verify() {
