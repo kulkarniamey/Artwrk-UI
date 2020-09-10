@@ -70,6 +70,32 @@
                       >{{ notification.notification }}
                     </v-list-item-title>
                     <v-card-actions>
+                      <v-spacer></v-spacer>
+                    </v-card-actions>
+                    <v-list-item
+                      v-for="(notification, i) in notifications"
+                      :key="i"
+                    >
+                      <v-list-item-title
+                        >{{ notification.text }}
+                      </v-list-item-title>
+
+                      <v-card-actions>
+                        <v-spacer></v-spacer>
+
+                        <v-btn text nuxt :to="notification.actionLink">{{
+                          notification.actionText
+                        }}</v-btn>
+                        <v-btn
+                          color="primary"
+                          text
+                          @click="removeNotification(i)"
+                          >Remove</v-btn
+                        >
+                      </v-card-actions>
+                    </v-list-item>
+
+                    <v-card-actions>
                       <v-btn text nuxt :to="notification.actionLink">{{
                         notification.actionText
                       }}</v-btn>
@@ -129,6 +155,66 @@
           class="d-flex"
         >
           <v-list-itm-group v-if="$auth.loggedIn">
+            <v-list-item>
+              <v-menu bottom offset-y transition="slide-x-transition">
+                <template v-slot:activator="{ on, attrs }">
+                  <v-btn
+                    :disabled="notifications.length === 0"
+                    dark
+                    icon
+                    class="ma-2"
+                    v-bind="attrs"
+                    v-on="on"
+                  >
+                    <v-badge
+                      :content="notifications.length"
+                      :value="notifications.length"
+                      color="green"
+                      overlap
+                    >
+                      <v-icon color="black">mdi-bell-outline</v-icon>
+                    </v-badge>
+                  </v-btn>
+                </template>
+                <v-card>
+                  <v-list>
+                    <v-list-item
+                      v-for="(notification, i) in notifications"
+                      :key="i"
+                    >
+                      <v-list-item-title
+                        >{{ notification.notification }}
+                      </v-list-item-title>
+                      <v-card-actions>
+                        <v-spacer></v-spacer>
+                      </v-card-actions>
+                      <v-list-item
+                        v-for="(notification, i) in notifications"
+                        :key="i"
+                      >
+                        <v-list-item-title
+                          >{{ notification.text }}
+                        </v-list-item-title>
+
+                        <v-card-actions>
+                          <v-spacer></v-spacer>
+
+                          <v-btn text nuxt :to="notification.actionLink">{{
+                            notification.actionText
+                          }}</v-btn>
+                          <v-btn
+                            color="primary"
+                            text
+                            @click="removeNotification(i)"
+                            >Remove</v-btn
+                          >
+                        </v-card-actions>
+                      </v-list-item>
+                    </v-list-item>
+                  </v-list>
+                </v-card>
+              </v-menu>
+            </v-list-item>
             <v-list-item>
               <v-icon>mdi-account</v-icon>
               <v-btn
@@ -239,7 +325,8 @@ export default {
   async created() {
     this.user = this.$auth?.user?.username || null
     try {
-      const state = this.$auth.getToken('local')
+      const state = await this.$auth.getToken('local')
+
       if (state !== false) {
         const token = state.replace('Bearer ', '')
         const userPayload = {
@@ -268,12 +355,12 @@ export default {
     this.loading = false
     //console.log(state)
 
-    const payload = {
-      operation: 'get_all_notifications',
-      id: this.checkAdmin(),
-      authorizationToken: this.$auth.getToken('local').replace('Bearer ', ''),
-    }
     try {
+      const payload = {
+        operation: 'get_all_notifications',
+        id: this.checkAdmin(),
+        authorizationToken: this.$auth.getToken('local').replace('Bearer ', ''),
+      }
       const response = await this.$axios.put(
         `https://cuwewf4fsg.execute-api.ap-south-1.amazonaws.com/artwrkInit/notifications`,
         payload
@@ -297,22 +384,6 @@ export default {
           )
 
           console.log(this.notifications)
-        }
-        try {
-          const response = await this.$axios.put(
-            `https://cuwewf4fsg.execute-api.ap-south-1.amazonaws.com/artwrkInit/notifications`,
-            payload
-          )
-          console.log(response.data.notifications)
-          if (response.data.notifications) {
-            this.notifications = this.notifications.concat(
-              response.data.notifications
-            )
-
-            console.log(this.notifications)
-          }
-        } catch (err) {
-          console.log(err)
         }
       } catch (err) {
         console.log(err)
