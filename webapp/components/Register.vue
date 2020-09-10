@@ -88,26 +88,30 @@ export default {
       pass2: '',
       passRules: [
         (v) => !!v || 'Password is required',
-        (v) => (v && v.length <= 8) || 'Password must be less than 8 characters'
+        (v) =>
+          (v && v.length <= 8) || 'Password must be less than 8 characters',
       ],
       passTwoRules: [
         (v) => !!v || 'Password is required',
         (v) =>
           (v && v.length <= 8) || 'Password must be less than 8 characters',
-        (v) => (v && this.checkMatch) || 'Passwords must match'
+        (v) => (v && this.checkMatch) || 'Passwords must match',
       ],
       email: '',
       emailRules: [
         (v) => !!v || 'E-mail is required',
-        (v) => /.+@.+\..+/.test(v) || 'E-mail must be valid'
+        (v) => /.+@.+\..+/.test(v) || 'E-mail must be valid',
       ],
       username: '',
       usernameRules: [
         (v) => !!v || 'Username is required',
         (v) =>
-          (v && v.length <= 50) || 'Username must be less than 25 characters'
+          (v && v.length <= 50) || 'Username must be less than 25 characters',
       ],
-      items: ['artist', 'recruiter']
+      items: [
+        { text: 'Artist', value: 'artist' },
+        { text: 'Recruiter', value: 'recruiter' },
+      ],
     }
   },
   methods: {
@@ -122,7 +126,7 @@ export default {
         username: this.username,
         email: this.email,
         password: this.pass,
-        type: this.userType
+        type: this.userType,
       }
       try {
         await this.$axios.$put('/register', payload).then((response) => {
@@ -133,7 +137,7 @@ export default {
         console.log(error)
       }
       console.log('Data Submitted payload:', payload)
-    }
+    },
   },
   computed: {
     checkMatch() {
@@ -142,8 +146,8 @@ export default {
       } else {
         return false
       }
-    }
-  }
+    },
+  },
 }
 </script>
 
