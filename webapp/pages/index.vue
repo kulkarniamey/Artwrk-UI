@@ -11,7 +11,7 @@
           </span>
           <span class="wrk">Wrk</span>
           <span class="dot">.</span> -->
-          <v-img src="/logo-white.svg" max-height="130" max-width="130"></v-img>
+          <logowhite class="svgcomp" />
         </div>
       </div>
       <v-row>
@@ -39,18 +39,14 @@
           >
             <v-card-title class="flexdisplay-title">
               <span class="headline">What is </span>
-              <v-img
-                src="/logo-black.svg"
-                max-height="100"
-                max-width="100"
-              ></v-img>
+              <logoblack class="svgcomp" />
             </v-card-title>
             <v-carousel
               :show-arrows="false"
               hide-delimiters
               :height="customHeight"
               cycle
-              interval="3000"
+              interval="1000"
             >
               <v-carousel-item
                 v-for="(item, i) in items"
@@ -100,11 +96,7 @@
             <!-- About Us -->
             <v-card-title class="flexdisplay-title">
               <span class="headline">About </span>
-              <v-img
-                src="/logo-black.svg"
-                max-height="100"
-                max-width="100"
-              ></v-img>
+              <logoblack class="svgcomp" />
             </v-card-title>
             <v-card-text>
               <v-container>
@@ -277,6 +269,8 @@
 </template>
 
 <script>
+import logowhite from '~/components/logowhite'
+import logoblack from '~/components/logoblack'
 export default {
   layout: 'surveylayout',
   name: 'landing',
@@ -311,6 +305,7 @@ export default {
       customHeight: 200
     }
   },
+  components: { logowhite, logoblack },
   methods: {
     yourCallBackFunction() {
       this.dialog = false
@@ -332,6 +327,15 @@ export default {
 </script>
 
 <style lang="css" scoped>
+@font-face {
+  font-family: Montserrat;
+  src: url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+}
+.svgcomp {
+  max-width: 100;
+  max-height: 100;
+}
+
 .legend-text {
   margin: auto;
   font-weight: 700;
