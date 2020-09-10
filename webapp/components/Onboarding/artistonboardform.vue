@@ -223,7 +223,7 @@ export default {
         skilltag: undefined,
         empHistory: undefined,
         awards: undefined,
-        education: undefined,
+        education: undefined
       },
       profile: {},
       valid: true,
@@ -233,7 +233,7 @@ export default {
         (value) =>
           !value ||
           value.size < 20000000 ||
-          'Picture size should be less than 20 MB!',
+          'Picture size should be less than 20 MB!'
       ],
       companyNameRules: [],
 
@@ -253,9 +253,9 @@ export default {
         'Logo Designer',
         'UI/UX Designer',
         'Dancer',
-        'Musician',
+        'Musician'
       ],
-      fileData: undefined,
+      fileData: undefined
     }
   },
   mounted() {
@@ -280,7 +280,6 @@ export default {
           const link = `/artist/${response.data.profile.username}`
           this.$router.push(link)
         }
-        debugger
       } catch (err) {
         console.log(err)
       }
@@ -302,9 +301,9 @@ export default {
           metadata: JSON.stringify({
             user_id: id,
             upload_type: 'profile_pic',
-            filename: fname,
-          }),
-        },
+            filename: fname
+          })
+        }
       }
       try {
         const response = await this.$axios.put(
@@ -312,7 +311,7 @@ export default {
           formData,
           config
         )
-        debugger
+
         console.log(response)
       } catch (err) {
         console.log(err)
@@ -321,7 +320,7 @@ export default {
     firstPageValid() {
       this.artistNameRules = [
         (v) => !!v || 'Name is required',
-        (v) => (v && v.length <= 50) || 'Name must be less than 25 words',
+        (v) => (v && v.length <= 50) || 'Name must be less than 25 words'
         // Tentative word limit. Needs to be changed.
       ]
 
@@ -330,21 +329,19 @@ export default {
           this.e1 = 2
         }
       }
-      debugger
     },
     applySocialRules() {
-      debugger
       this.fbRules = [
         (v) =>
           /[(http(s)?):\/\/(www\.)?a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/gi.test(
             v
-          ) || 'Enter valid link',
+          ) || 'Enter valid link'
       ]
       this.tweetRules = [
         (v) =>
           /[(http(s)?):\/\/(www\.)?a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/gi.test(
             v
-          ) || 'Enter valid link',
+          ) || 'Enter valid link'
       ]
     },
     secondPageValid() {
@@ -381,7 +378,7 @@ export default {
       }
       this.profile.education_history.push(this.formData.education)
       this.formData.education = ''
-    },
+    }
   },
   computed: {
     checkMatch() {
@@ -390,8 +387,8 @@ export default {
       } else {
         return false
       }
-    },
-  },
+    }
+  }
 }
 </script>
 

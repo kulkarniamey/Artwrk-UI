@@ -198,7 +198,6 @@ export default {
       const id = this.$auth.user.user_id
       const uploadType = this.document.toLowerCase()
       const description = uploadType === 'certificate' ? this.desc : undefined
-      debugger
       const config = {
         headers: {
           'Content-Type': 'multipart/form-data',

@@ -15,36 +15,40 @@
           <v-container>
             <v-row>
               <v-col cols="12">
-                                   <v-chip
-        v-for="(names, id) in profile.skill_tags"
-        :key="id"
-        class="ma-1"
-        color="blue lighten-4"
-        >{{ names }}
-      </v-chip>  
-            <v-form v-on:submit.prevent="addSkill()">
-        <v-text-field placeholder="Press enter after each entry" required v-model="formData.skills" type="text">
-        </v-text-field>
-            </v-form>
+                <v-chip
+                  v-for="(names, id) in profile.skill_tags"
+                  :key="id"
+                  class="ma-1"
+                  color="blue lighten-4"
+                  >{{ names }}
+                </v-chip>
+                <v-form v-on:submit.prevent="addSkill()">
+                  <v-text-field
+                    placeholder="Press enter after each entry"
+                    required
+                    v-model="formData.skills"
+                    type="text"
+                  >
+                  </v-text-field>
+                </v-form>
               </v-col>
 
-                  <v-col cols="6" subheading="Social Media">
-                    <v-text-field
-                      v-model="profile.facebook_link"
-                      label="Facebook profile"
-                      @input="applySocialRules()"
-                      :rules="fbRules"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col cols="6">
-                    <v-text-field
-                      v-model="profile.twitter_link"
-                      label="Twitter profile"
-                      @input="applySocialRules()"
-                      :rules="tweetRules"
-                    ></v-text-field>
-                  </v-col>
-
+              <v-col cols="6" subheading="Social Media">
+                <v-text-field
+                  v-model="profile.facebook_link"
+                  label="Facebook profile"
+                  @input="applySocialRules()"
+                  :rules="fbRules"
+                ></v-text-field>
+              </v-col>
+              <v-col cols="6">
+                <v-text-field
+                  v-model="profile.twitter_link"
+                  label="Twitter profile"
+                  @input="applySocialRules()"
+                  :rules="tweetRules"
+                ></v-text-field>
+              </v-col>
             </v-row>
           </v-container>
           <small>*indicates required field</small>
@@ -65,7 +69,7 @@
 export default {
   name: 'ArtistProfileEdit',
   props: {
-    profileData: { type: Object, required: true },
+    profileData: { type: Object, required: true }
   },
   data: () => ({
     dialog: false,
@@ -78,12 +82,11 @@ export default {
       'After Effects',
       'Blender'
     ],
-    formData:{
-      skills:undefined,
-      
+    formData: {
+      skills: undefined
     },
-    fbRules:[],
-    tweetRules:[],
+    fbRules: [],
+    tweetRules: []
   }),
   mounted() {
     //this.profile = this.profileData
@@ -93,11 +96,9 @@ export default {
       $nuxt.$emit('save-profile', this.profile)
       this.updateProfile()
       this.dialog = false
-      this.$router.go(this.$router.currentRoute) 
-      
+      this.$router.go(this.$router.currentRoute)
     },
-    async updateProfile(){
-     
+    async updateProfile() {
       this.profile['operation'] = 'update_profile'
       this.profile['authorizationToken'] = this.$auth
         .getToken('local')
@@ -112,27 +113,20 @@ export default {
           const link = `/artist/${response.data.profile.username}`
           this.$router.push(link)
         }
-        debugger
       } catch (err) {
         console.log(err)
       }
     },
-    
 
-    addSkill(){
-
+    addSkill() {
       if (!this.profile.skill_tags) {
         this.profile.skill_tags = []
       }
       this.profile.skill_tags.push(this.formData.skills)
       this.formData.skills = ''
-      
-      
-
     },
 
     applySocialRules() {
-      debugger
       this.fbRules = [
         (v) =>
           /[(http(s)?):\/\/(www\.)?a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/gi.test(
@@ -145,7 +139,7 @@ export default {
             v
           ) || 'Enter valid link'
       ]
-    },
+    }
   }
 }
 </script>
