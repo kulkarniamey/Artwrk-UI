@@ -94,10 +94,18 @@
               </v-card>
             </v-menu>
 
-            <v-btn nuxt :to="`/artist/` + user" text large dark
-              >Welcome {{ user }}
-            </v-btn>
-            <v-btn text @click="$auth.logout()" dark>Logout</v-btn>
+                  <v-btn text nuxt :to="notification.actionLink">{{notification.actionText}}</v-btn>
+                  <v-btn color="primary" text @click="removeNotification(i)"
+                    >Remove</v-btn
+                  >
+                </v-card-actions>
+              </v-list-item>
+            </v-list>
+          </v-card>
+        </v-menu>
+       
+        <v-btn nuxt :to="`/artist/`+user" text large dark>Welcome {{ user }} </v-btn>
+        <v-btn text @click="$auth.logout()" dark>Logout</v-btn>
 
             <!-- <v-Snackbars
 
@@ -248,8 +256,14 @@ export default {
     gotoProfile() {
       this.$router.push('artist/' + this.user)
     },
-    handleResize() {
-      this.width = window.innerWidth
+
+    checkAdmin(){
+      if(this.$auth?.user?.user_id ==='admin_admin'){
+        return 'admin'
+      }
+      else{
+        return this.$auth?.user?.user_id
+      }
     }
   },
   async created() {
@@ -263,7 +277,7 @@ export default {
           authorizationToken: token
         }
         let user = await this.$axios
-          .put('profile/', userPayload)
+          .put('https://cuwewf4fsg.execute-api.ap-south-1.amazonaws.com/artwrkInit/profile/', userPayload)
           .then((user) => {
             this.$auth.setUser(user.data.profile)
             this.user = this.$auth?.user?.username || null
@@ -283,10 +297,23 @@ export default {
     this.handleResize()
     //console.log(state)
 
-    const payload = {
-      operation: 'get_all_notifications',
-      id: this.$auth?.user?.user_id,
-      authorizationToken: this.$auth.getToken('local').replace('Bearer ', '')
+    const payload ={
+          operation: "get_all_notifications",
+          id: this.checkAdmin(),
+          authorizationToken: this.$auth
+        .getToken('local')
+        .replace('Bearer ', '')
+
+    }
+    try{
+    const response= await this.$axios.put(`https://cuwewf4fsg.execute-api.ap-south-1.amazonaws.com/artwrkInit/notifications`,payload);
+    console.log(payload);
+    if (response.data.notifications){
+      this.notifications= this.notifications.concat(response.data.notifications)
+      debugger
+      console.log(this.notifications)
+            
+      
     }
     try {
       const response = await this.$axios.put(

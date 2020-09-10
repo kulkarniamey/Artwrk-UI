@@ -80,7 +80,7 @@ export default {
       formData: {
         jobTitle: undefined,
         jobDescription: undefined,
-        companyName: undefined
+        companyName: undefined,
       },
       valid: true,
       snackbar: false,
@@ -94,7 +94,7 @@ export default {
 
       jobDescRules: [],
       jobTypes: ['Full time', 'Part time', 'Freelance'],
-      postJobData: {}
+      postJobData: {},
     }
   },
   methods: {
@@ -102,13 +102,13 @@ export default {
       this.companyNameRules = [
         (v) => !!v || 'Company name is required',
         (v) =>
-          (v && v.length <= 50) || 'Company name must be less than 25 words'
+          (v && v.length <= 50) || 'Company name must be less than 25 words',
         // Tentative word limit. Needs to be changed.
       ]
 
       this.jobTitleRules = [
         (v) => !!v || 'Job title is required',
-        (v) => (v && v.length <= 50) || 'Job title must be less than 25 words'
+        (v) => (v && v.length <= 50) || 'Job title must be less than 25 words',
         // Tentative word limit. Needs to be changed.
       ]
 
@@ -116,7 +116,7 @@ export default {
         (v) => !!v || 'Job description is required',
         (v) =>
           (v && v.length <= 3000) ||
-          'Job description must be less than 500 words'
+          'Job description must be less than 500 words',
         // Tentative word limit. Needs to be changed.
       ]
       if (this.$refs.form.validate()) {
@@ -143,7 +143,7 @@ export default {
         jobDescription: undefined,
         companyName: undefined,
         artistType: undefined,
-        jobType: undefined
+        jobType: undefined,
       }
       this.companyNameRules = []
 
@@ -175,8 +175,8 @@ export default {
             headers: {
               metadata: JSON.stringify(this.postJobData),
               authorizationToken: this.postJobData.authorizationToken,
-              'content-type': 'multipart/form-data'
-            }
+              'content-type': 'multipart/form-data',
+            },
           }
         )
 
@@ -184,14 +184,17 @@ export default {
         console.log(response.data.statusCode)
         if (response.data.statusCode === 200) {
           this.snackbar = true
-        }
 
-        debugger
+          setTimeout(() => {
+            this.$router.push('/jobs')
+          }, 1000)
+          debugger
+        }
       } catch (err) {
         console.log(err)
       }
-    }
-  }
+    },
+  },
 }
 </script>
 

@@ -39,6 +39,7 @@
 
 <script>
 export default {
+  middleware: ['auth'],
     data:()=>({
 
       recruiter_list: [],
@@ -50,6 +51,13 @@ export default {
 
     async mounted(){
     this.getRecruiterList()
+     if( !(this.$auth.user.type==='admin')){
+       
+       this.$router.push('comingsoon')
+    
+       
+     }
+
     
   },
 
@@ -65,6 +73,7 @@ export default {
       
       
     },
+
 
     approveRecruiter(index){
     

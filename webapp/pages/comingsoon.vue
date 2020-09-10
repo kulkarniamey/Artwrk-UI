@@ -20,8 +20,11 @@ export default {
   },
   mounted() {
     const profile = this.$auth.user
-    if (profile?.type === 'admin') {
-      this.$router.push('')
+    if(profile?.type=== 'admin'){ this.$router.push('adminVerifier')}
+    else{
+    if (profile?.name === null) {
+      console.log(this.$auth.user);
+      this.$router.push('onboarding/')
     }
     if (profile?.name === null) {
       if (profile?.type === 'artist') {
