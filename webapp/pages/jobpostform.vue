@@ -188,7 +188,6 @@ export default {
           setTimeout(() => {
             this.$router.push('/jobs')
           }, 1000)
-          debugger
         }
       } catch (err) {
         console.log(err)

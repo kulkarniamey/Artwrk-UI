@@ -236,8 +236,12 @@ export default {
     gotoProfile() {
       this.$router.push('artist/' + this.user)
     },
-    handleResize() {
-      this.width = window.innerWidth
+    checkAdmin() {
+      if (this.$auth?.user?.user_id === 'admin_admin') {
+        return 'admin'
+      } else {
+        return this.$auth?.user?.user_id
+      }
     }
   },
   async created() {
@@ -251,7 +255,10 @@ export default {
           authorizationToken: token
         }
         let user = await this.$axios
-          .put('profile/', userPayload)
+          .put(
+            'https://cuwewf4fsg.execute-api.ap-south-1.amazonaws.com/artwrkInit/profile/',
+            userPayload
+          )
           .then((user) => {
             this.$auth.setUser(user.data.profile)
             this.user = this.$auth?.user?.username || null
@@ -267,13 +274,11 @@ export default {
       }
     } catch (err) {}
     this.loading = false
-    window.addEventListener('resize', this.handleResize)
-    this.handleResize()
     //console.log(state)
 
     const payload = {
       operation: 'get_all_notifications',
-      id: this.$auth?.user?.user_id,
+      id: this.checkAdmin(),
       authorizationToken: this.$auth.getToken('local').replace('Bearer ', '')
     }
     try {
@@ -281,12 +286,11 @@ export default {
         `https://cuwewf4fsg.execute-api.ap-south-1.amazonaws.com/artwrkInit/notifications`,
         payload
       )
-      // console.log(response.data.notifications);
+      console.log(payload)
       if (response.data.notifications) {
         this.notifications = this.notifications.concat(
           response.data.notifications
         )
-        debugger
         console.log(this.notifications)
       }
       try {
@@ -294,20 +298,34 @@ export default {
           `https://cuwewf4fsg.execute-api.ap-south-1.amazonaws.com/artwrkInit/notifications`,
           payload
         )
-        console.log(response.data.notifications)
+        // console.log(response.data.notifications);
         if (response.data.notifications) {
           this.notifications = this.notifications.concat(
             response.data.notifications
           )
-          debugger
+
           console.log(this.notifications)
+        }
+        try {
+          const response = await this.$axios.put(
+            `https://cuwewf4fsg.execute-api.ap-south-1.amazonaws.com/artwrkInit/notifications`,
+            payload
+          )
+          console.log(response.data.notifications)
+          if (response.data.notifications) {
+            this.notifications = this.notifications.concat(
+              response.data.notifications
+            )
+
+            console.log(this.notifications)
+          }
+        } catch (err) {
+          console.log(err)
         }
       } catch (err) {
         console.log(err)
       }
-    } catch (err) {
-      console.log(err)
-    }
+    } catch (err) {}
   }
 }
 </script>
