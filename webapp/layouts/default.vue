@@ -256,7 +256,6 @@ export default {
     gotoProfile() {
       this.$router.push('artist/' + this.user)
     },
-
     checkAdmin(){
       if(this.$auth?.user?.user_id ==='admin_admin'){
         return 'admin'
@@ -293,8 +292,6 @@ export default {
       }
     } catch (err) {}
     this.loading = false
-    window.addEventListener('resize', this.handleResize)
-    this.handleResize()
     //console.log(state)
 
     const payload ={
@@ -312,8 +309,7 @@ export default {
       this.notifications= this.notifications.concat(response.data.notifications)
       debugger
       console.log(this.notifications)
-            
-      
+              
     }
     try {
       const response = await this.$axios.put(
@@ -331,9 +327,10 @@ export default {
     } catch (err) {
       console.log(err)
     }
-  },
+  }
+  catch(err){}
 
-  async getNotifications() {}
+}
 }
 </script>
 <style scoped>

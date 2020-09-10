@@ -20,17 +20,19 @@ export default {
   },
   mounted() {
     const profile = this.$auth.user
-    if(profile?.type=== 'admin'){ this.$router.push('adminVerifier')}
-    else{
-    if (profile?.name === null) {
-      console.log(this.$auth.user);
-      this.$router.push('onboarding/')
-    }
-    if (profile?.name === null) {
-      if (profile?.type === 'artist') {
-        this.$router.push('onboarding/artist')
-      } else if (profile?.type === 'recruiter') {
-        this.$router.push('onboarding/recruiter')
+    if (profile?.type === 'admin') {
+      this.$router.push('adminVerifier')
+    } else {
+      if (profile?.name === null) {
+        console.log(this.$auth.user)
+        this.$router.push('onboarding/')
+      }
+      if (profile?.name === null) {
+        if (profile?.type === 'artist') {
+          this.$router.push('onboarding/artist')
+        } else if (profile?.type === 'recruiter') {
+          this.$router.push('onboarding/recruiter')
+        }
       }
     }
   },
