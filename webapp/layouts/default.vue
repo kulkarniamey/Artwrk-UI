@@ -66,8 +66,9 @@
                     v-for="(notification, i) in notifications"
                     :key="i"
                   >
-                    <v-list-item-title
-                      >{{ notification.notification }}
+                    <v-list-item-title @click="linkNotification(notification.link_id)"
+                      > 
+                      <nuxt-link to=""> {{ notification.notification }} </nuxt-link>
                     </v-list-item-title>
                     <v-card-actions>
                       <v-spacer></v-spacer>
@@ -300,13 +301,24 @@ export default {
         return this.$auth?.user?.user_id
       }
     },
+
+      linkNotification(i){
+      console.log(i.startsWith('recruiter'))
+      if(i.startsWith('recruiter')){
+        this.$router.push('/recruiter/' + i)
+      }
+      else{this.$router.push('/artist/' + i)}
+       
+
+    }
   },
   async created() {
     this.user = this.$auth?.user?.username || null
     try {
       const state = await this.$auth.getToken('local')
 
-      if (state !== false) {
+      if (state !== false && this.$auth?.user?.type !== 'admin' ) {
+        debugger
         const token = state.replace('Bearer ', '')
         const userPayload = {
           operation: 'get_profile',
@@ -347,9 +359,14 @@ export default {
           payload
         )
         // console.log(response.data.notifications);
+        const processedNotifications = this.response.data.notifications.map((singlenotification,index) =>{
+          return singlenotification
+          debugger
+        } )
+        
         if (response.data.notifications) {
           this.notifications = this.notifications.concat(
-            response.data.notifications
+            processedNotifications
           )
 
           console.log(this.notifications)

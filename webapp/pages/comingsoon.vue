@@ -20,6 +20,7 @@ export default {
   },
   mounted() {
     const profile = this.$auth.user
+    debugger
     if (profile?.type === 'admin') {
       this.$router.push('adminVerifier')
     } else {

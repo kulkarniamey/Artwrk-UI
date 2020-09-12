@@ -137,6 +137,7 @@ export default {
             operation: operation,
           },
         })
+        
         if (response?.data?.statusCode !== 200) {
           this.text = response.data.message
           throw 'error!'
@@ -147,9 +148,11 @@ export default {
           authorizationToken: token,
         }
         if (type === 'admin') {
-          let user = await this.$axios.put('/profile/', userPayload)
+          //let user = await this.$axios.put('/profile/', userPayload)
+          let user = {"user_id":"admin","username":"admin","artist_score":0,"awards_recognition":[],"current_employer":null,"education_history":[],"email_verfication":"False","employer_history":[],"facebook_link":null,"followers":[{"recruiter_tryme":"job_1599153723.966364_tryme"},{"recruiter_parimal098":"job_1599641036.188983_parimal098"},{"recruiter_Amey_recruiter":"job_1599067882.908197_Amey_recruiter"}],"following":[],"name":"PS","type":"admin","skill_tags":[],"twitter_link":null,"certificates":[{"asssas":"https://artwrk-test-upload.s3.ap-south-1.amazonaws.com/artist_som3/certificate/123.docx"}],"applied_jobs":[],"email":"soham.artwrk.com@gmail.com","artist_type":null}
+          
           //console.log(user)
-          this.$auth.setUser(user.data.profile)
+          this.$auth.setUser(user)
         } else {
           let user = await this.$axios.put('/profile/', userPayload)
           //console.log(user)
