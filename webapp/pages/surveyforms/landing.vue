@@ -46,7 +46,7 @@
               hide-delimiters
               :height="customHeight"
               cycle
-              interval="1000"
+              interval="8000"
             >
               <v-carousel-item
                 v-for="(item, i) in items"
@@ -269,8 +269,8 @@
 </template>
 
 <script>
-import logowhite from '../../components/logowhite'
-import logoblack from '../../components/logoblack'
+import logowhite from '~/components/logowhite'
+import logoblack from '~/components/logoblack'
 export default {
   layout: 'surveylayout',
   name: 'landing',
