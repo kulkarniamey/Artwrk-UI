@@ -72,28 +72,7 @@
                     <v-card-actions>
                       <v-spacer></v-spacer>
                     </v-card-actions>
-                    <v-list-item
-                      v-for="(notification, i) in notifications"
-                      :key="i"
-                    >
-                      <v-list-item-title
-                        >{{ notification.text }}
-                      </v-list-item-title>
-
-                      <v-card-actions>
-                        <v-spacer></v-spacer>
-
-                        <v-btn text nuxt :to="notification.actionLink">{{
-                          notification.actionText
-                        }}</v-btn>
-                        <v-btn
-                          color="primary"
-                          text
-                          @click="removeNotification(i)"
-                          >Remove</v-btn
-                        >
-                      </v-card-actions>
-                    </v-list-item>
+            
 
                     <v-card-actions>
                       <v-btn text nuxt :to="notification.actionLink">{{
@@ -361,17 +340,7 @@ export default {
         id: this.checkAdmin(),
         authorizationToken: this.$auth.getToken('local').replace('Bearer ', ''),
       }
-      const response = await this.$axios.put(
-        `https://cuwewf4fsg.execute-api.ap-south-1.amazonaws.com/artwrkInit/notifications`,
-        payload
-      )
-      console.log(payload)
-      if (response.data.notifications) {
-        this.notifications = this.notifications.concat(
-          response.data.notifications
-        )
-        console.log(this.notifications)
-      }
+      
       try {
         const response = await this.$axios.put(
           `https://cuwewf4fsg.execute-api.ap-south-1.amazonaws.com/artwrkInit/notifications`,
