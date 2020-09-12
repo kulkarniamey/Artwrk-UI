@@ -38,9 +38,5 @@ export default {
   padding: 1rem 0;
   width: 100%;
   height: 20vh;
-
-  position: absolute;
-  left: 0;
-  top: 0;
 }
 </style>

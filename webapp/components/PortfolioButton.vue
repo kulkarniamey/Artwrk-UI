@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="button-cont">
     <v-btn text class="font-weight-bold mb-3"> Projects </v-btn>
 
     <v-menu bottom offset-y>
@@ -238,5 +238,10 @@ export default {
 <style lang="css" scoped>
 .link {
   text-decoration: none;
+}
+.button-cont {
+  min-width: 360px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
 }
 </style>

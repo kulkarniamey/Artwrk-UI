@@ -1,177 +1,61 @@
 <template>
-  <div>
-    <template v-if="!mobile">
-      <v-row>
-        <v-col cols="12">
-          <CoverPic :profileData="profile" />
-        </v-col>
-      </v-row>
-      <v-row>
-        <v-col cols="3" class="profile-card">
-          <ArtistProfileCardComponent :profileData="profile" />
-        </v-col>
-        <v-col cols="9" class="profile-content">
-          <v-row>
-            <v-col cols="4">
-              <PortfolioButton :profile="profile" />
-            </v-col>
-            <v-col cols="4">
-              <v-dialog max-width="600" v-model="dialog" persistent>
-                <template v-slot:activator="{ on, attrs }">
-                  <v-btn
-                    rounded
-                    color="indigo accent-4 mb-3"
-                    dark
-                    v-bind="attrs"
-                    v-on="on"
-                  >
-                    Upload Post
-                  </v-btn>
-                </template>
-                <v-card>
-                  <v-card-title>
-                    Post Details
-                  </v-card-title>
-                  <v-card-text>
-                    <v-form class="px-3">
-                      <v-text-field label="Description" v-model="desc">
-                      </v-text-field>
-                      <v-file-input
-                        prepend-icon="mdi-camera"
-                        label="File input"
-                        @change="handleFile"
-                      ></v-file-input>
-                      <v-card-actions>
-                        <v-spacer></v-spacer>
-                        <v-btn
-                          color="blue darken-1"
-                          text
-                          @click="dialog = false"
-                          >Close</v-btn
-                        >
-                        <v-btn color="blue darken-1" text @click="createPost"
-                          >Save</v-btn
-                        >
-                      </v-card-actions>
-                    </v-form>
-                  </v-card-text>
-                </v-card>
-              </v-dialog>
-            </v-col>
-          </v-row>
-          <imageGrid v-if="!isPostsNull" :postData="postData.posts" />
-          <div class="flex" v-else>
-            <v-img class="splash" contain src="/noposts.svg" />
-            <h4 class="text-grey text-center">
-              Seems like you have no posts...
-            </h4>
-          </div>
-        </v-col>
-      </v-row>
-    </template>
-    <template v-if="mobile">
-      <v-row>
-        <v-col cols="12" sm="10">
-          <CoverPic :profileData="profile" />
-        </v-col>
-      </v-row>
-      <v-tabs
-        centered
-        background-color="white"
-        color="deep-purple accent-4"
-        class="tabs-control"
-      >
-        <v-tab>Bio </v-tab>
-        <v-tab>Projects </v-tab>
-        <v-tab>Portfolio </v-tab>
-        <v-tab-item>
-          <v-row class="test">
-            <v-col cols="12" sm="10" class="mobile-card--padding">
-              <ArtistProfileCardComponent :profileData="profile" />
-            </v-col>
-          </v-row>
-        </v-tab-item>
+  <div class="grid-container">
+    <CoverPic :profileData="profile" id="cover" />
+    <ArtistProfileCardComponent :profileData="profile" id="bio" />
 
-        <v-tab-item>
-          <v-row align-content="center">
-            <v-col cols="12" sm="10">
-              <v-dialog max-width="300" v-model="dialog" persistent>
-                <template v-slot:activator="{ on, attrs }">
-                  <v-btn
-                    rounded
-                    color="indigo accent-4 mb-3"
-                    dark
-                    v-bind="attrs"
-                    v-on="on"
-                  >
-                    Upload Post
-                  </v-btn>
-                </template>
-                <v-card>
-                  <v-card-title>
-                    Post Details
-                  </v-card-title>
-                  <v-card-text>
-                    <v-form class="px-3">
-                      <v-text-field label="Description" v-model="desc">
-                      </v-text-field>
-                      <v-file-input
-                        prepend-icon="mdi-camera"
-                        label="File input"
-                        @change="handleFile"
-                      ></v-file-input>
-                      <v-card-actions>
-                        <v-spacer></v-spacer>
-                        <v-btn
-                          color="blue darken-1"
-                          text
-                          @click="dialog = false"
-                          >Close</v-btn
-                        >
-                        <v-btn color="blue darken-1" text @click="createPost"
-                          >Save</v-btn
-                        >
-                      </v-card-actions>
-                    </v-form>
-                  </v-card-text>
-                </v-card>
-              </v-dialog>
-            </v-col>
-            <v-col cols="12" sm="10" class="">
-              <imageGrid v-if="!isPostsNull" :postData="postData.posts" />
-              <div class="flex" v-else>
-                <v-img class="splash" contain src="/noposts.svg" />
-                <h4 class="text-grey text-center">
-                  Seems like you have no posts...
-                </h4>
-              </div>
-            </v-col>
-          </v-row>
-        </v-tab-item>
-
-        <v-tab-item>
-          <v-row>
-            <v-col cols="12" sm="10" class="profile-content">
-              <PortfolioButton :profile="profile" />
-            </v-col>
-          </v-row>
-        </v-tab-item>
-      </v-tabs>
-    </template>
+    <div id="portfolioBtn">
+      <PortfolioButton :profile="profile" id="" />
+      <v-dialog max-width="600" v-model="dialog" persistent>
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn
+            rounded
+            color="indigo accent-4 mb-3"
+            dark
+            v-bind="attrs"
+            v-on="on"
+          >
+            Upload Post
+          </v-btn>
+        </template>
+        <v-card>
+          <v-card-title> Post Details </v-card-title>
+          <v-card-text>
+            <v-form class="px-3">
+              <v-text-field label="Description" v-model="desc"> </v-text-field>
+              <v-file-input
+                prepend-icon="mdi-camera"
+                label="File input"
+                @change="handleFile"
+              ></v-file-input>
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn color="blue darken-1" text @click="dialog = false"
+                  >Close</v-btn
+                >
+                <v-btn color="blue darken-1" text @click="createPost"
+                  >Save</v-btn
+                >
+              </v-card-actions>
+            </v-form>
+          </v-card-text>
+        </v-card>
+      </v-dialog>
+    </div>
+    <ImageGrid :postData="postData.posts" id="posts" />
   </div>
 </template>
 
 <script>
 import CoverPic from '../../components/CoverPic'
 import ArtistProfileCardComponent from '../../components/ArtistProfileCardComponent'
-import imageGrid from '../../components/ImageGrid'
+import ImageGrid from '../../components/ImageGrid'
 import PortfolioButton from '../../components/PortfolioButton'
 export default {
   value: '_id',
   middleware: 'auth',
   components: {
     CoverPic,
-    imageGrid,
+    ImageGrid,
     ArtistProfileCardComponent,
     PortfolioButton
   },
@@ -398,5 +282,62 @@ export default {
 }
 .splash {
   max-height: 20rem;
+}
+.grid-container {
+  /* height: 100vh; */
+  display: grid;
+  grid-template-columns: 1fr 4fr;
+  grid-template-rows: 2fr 1fr 7fr;
+  grid-template-areas:
+    'coverpic coverpic coverpic'
+    'artistCard portfolio protfolio'
+    'artistCard imageGrid imageGrid';
+  gap: 12px;
+}
+
+#cover {
+  grid-area: coverpic;
+}
+#bio {
+  grid-area: artistCard;
+}
+#portfolioBtn {
+  grid-area: portfolio;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  align-self: center;
+  gap: 12px;
+}
+#upload {
+  grid-area: uploadpic;
+}
+#posts {
+  grid-area: imageGrid;
+}
+
+@media screen and (max-width: 760px) {
+  .grid-container {
+    /* height: 100vh; */
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      'coverpic'
+      'portfolio'
+      'imageGrid';
+    gap: 12px;
+    max-width: 100%;
+  }
+  #bio {
+    display: none;
+  }
+  #portfolioBtn {
+    grid-area: portfolio;
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+  }
 }
 </style>

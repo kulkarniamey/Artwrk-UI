@@ -21,9 +21,9 @@
               <v-img
                 :src="x.url"
                 :key="index"
-                alt="pussy"
+                alt="post"
                 class="img-class"
-                cover
+                contain
                 @click="showDetail($event, x)"
               />
             </v-card>
@@ -45,7 +45,7 @@ import axios, * as others from 'axios'
 import Modal from './Modal'
 const API_KEY = 'c397975f-36f1-49d9-9299-530a628c8663'
 export default {
-  name: 'imageGrid',
+  name: 'ImageGrid',
   components: { Modal },
   data() {
     return {
@@ -54,21 +54,21 @@ export default {
       dialog: false,
       selectedPost: undefined,
       imgval: '',
-      images: this.postData,
+      images: this.postData
     }
   },
   props: {
-    postData: { type: Array, required: true },
+    postData: { type: Array, required: true }
   },
   watch: {
     postData() {
       this.images = this.postData
-    },
+    }
   },
   computed: {
     renderImage() {
       return this.imageurls.filter((p) => p.isActive).length
-    },
+    }
   },
   methods: {
     getManyPussy() {
@@ -90,11 +90,11 @@ export default {
       this.dialog = false
       this.title = ''
       this.imgval = ''
-    },
+    }
   },
   mounted() {
     this.images = this.postData
-  },
+  }
 }
 </script>
 
@@ -109,16 +109,14 @@ export default {
 .grid-square:hover {
   cursor: pointer;
 }
-// .img-class {
-//   max-width: 100%;
-//   height: 200px;
-//   object-fit: cover;
-//   object-position: center;
-//   opacity: 1;
-// }
+.img-class {
+  object-fit: cover;
+  object-position: center;
+}
 .grid-card {
   margin: 0.5em;
   border-radius: 0;
+  object-fit: contain;
 }
 
 // .overlay {
