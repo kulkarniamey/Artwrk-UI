@@ -15,8 +15,6 @@
           :src="postData.url"
           gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
           cotain
-          width="960px"
-          height="480px"
         >
           <div class="image-content">
             <v-card-title>
@@ -41,7 +39,7 @@ export default {
   props: ['showModal', 'postData'],
   data() {
     return {
-      liked: ''
+      liked: '',
     }
   },
   mounted() {
@@ -62,12 +60,12 @@ export default {
         operation: 'vote',
         id: this.$auth.user.user_id,
         post_id: this.postData.postid,
-        other_id: this.$auth.user.user_id
+        other_id: this.$auth.user.user_id,
       }
       const resp = await this.$axios.put('login', payload)
       console.log(resp)
-    }
-  }
+    },
+  },
 }
 </script>
 

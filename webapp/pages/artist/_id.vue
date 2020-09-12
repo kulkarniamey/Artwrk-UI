@@ -41,7 +41,7 @@
         </v-card>
       </v-dialog>
     </div>
-    <ImageGrid :postData="postData.posts" id="posts" />
+    <ImageGrid v-if="!isPostsNull" :postData="postData.posts" id="posts" />
   </div>
 </template>
 
@@ -57,7 +57,7 @@ export default {
     CoverPic,
     ImageGrid,
     ArtistProfileCardComponent,
-    PortfolioButton
+    PortfolioButton,
   },
   data() {
     return {
@@ -83,12 +83,12 @@ export default {
         certificates: [],
         applied_jobs: [],
         email: '',
-        artist_type: null
+        artist_type: null,
       },
       width: 0,
       desc: '',
       fileData: undefined,
-      postData: []
+      postData: [],
     }
   },
   async created() {
@@ -113,7 +113,7 @@ export default {
     async fetchPosts() {
       const payload = {
         operation: 'get_posts_by_user',
-        id: this.profile.user_id
+        id: this.profile.user_id,
       }
       const response = await this.$axios.put(
         'https://cuwewf4fsg.execute-api.ap-south-1.amazonaws.com/artwrkInit/posts',
@@ -155,9 +155,9 @@ export default {
             upload_type: 'post',
             description: this.desc,
             filename: fname + '_' + time,
-            date_time: date + '_' + time
-          })
-        }
+            date_time: date + '_' + time,
+          }),
+        },
       }
       try {
         let response = await this.$axios
@@ -171,7 +171,7 @@ export default {
         this.dialog = false
         this.fetchPosts()
       }
-    }
+    },
   },
   computed: {
     mobile() {
@@ -180,8 +180,8 @@ export default {
       }
 
       return false
-    }
-  }
+    },
+  },
 }
 </script>
 
@@ -320,6 +320,7 @@ export default {
     /* height: 100vh; */
     display: grid;
     grid-template-columns: 1fr;
+    grid-template-rows: auto auto 1fr;
     grid-template-areas:
       'coverpic'
       'portfolio'

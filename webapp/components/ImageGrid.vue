@@ -1,36 +1,17 @@
 <template>
   <div>
-    <v-row class="" no-gutters>
-      <v-col
-        lg="3"
-        md="4"
-        sm="6"
-        cols="12"
-        v-for="(x, index) in images"
-        :key="index"
-        align="center"
-        no-gutters
-        ><div class="grid-square">
-          <v-lazy
-            v-model="x.isActive"
-            :options="{ threshold: 0.5 }"
-            transition="fade-transition"
-            class=""
-          >
-            <v-card outlined class="grid-card">
-              <v-img
-                :src="x.url"
-                :key="index"
-                alt="post"
-                class="img-class"
-                contain
-                @click="showDetail($event, x)"
-              />
-            </v-card>
-          </v-lazy>
-        </div>
-      </v-col>
-    </v-row>
+    <div class="image-grid">
+      <template v-for="(x, index) in images">
+        <v-img
+          :src="x.url"
+          :key="index"
+          alt="post"
+          class="single-image"
+          lazy-src="/loadersvg.svg"
+          @click="showDetail($event, x)"
+        />
+      </template>
+    </div>
     <Modal
       v-if="selectedPost"
       :showModal="dialog"
@@ -54,21 +35,21 @@ export default {
       dialog: false,
       selectedPost: undefined,
       imgval: '',
-      images: this.postData
+      images: this.postData,
     }
   },
   props: {
-    postData: { type: Array, required: true }
+    postData: { type: Array, required: true },
   },
   watch: {
     postData() {
       this.images = this.postData
-    }
+    },
   },
   computed: {
     renderImage() {
       return this.imageurls.filter((p) => p.isActive).length
-    }
+    },
   },
   methods: {
     getManyPussy() {
@@ -90,35 +71,37 @@ export default {
       this.dialog = false
       this.title = ''
       this.imgval = ''
-    }
+    },
   },
   mounted() {
     this.images = this.postData
-  }
+  },
 }
 </script>
 
 <style lang="scss" scoped>
-.grid-square {
-  width: 100%;
-  height: 100%;
-  padding: 0;
-  background: transparent;
-  margin: 0;
+.image-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
 }
-.grid-square:hover {
-  cursor: pointer;
+.single-image {
+  max-width: 404px;
+  min-width: 145px;
+  max-height: 200px;
+  min-height: 100px;
 }
-.img-class {
-  object-fit: cover;
-  object-position: center;
+@media screen and (max-width: 760px) {
+  .image-grid {
+    grid-template-columns: repeat(1, 1fr);
+  }
+  .single-image {
+    max-width: 404px;
+    min-width: 145px;
+    max-height: 200px;
+    min-height: 100px;
+  }
 }
-.grid-card {
-  margin: 0.5em;
-  border-radius: 0;
-  object-fit: contain;
-}
-
 // .overlay {
 //   opacity: 0;
 // }
