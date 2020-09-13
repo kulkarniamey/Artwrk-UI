@@ -19,12 +19,17 @@ export default {
   name: 'CoverPic',
   data: () => ({
     profile: {},
-    isDpNull: true
+    isDpNull: true,
   }),
   props: { profileData: { type: Object } },
   mounted() {
     this.profile = this.profileData
-  }
+  },
+  watch: {
+    profileData() {
+      this.profile = this.profileData
+    },
+  },
 }
 </script>
 

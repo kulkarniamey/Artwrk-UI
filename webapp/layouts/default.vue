@@ -72,7 +72,6 @@
                     <v-card-actions>
                       <v-spacer></v-spacer>
                     </v-card-actions>
-            
 
                     <v-card-actions>
                       <v-btn text nuxt :to="notification.actionLink">{{
@@ -87,7 +86,7 @@
               </v-card>
             </v-menu>
 
-            <v-btn nuxt :to="`/artist/` + user" text large dark
+            <v-btn nuxt :to="`/artist/` + 'me'" text large dark
               >Welcome {{ user }}
             </v-btn>
             <v-btn text @click="$auth.logout()" dark>Logout</v-btn>
@@ -291,7 +290,7 @@ export default {
       this.notifications.splice(index, 1)
     },
     gotoProfile() {
-      this.$router.push('artist/' + this.user)
+      this.$router.push('artist/' + 'me')
     },
     checkAdmin() {
       if (this.$auth?.user?.user_id === 'admin_admin') {
@@ -340,7 +339,7 @@ export default {
         id: this.checkAdmin(),
         authorizationToken: this.$auth.getToken('local').replace('Bearer ', ''),
       }
-      
+
       try {
         const response = await this.$axios.put(
           `https://cuwewf4fsg.execute-api.ap-south-1.amazonaws.com/artwrkInit/notifications`,
