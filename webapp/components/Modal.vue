@@ -43,10 +43,15 @@ export default {
     }
   },
   mounted() {
-    if (this.postData.voters.includes(this.$auth.user.name)) {
-      this.liked = 'red'
-    }
-    this.liked = ''
+    this.checkIfLiked()
+
+    debugger
+  },
+  watch: {
+    postData() {
+      debugger
+      this.checkIfLiked()
+    },
   },
   methods: {
     closeModal(e) {
@@ -58,12 +63,21 @@ export default {
     async upvotePost() {
       const payload = {
         operation: 'vote',
-        id: this.$auth.user.user_id,
+        id: `artist_${this.$route.params.id}`,
         post_id: this.postData.postid,
         other_id: this.$auth.user.user_id,
+        type: this.$auth.user.type,
       }
       const resp = await this.$axios.put('login', payload)
       console.log(resp)
+    },
+    checkIfLiked() {
+      const isLiked = this.postData.voters.some((liker) => {
+        const ans = liker[this.$auth.user.user_id] !== undefined
+        debugger
+        return ans
+      })
+      console.log(isLiked)
     },
   },
 }
