@@ -2,7 +2,15 @@
   <v-card class="artist-card mx-auto my-12 tile" min-width="374">
     <v-card-actions class="pt-10">
       <div v-if="!isUserSelf">
-        <v-btn mx-auto rounded color="indigo accent-4" dark> Connect</v-btn>
+        <v-btn
+          mx-auto
+          rounded
+          color="indigo accent-4"
+          @click="connectToUser"
+          dark
+        >
+          Connect</v-btn
+        >
       </div>
       <v-spacer></v-spacer>
       <v-list-item-title class="font-weight-bold pl-5"
@@ -140,6 +148,15 @@ export default {
 
     handleResize() {
       this.width = window.innerWidth
+    },
+    async connectToUser() {
+      const payload = {
+        operation: 'connect_to_users',
+        id: this.profile.user_id,
+        other_id: this.$auth?.user?.user_id,
+      }
+      const resp = await this.$axios.put('login', payload)
+      console.log(resp)
     },
   },
 }
