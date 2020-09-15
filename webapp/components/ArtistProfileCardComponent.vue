@@ -1,8 +1,16 @@
 <template>
   <v-card class="artist-card mx-auto my-12 tile" min-width="374">
     <v-card-actions class="pt-10">
-      <div v-if="!isSelf">
-        <v-btn mx-auto rounded color="indigo accent-4" dark> Connect</v-btn>
+      <div v-if="!isUserSelf">
+        <v-btn
+          mx-auto
+          rounded
+          color="indigo accent-4"
+          @click="connectToUser"
+          dark
+        >
+          Connect</v-btn
+        >
       </div>
       <v-spacer></v-spacer>
       <v-list-item-title class="font-weight-bold pl-5"
@@ -11,7 +19,7 @@
 
       <v-spacer />
 
-      <v-btn v-if="isSelf" small v-on:click="editContent" icon>
+      <v-btn v-if="isUserSelf" small v-on:click="editContent" icon>
         <artistProfileEdit :profileData="profile" />
 
         <i v-show="isEditing"><v-icon dark>mdi-content-save</v-icon></i>
@@ -93,7 +101,6 @@ export default {
       email: '',
       artist_type: null,
     },
-    isSelf: false,
     isEditing: false,
   }),
   computed: {
@@ -104,6 +111,12 @@ export default {
 
       return false
     },
+    isUserSelf() {
+      if (this.profile?.user_id === this.$auth?.user?.user_id) {
+        return true
+      }
+      return false
+    },
   },
   created() {
     ;(this.profile = this.profileData),
@@ -111,14 +124,15 @@ export default {
         this.profile = newProfile
       })
 
-    this.isSelf =
-      this.$router?.currentRoute?.params?.id === this.profileData.username
-
     window.addEventListener('resize', this.handleResize)
     this.handleResize()
   },
   props: { profileData: { type: Object } },
-
+  watch: {
+    profileData() {
+      this.profile = this.profileData
+    },
+  },
   destroyed() {
     window.removeEventListener('resize', this.handleResize)
   },
@@ -134,6 +148,15 @@ export default {
 
     handleResize() {
       this.width = window.innerWidth
+    },
+    async connectToUser() {
+      const payload = {
+        operation: 'connect_to_users',
+        id: this.profile.user_id,
+        other_id: this.$auth?.user?.user_id,
+      }
+      const resp = await this.$axios.put('login', payload)
+      console.log(resp)
     },
   },
 }
