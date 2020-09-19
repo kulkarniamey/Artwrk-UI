@@ -19,7 +19,7 @@ export default {
   name: 'CoverPic',
   data: () => ({
     profile: {},
-    isDpNull: true,
+    isDpNull: true
   }),
   props: { profileData: { type: Object } },
   mounted() {
@@ -28,12 +28,21 @@ export default {
   watch: {
     profileData() {
       this.profile = this.profileData
-    },
+    }
   },
+  computed: {
+    mobile() {
+      if (this.width <= 960) {
+        return true
+      }
+
+      return false
+    }
+  }
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="css" scoped>
 .cover {
   background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)),
     url('/cover.jpg');

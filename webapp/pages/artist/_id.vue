@@ -1,6 +1,38 @@
 <template>
   <div class="grid-container">
     <CoverPic :profileData="profile" id="cover" />
+    <v-dialog
+      v-model="dialog1"
+      fullscreen
+      hide-overlay
+      transition="dialog-bottom-transition"
+    >
+      <template v-slot:activator="{ on, attrs }">
+        <v-btn
+          id="mobile-bio"
+          class="white--text"
+          rounded
+          block
+          color="indigo accent-4"
+          v-bind="attrs"
+          v-on="on"
+        >
+          About me
+        </v-btn>
+      </template>
+      <v-card>
+        <v-toolbar dark color="primary">
+          <v-toolbar-title>Bio</v-toolbar-title>
+          <v-spacer></v-spacer>
+          <v-toolbar-items>
+            <v-btn icon dark @click="dialog1 = false">
+              <v-icon>mdi-close</v-icon>
+            </v-btn>
+          </v-toolbar-items>
+        </v-toolbar>
+        <ArtistProfileCardComponent :profileData="profile" />
+      </v-card>
+    </v-dialog>
     <ArtistProfileCardComponent :profileData="profile" id="bio" />
 
     <div v-if="isUserSelf" id="portfolioBtn">
@@ -57,13 +89,14 @@ export default {
     CoverPic,
     ImageGrid,
     ArtistProfileCardComponent,
-    PortfolioButton,
+    PortfolioButton
   },
   data() {
     return {
       user: '',
       isPostsNull: true,
       dialog: false,
+      dialog1: false,
       profile: {
         user_id: '',
         username: '',
@@ -83,12 +116,12 @@ export default {
         certificates: [],
         applied_jobs: [],
         email: '',
-        artist_type: null,
+        artist_type: null
       },
       width: 0,
       desc: '',
       fileData: undefined,
-      postData: [],
+      postData: []
     }
   },
   async mounted() {
@@ -96,7 +129,7 @@ export default {
     try {
       const payload = {
         operation: 'get_profile',
-        user_id: artistId,
+        user_id: artistId
       }
       const resp = await this.$axios.put(
         'https://cuwewf4fsg.execute-api.ap-south-1.amazonaws.com/artwrkInit/profile/',
@@ -127,7 +160,7 @@ export default {
     async fetchPosts() {
       const payload = {
         operation: 'get_posts_by_user',
-        id: this.profile.user_id,
+        id: this.profile.user_id
       }
       const response = await this.$axios.put(
         'https://cuwewf4fsg.execute-api.ap-south-1.amazonaws.com/artwrkInit/posts',
@@ -169,9 +202,9 @@ export default {
             upload_type: 'post',
             description: this.desc,
             filename: fname + '_' + time,
-            date_time: date + '_' + time,
-          }),
-        },
+            date_time: date + '_' + time
+          })
+        }
       }
       try {
         let response = await this.$axios
@@ -185,7 +218,7 @@ export default {
         this.dialog = false
         this.fetchPosts()
       }
-    },
+    }
   },
   computed: {
     mobile() {
@@ -200,8 +233,8 @@ export default {
         return true
       }
       return false
-    },
-  },
+    }
+  }
 }
 </script>
 
@@ -334,15 +367,19 @@ export default {
 #posts {
   grid-area: imageGrid;
 }
+#mobile-bio {
+  display: none;
+}
 
 @media screen and (max-width: 760px) {
   .grid-container {
     /* height: 100vh; */
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: auto auto 1fr;
+    grid-template-rows: auto auto auto 1fr;
     grid-template-areas:
       'coverpic'
+      'mobilebio'
       'portfolio'
       'imageGrid';
     gap: 12px;
@@ -350,6 +387,9 @@ export default {
   }
   #bio {
     display: none;
+  }
+  #mobile-bio {
+    display: block;
   }
   #portfolioBtn {
     grid-area: portfolio;
