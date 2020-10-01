@@ -53,6 +53,7 @@
           <v-card-title> Post Details </v-card-title>
           <v-card-text>
             <v-form class="px-3">
+              <v-text-field label="Post Title" v-model="title"> </v-text-field>
               <v-text-field label="Description" v-model="desc"> </v-text-field>
               <v-file-input
                 prepend-icon="mdi-camera"
@@ -119,6 +120,7 @@ export default {
         artist_type: null
       },
       width: 0,
+      title: '',
       desc: '',
       fileData: undefined,
       postData: []
@@ -200,6 +202,7 @@ export default {
           metadata: JSON.stringify({
             user_id: id,
             upload_type: 'post',
+            title: this.title,
             description: this.desc,
             filename: fname + '_' + time,
             date_time: date + '_' + time
