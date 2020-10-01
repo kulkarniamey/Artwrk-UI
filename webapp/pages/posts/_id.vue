@@ -13,9 +13,12 @@ export default {
   async mounted() {
     const payload = {
       operation: 'get_post',
-      post_id: 'post_1599292426.731536_prashant'
+      post_id: 'post_1601551773.460599_som3'
     }
-    const resp = await this.$axios.put('/posts', payload)
+    const resp = await this.$axios.put(
+      'https://cuwewf4fsg.execute-api.ap-south-1.amazonaws.com/artwrkInit/posts',
+      payload
+    )
     console.log(resp)
   }
 }
