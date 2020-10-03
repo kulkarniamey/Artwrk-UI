@@ -1,22 +1,24 @@
 <template>
   <div>
     <div id="gird-container">
-      <v-avatar color="indigo" size="64" class="row1"
-        ><v-icon size="40">mdi-account</v-icon>
-      </v-avatar>
-      <h3 class=" row1">Name</h3>
-
-      <h1 class="row2">Post Name</h1>
-      <v-img
-        class="row3"
-        src="https://images.unsplash.com/photo-1601221948541-43641bf493a4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80"
-      ></v-img>
+      <div class="row1">
+        <v-avatar color="indigo" size="48"
+          ><v-icon v-if="!profile.profile_pic" dark size="40"
+            >mdi-account</v-icon
+          >
+          <v-img v-else :src="profile.profile_pic"></v-img>
+        </v-avatar>
+        <h3>
+          <nuxt-link :to="`/artist/` + profile.username">{{
+            profile.username
+          }}</nuxt-link>
+        </h3>
+      </div>
+      <h1 class="row2">{{ postData.title }}</h1>
+      <v-img class="row3" :src="postData.url"></v-img>
       <span class="row4">Upvote and rate</span>
       <p class="row5">
-        Description Lorem ipsum dolor sit amet consectetur adipisicing elit.
-        Aliquid totam obcaecati repudiandae quos! Modi quod amet doloribus aut
-        at ullam dolor fuga, odit magnam necessitatibus esse saepe itaque
-        obcaecati iste.
+        {{ postData.description }}
       </p>
     </div>
   </div>
@@ -24,7 +26,16 @@
 
 <script>
 export default {
-  name: 'Posts'
+  name: 'Posts',
+  data() {
+    return {
+      loading: false
+    }
+  },
+  props: {
+    postData: { type: Object },
+    profile: { type: Object }
+  }
 }
 </script>
 
@@ -44,6 +55,17 @@ export default {
 .row1 {
   grid-area: artistInfo;
   justify-self: left;
+  display: flex;
+  align-items: center;
+}
+.row1 h3 {
+  margin-left: 1em;
+
+  cursor: pointer;
+}
+a {
+  color: #000;
+  text-decoration: none;
 }
 .row2 {
   grid-area: postTitle;
