@@ -7,12 +7,17 @@
     <v-row>
       <ImageGrid class="grid" />
     </v-row>
+
+    <v-row>
+      <timeline></timeline>
+    </v-row>
   </div>
 </template>
 
 <script>
 import ImageGrid from '../components/ImageGrid'
 import CoverPic from '../components/CoverPic'
+import timeline from '../components/timeline'
 export default {
   name: 'testprofile',
   data() {
