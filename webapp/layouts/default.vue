@@ -67,7 +67,11 @@
                     :key="i"
                   >
                     <v-list-item-title
-                      >{{ notification.notification }}
+                      @click="linkNotification(notification.notification)"
+                    >
+                      <nuxt-link to="">
+                        {{ notification.notification }}</nuxt-link
+                      >
                     </v-list-item-title>
                     <v-card-actions>
                       <v-spacer></v-spacer>
@@ -86,7 +90,7 @@
               </v-card>
             </v-menu>
 
-            <v-btn nuxt :to="`/artist/` + 'me'" text large dark
+            <v-btn nuxt :to="`/artist/` + user" text large dark
               >Welcome {{ user }}
             </v-btn>
             <v-btn text @click="$auth.logout()" dark>Logout</v-btn>
@@ -115,72 +119,6 @@
           </div>
         </template>
         <template v-if="mobile">
-          <div v-if="$auth.loggedIn">
-            <v-btn color="indigo accent-4" to="/jobs" rounded> Jobs </v-btn>
-          </div>
-          <v-btn icon to="/search">
-            <v-icon>mdi-magnify</v-icon>
-          </v-btn>
-          <v-menu
-            v-if="$auth.loggedIn"
-            bottom
-            offset-y
-            transition="slide-x-transition"
-          >
-            <template v-slot:activator="{ on, attrs }">
-              <v-btn
-                :disabled="notifications.length === 0"
-                dark
-                icon
-                class="ma-2"
-                v-bind="attrs"
-                v-on="on"
-              >
-                <v-badge
-                  :content="notifications.length"
-                  :value="notifications.length"
-                  color="green"
-                  overlap
-                >
-                  <v-icon color="black">mdi-bell-outline</v-icon>
-                </v-badge>
-              </v-btn>
-            </template>
-            <v-card>
-              <v-list>
-                <v-list-item
-                  v-for="(notification, i) in notifications"
-                  :key="i"
-                >
-                  <v-list-item-title
-                    >{{ notification.notification }}
-                  </v-list-item-title>
-                  <v-card-actions>
-                    <v-spacer></v-spacer>
-                  </v-card-actions>
-                  <v-list-item
-                    v-for="(notification, i) in notifications"
-                    :key="i"
-                  >
-                    <v-list-item-title
-                      >{{ notification.text }}
-                    </v-list-item-title>
-
-                    <v-card-actions>
-                      <v-spacer></v-spacer>
-
-                      <v-btn text nuxt :to="notification.actionLink">{{
-                        notification.actionText
-                      }}</v-btn>
-                      <v-btn color="primary" text @click="removeNotification(i)"
-                        >Remove</v-btn
-                      >
-                    </v-card-actions>
-                  </v-list-item>
-                </v-list-item>
-              </v-list>
-            </v-card>
-          </v-menu>
           <v-app-bar-nav-icon
             @click.stop="drawer = !drawer"
           ></v-app-bar-nav-icon>
@@ -199,6 +137,66 @@
           class="d-flex"
         >
           <v-list-itm-group v-if="$auth.loggedIn">
+            <v-list-item>
+              <v-menu bottom offset-y transition="slide-x-transition">
+                <template v-slot:activator="{ on, attrs }">
+                  <v-btn
+                    :disabled="notifications.length === 0"
+                    dark
+                    icon
+                    class="ma-2"
+                    v-bind="attrs"
+                    v-on="on"
+                  >
+                    <v-badge
+                      :content="notifications.length"
+                      :value="notifications.length"
+                      color="green"
+                      overlap
+                    >
+                      <v-icon color="black">mdi-bell-outline</v-icon>
+                    </v-badge>
+                  </v-btn>
+                </template>
+                <v-card>
+                  <v-list>
+                    <v-list-item
+                      v-for="(notification, i) in notifications"
+                      :key="i"
+                    >
+                      <v-list-item-title
+                        >{{ notification.notification }}
+                      </v-list-item-title>
+                      <v-card-actions>
+                        <v-spacer></v-spacer>
+                      </v-card-actions>
+                      <v-list-item
+                        v-for="(notification, i) in notifications"
+                        :key="i"
+                      >
+                        <v-list-item-title
+                          >{{ notification.text }}
+                        </v-list-item-title>
+
+                        <v-card-actions>
+                          <v-spacer></v-spacer>
+
+                          <v-btn text nuxt :to="notification.actionLink">{{
+                            notification.actionText
+                          }}</v-btn>
+                          <v-btn
+                            color="primary"
+                            text
+                            @click="removeNotification(i)"
+                            >Remove</v-btn
+                          >
+                        </v-card-actions>
+                      </v-list-item>
+                    </v-list-item>
+                  </v-list>
+                </v-card>
+              </v-menu>
+            </v-list-item>
             <v-list-item>
               <v-icon>mdi-account</v-icon>
               <v-btn
@@ -296,13 +294,23 @@ export default {
       this.notifications.splice(index, 1)
     },
     gotoProfile() {
-      this.$router.push('artist/' + 'me')
+      this.$router.push('artist/' + this.user)
     },
     checkAdmin() {
       if (this.$auth?.user?.user_id === 'admin_admin') {
         return 'admin'
       } else {
         return this.$auth?.user?.user_id
+      }
+    },
+
+    linkNotification(i) {
+      console.log(i)
+      console.log(i.substr(0, i.indexOf(' ')))
+      if (this.$auth?.user?.user_id === 'admin_admin') {
+        this.$router.push('/recruiter/' + i.substr(0, i.indexOf(' ')))
+      } else if (this.$auth?.user?.type === 'recruiter') {
+        this.$router.push('/artist/' + i.substr(0, i.indexOf(' ')))
       }
     }
   },
@@ -357,7 +365,7 @@ export default {
             response.data.notifications
           )
 
-          console.log(this.notifications)
+          //console.log(this.notifications)
         }
       } catch (err) {
         console.log(err)
