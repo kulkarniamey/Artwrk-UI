@@ -66,13 +66,16 @@
                     v-for="(notification, i) in notifications"
                     :key="i"
                   >
-                    <v-list-item-title @click="linkNotification(notification.notification)"
-                      > <nuxt-link to=""> {{ notification.notification }}</nuxt-link>
+                    <v-list-item-title
+                      @click="linkNotification(notification.notification)"
+                    >
+                      <nuxt-link to="">
+                        {{ notification.notification }}</nuxt-link
+                      >
                     </v-list-item-title>
                     <v-card-actions>
                       <v-spacer></v-spacer>
                     </v-card-actions>
-            
 
                     <v-card-actions>
                       <v-btn text nuxt :to="notification.actionLink">{{
@@ -242,7 +245,7 @@ import SiteLoader from '../components/SiteLoader'
 
 export default {
   props: {
-    source: String,
+    source: String
   },
   components: { FooterComponent, SiteLoader },
   data: () => ({
@@ -253,13 +256,13 @@ export default {
       {
         icon: 'mdi-apps',
         title: 'Welcome',
-        to: '/',
+        to: '/'
       },
       {
         icon: 'mdi-chart-bubble',
         title: 'Inspire',
-        to: '/inspire',
-      },
+        to: '/inspire'
+      }
     ],
     icons: [],
 
@@ -270,21 +273,21 @@ export default {
     text: 'Hello I am New User',
     timeout: null,
     notifications: [],
-    user: undefined,
+    user: undefined
   }),
   watch: {
     group() {
       this.drawer = false
-    },
+    }
   },
   computed: {
-    isLoggedIn: function () {
+    isLoggedIn: function() {
       return this.$auth.loggedIn
     },
 
-    logOut: function () {
+    logOut: function() {
       this.$auth.logout()
-    },
+    }
   },
   methods: {
     removeNotification(index) {
@@ -301,23 +304,15 @@ export default {
       }
     },
 
-      linkNotification(i){
+    linkNotification(i) {
       console.log(i)
-      console.log(i.substr(0,i.indexOf(' ')))
-      if (this.$auth?.user?.user_id === 'admin_admin'){
-        this.$router.push('/recruiter/' + i.substr(0,i.indexOf(' ')))
+      console.log(i.substr(0, i.indexOf(' ')))
+      if (this.$auth?.user?.user_id === 'admin_admin') {
+        this.$router.push('/recruiter/' + i.substr(0, i.indexOf(' ')))
+      } else if (this.$auth?.user?.type === 'recruiter') {
+        this.$router.push('/artist/' + i.substr(0, i.indexOf(' ')))
       }
-
-      else if (this.$auth?.user?.type === 'recruiter'){
-        this.$router.push('/artist/' + i.substr(0,i.indexOf(' ')))
-      }
-
-   
-       
-
     }
-
-    
   },
   async created() {
     this.user = this.$auth?.user?.username || null
@@ -328,7 +323,7 @@ export default {
         const token = state.replace('Bearer ', '')
         const userPayload = {
           operation: 'get_profile',
-          authorizationToken: token,
+          authorizationToken: token
         }
         let user = await this.$axios
           .put(
@@ -342,7 +337,7 @@ export default {
               this.notifications.push({
                 notification: 'You have not yet verified your email',
                 actionText: 'verify',
-                actionLink: '/auth/verify',
+                actionLink: '/auth/verify'
               })
             }
           })
@@ -356,9 +351,9 @@ export default {
       const payload = {
         operation: 'get_all_notifications',
         id: this.checkAdmin(),
-        authorizationToken: this.$auth.getToken('local').replace('Bearer ', ''),
+        authorizationToken: this.$auth.getToken('local').replace('Bearer ', '')
       }
-      
+
       try {
         const response = await this.$axios.put(
           `https://cuwewf4fsg.execute-api.ap-south-1.amazonaws.com/artwrkInit/notifications`,
@@ -370,7 +365,7 @@ export default {
             response.data.notifications
           )
 
-          console.log(this.notifications)
+          //console.log(this.notifications)
         }
       } catch (err) {
         console.log(err)
@@ -379,7 +374,7 @@ export default {
   },
   mounted() {
     this.mobile = screen.width > 760 ? false : true
-  },
+  }
 }
 </script>
 <style scoped>
