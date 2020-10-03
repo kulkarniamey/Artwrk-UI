@@ -3,7 +3,7 @@
     <CoverPic :profileData="profile" id="cover" />
     <ArtistProfileCardComponent :profileData="profile" id="bio" />
 
-    <div v-if="isUserSelf" id="portfolioBtn">
+    <div id="portfolioBtn">
       <PortfolioButton :profile="profile" id="" />
       <v-dialog max-width="600" v-model="dialog" persistent>
         <template v-slot:activator="{ on, attrs }">
@@ -91,22 +91,8 @@ export default {
       postData: [],
     }
   },
-  async mounted() {
-    const recruiterId = `recruiter_${this.$route.params.id}`
-    try {
-      const payload = {
-        operation: 'get_profile',
-        user_id: recruiterId,
-      }
-      const resp = await this.$axios.put(
-        'https://cuwewf4fsg.execute-api.ap-south-1.amazonaws.com/artwrkInit/profile/',
-        payload
-      )
-      this.profile = resp.data.profile
-    } catch (error) {
-      console.log(error)
-    }
-
+  async created() {
+    this.profile = this.$auth.user
     console.log(this.profile)
     window.addEventListener('resize', this.handleResize)
     this.handleResize()
@@ -193,12 +179,6 @@ export default {
         return true
       }
 
-      return false
-    },
-    isUserSelf() {
-      if (this.profile?.user_id === this.$auth?.user?.user_id) {
-        return true
-      }
       return false
     },
   },
