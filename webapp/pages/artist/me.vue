@@ -21,6 +21,7 @@
           <v-card-title> Post Details </v-card-title>
           <v-card-text>
             <v-form class="px-3">
+              <v-text-field label="Post Title" v-model="title"> </v-text-field>
               <v-text-field label="Description" v-model="desc"> </v-text-field>
               <v-file-input
                 prepend-icon="mdi-camera"
@@ -57,7 +58,7 @@ export default {
     CoverPic,
     ImageGrid,
     ArtistProfileCardComponent,
-    PortfolioButton,
+    PortfolioButton
   },
   data() {
     return {
@@ -83,12 +84,13 @@ export default {
         certificates: [],
         applied_jobs: [],
         email: '',
-        artist_type: null,
+        artist_type: null
       },
       width: 0,
+      title: '',
       desc: '',
       fileData: undefined,
-      postData: [],
+      postData: []
     }
   },
   async created() {
@@ -113,7 +115,7 @@ export default {
     async fetchPosts() {
       const payload = {
         operation: 'get_posts_by_user',
-        id: this.profile.user_id,
+        id: this.profile.user_id
       }
       const response = await this.$axios.put(
         'https://cuwewf4fsg.execute-api.ap-south-1.amazonaws.com/artwrkInit/posts',
@@ -153,11 +155,12 @@ export default {
           metadata: JSON.stringify({
             user_id: id,
             upload_type: 'post',
+            title: this.title,
             description: this.desc,
             filename: fname + '_' + time,
-            date_time: date + '_' + time,
-          }),
-        },
+            date_time: date + '_' + time
+          })
+        }
       }
       try {
         let response = await this.$axios
@@ -171,7 +174,7 @@ export default {
         this.dialog = false
         this.fetchPosts()
       }
-    },
+    }
   },
   computed: {
     mobile() {
@@ -180,8 +183,8 @@ export default {
       }
 
       return false
-    },
-  },
+    }
+  }
 }
 </script>
 
