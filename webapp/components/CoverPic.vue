@@ -1,15 +1,18 @@
 <template>
   <div>
-    <div class="text-center cover">
-      <v-avatar color="indigo" size="64"
-        ><v-icon v-if="!profileData.profile_pic" dark size="40"
-          >mdi-account</v-icon
-        >
-        <v-img v-else :src="profileData.profile_pic"></v-img>
-      </v-avatar>
-
-      <h3 class="white--text">{{ profile.username }}</h3>
-      <p class="white--text">{{ profile.name }}</p>
+    <div class="cover">
+      <div class="displayPic">
+        <v-avatar color="indigo" size="100"
+          ><v-icon v-if="!profileData.profile_pic" dark size="40"
+            >mdi-account</v-icon
+          >
+          <v-img v-else :src="profileData.profile_pic"></v-img>
+        </v-avatar>
+      </div>
+      <div class="nameUsername">
+        <h3 class="white--text">{{ profile.username }}</h3>
+        <p class="white--text">{{ profile.name }}</p>
+      </div>
     </div>
   </div>
 </template>
@@ -52,5 +55,14 @@ export default {
   padding: 1rem 0;
   width: 100%;
   height: 20vh;
+  display: flex;
+  align-items: center;
+}
+.displayPic {
+  margin-left: 1em;
+}
+.nameUsername {
+  margin-left: 1em;
+  justify-content: center;
 }
 </style>
