@@ -22,9 +22,6 @@
           <div v-if="$auth.loggedIn">
             <v-btn color="indigo accent-4" to="/jobs" rounded> Jobs </v-btn>
           </div>
-          <v-btn icon to="/search">
-            <v-icon>mdi-magnify</v-icon>
-          </v-btn>
 
           <v-btn icon>
             <v-icon>mdi-arrow-all</v-icon>
@@ -164,7 +161,7 @@
       <v-navigation-drawer
         v-if="drawer"
         v-model="drawer"
-        bottom
+        right
         absolute
         temporary
       >
@@ -173,7 +170,7 @@
           active-class="deep-purple--text text--accent-4"
           class="d-flex"
         >
-          <v-list-itm-group v-if="$auth.loggedIn">
+          <v-list-itm-group v-if="$auth.loggedIn" class="pa-3">
             <v-list-item>
               <v-icon>mdi-account</v-icon>
               <v-btn
@@ -192,7 +189,7 @@
               >
             </v-list-item>
           </v-list-itm-group>
-          <v-list-itm-group v-else class="justify-center">
+          <v-list-itm-group v-else class="justify-center pa-3">
             <v-list-item>
               <v-icon>mdi-login</v-icon>
               <v-btn class="text-center" text to="/auth/login">Login</v-btn>

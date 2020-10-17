@@ -2,17 +2,23 @@
   <v-footer dark padless>
     <v-row justify="center" no-gutters>
       <template v-if="mobile">
-        <v-btn
-          v-for="icon in icons"
-          :key="icon"
-          color="white"
-          text
-          rounded
-          icon
-          class="my-2 mx-5 foot-nav text-center"
+        <v-col cols="12">
+          <v-card flat tile class="#2b2b2b white--text text-center">
+            <v-card-text>
+              <v-btn
+                v-for="icon in icons"
+                :key="icon"
+                color="white"
+                text
+                rounded
+                icon
+                class="my-2 mx-5 foot-nav text-center"
+              >
+                <v-icon size="24px">{{ icon }}</v-icon>
+              </v-btn>
+            </v-card-text></v-card
+          ></v-col
         >
-          <v-icon size="24px">{{ icon }}</v-icon>
-        </v-btn>
       </template>
       <v-divider></v-divider>
       <v-col cols="12">
@@ -54,8 +60,5 @@ export default {
 .v-card__title {
   padding: 0;
   width: 100%;
-}
-.foot-nav v-icon {
-  margin: 0 auto;
 }
 </style>
