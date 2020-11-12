@@ -169,7 +169,7 @@
                 </v-card>
               </v-menu>
             </v-list-item>
-            <v-list-item>
+            <!-- <v-list-item>
               <v-icon>mdi-account</v-icon>
               <v-btn
                 class="justify-center"
@@ -179,7 +179,7 @@
                 large
                 >Welcome {{ user }}
               </v-btn>
-            </v-list-item>
+            </v-list-item> -->
             <v-list-item>
               <v-icon>mdi-logout</v-icon>
               <v-btn class="justify-center" text @click="$auth.logout()"
@@ -363,5 +363,6 @@ export default {
   left: 0;
 
   width: 100%;
+  padding-top: 3em;
 }
 </style>
