@@ -22,24 +22,12 @@
           <div v-if="$auth.loggedIn">
             <v-btn color="indigo accent-4" to="/jobs" rounded> Jobs </v-btn>
           </div>
-          <v-btn icon to="/search">
-            <v-icon>mdi-magnify</v-icon>
-          </v-btn>
 
           <v-btn icon>
             <v-icon>mdi-arrow-all</v-icon>
           </v-btn>
 
           <div v-if="$auth.loggedIn">
-            <!-- <v-btn icon dark @click="snackbar = true,messages=0" >
-          <v-badge 
-        :content="messages"
-        :value="messages"
-         color="green"
-        overlap> 
-        <v-icon >mdi-bell-outline</v-icon>    </v-badge>  
-        </v-btn> -->
-
             <v-menu bottom offset-y transition="slide-x-transition">
               <template v-slot:activator="{ on, attrs }">
                 <v-btn
@@ -94,22 +82,6 @@
               >Welcome {{ user }}
             </v-btn>
             <v-btn text @click="$auth.logout()" dark>Logout</v-btn>
-
-            <!-- <v-Snackbars
-
-
- v-for="(notification,index) in notifications" v-model="snackbar" :key="index" right top color="indigo lighten-1" :timeout="timeout" >
-    
-      
-               {{ notification.text }}
-               <br>
-               <v-btn light x-small > Approve</v-btn>
-               <v-btn light x-small> Delete</v-btn>
-
-              <template v-slot:action="{ attrs }">
-                <v-btn   color=""   text    v-bind="attrs" @click="snackbar = false"  > Close  </v-btn>
-              </template>
-      </v-Snackbars> -->
           </div>
 
           <div v-else>
@@ -127,7 +99,7 @@
       <v-navigation-drawer
         v-if="drawer"
         v-model="drawer"
-        bottom
+        right
         absolute
         temporary
       >
@@ -136,7 +108,7 @@
           active-class="deep-purple--text text--accent-4"
           class="d-flex"
         >
-          <v-list-itm-group v-if="$auth.loggedIn">
+          <v-list-itm-group v-if="$auth.loggedIn" class="pa-3">
             <v-list-item>
               <v-menu bottom offset-y transition="slide-x-transition">
                 <template v-slot:activator="{ on, attrs }">
@@ -215,7 +187,7 @@
               >
             </v-list-item>
           </v-list-itm-group>
-          <v-list-itm-group v-else class="justify-center">
+          <v-list-itm-group v-else class="justify-center pa-3">
             <v-list-item>
               <v-icon>mdi-login</v-icon>
               <v-btn class="text-center" text to="/auth/login">Login</v-btn>
@@ -229,11 +201,12 @@
           </v-list-itm-group>
         </v-list-item-group>
       </v-navigation-drawer>
+
       <v-main>
         <nuxt />
       </v-main>
 
-      <FooterComponent />
+      <FooterComponent class="bottm-nav" />
     </template>
   </v-app>
 </template>
@@ -383,5 +356,12 @@ export default {
 }
 .foot {
   display: flex;
+}
+.bottm-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+
+  width: 100%;
 }
 </style>
