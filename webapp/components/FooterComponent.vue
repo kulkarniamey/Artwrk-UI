@@ -20,21 +20,6 @@
           ></v-col
         >
       </template>
-      <v-divider></v-divider>
-      <v-col cols="12">
-        <v-card flat tile class="#2b2b2b white--text text-center">
-          <v-card-text>
-            <v-btn
-              v-for="link in links"
-              :key="link"
-              class="mx-1 white--text"
-              icon
-            >
-              <v-icon size="12px">{{ link }}</v-icon>
-            </v-btn>
-          </v-card-text>
-        </v-card>
-      </v-col>
     </v-row>
   </v-footer>
 </template>
