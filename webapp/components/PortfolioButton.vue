@@ -1,6 +1,7 @@
 <template>
   <div class="button-cont">
-    <v-btn text class="font-weight-bold mb-3"> Projects </v-btn>
+    <!-- <v-btn text class="font-weight-bold mb-3"> Projects </v-btn> -->
+    
 
     <v-menu bottom offset-y>
       <template v-slot:activator="{ on, attrs }">
@@ -184,7 +185,8 @@ export default {
       document: undefined,
       showUploadModal: false,
       desc: '',
-      fileData: undefined
+      fileData: undefined,
+      
     }
   },
   props: { profile: { type: Object, required: true } },
@@ -230,7 +232,9 @@ export default {
     showModal(docType) {
       this.showUploadModal = true
       this.document = docType
-    }
+    },
+
+    
   }
 }
 </script>
@@ -242,6 +246,6 @@ export default {
 .button-cont {
   min-width: 360px;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr ;
 }
 </style>

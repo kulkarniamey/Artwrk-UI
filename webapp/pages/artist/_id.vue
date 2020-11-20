@@ -35,11 +35,19 @@
     </v-dialog>
     <ArtistProfileCardComponent :profileData="profile" id="bio" />
 
-    <div v-if="isUserSelf" id="portfolioBtn">
+   
+      
+
+ <div v-if="isUserSelf" id="portfolioBtn">
+
+<v-btn text class="font-weight-bold mb-3 section-tab"  :class="isPostsSelected?'active':''" @click="selectPostsSection" > Projects </v-btn>
+<v-btn text class="font-weight-bold mb-3 section-tab " :class="!isPostsSelected?'active':''" @click="selectTimelineSection"> Timeline </v-btn>
+
       <PortfolioButton :profile="profile" id="" />
+      
       <v-dialog max-width="600" v-model="dialog" persistent>
         <template v-slot:activator="{ on, attrs }">
-          <v-btn
+       <v-btn
             rounded
             color="indigo accent-4 mb-3"
             dark
@@ -48,6 +56,7 @@
           >
             Upload Post
           </v-btn>
+          
         </template>
         <v-card>
           <v-card-title> Post Details </v-card-title>
@@ -74,7 +83,17 @@
         </v-card>
       </v-dialog>
     </div>
-    <ImageGrid v-if="!isPostsNull" :postData="postData.posts" id="posts" />
+   <div id="posts">
+      <timeline v-if="!isPostsSelected"/>
+      <div v-else >
+      <ImageGrid v-if="!isPostsNull" :postData="postData.posts" />
+      
+</div>
+            
+      
+    
+
+  </div>
   </div>
 </template>
 
@@ -83,6 +102,7 @@ import CoverPic from '../../components/CoverPic'
 import ArtistProfileCardComponent from '../../components/ArtistProfileCardComponent'
 import ImageGrid from '../../components/ImageGrid'
 import PortfolioButton from '../../components/PortfolioButton'
+import timeline from '../../components/timeline'
 export default {
   value: '_id',
   middleware: 'auth',
@@ -90,10 +110,12 @@ export default {
     CoverPic,
     ImageGrid,
     ArtistProfileCardComponent,
-    PortfolioButton
+    PortfolioButton,
+    timeline
   },
   data() {
     return {
+     
       user: '',
       isPostsNull: true,
       dialog: false,
@@ -123,7 +145,9 @@ export default {
       title: '',
       desc: '',
       fileData: undefined,
-      postData: []
+      postData: [],
+      isPostsSelected: true,
+     
     }
   },
   async mounted() {
@@ -153,6 +177,18 @@ export default {
   },
 
   methods: {
+
+    selectPostsSection(){
+      
+      this.isPostsSelected = true
+      return(this.isPostsSelected)
+    },
+    selectTimelineSection(){
+      
+      this.isPostsSelected = false
+      return(this.isPostsSelected)
+    },
+
     handleResize() {
       this.width = window.innerWidth
     },
@@ -332,18 +368,15 @@ export default {
 .profile-card {
   padding: 3em;
 }
+.active{
+  border-bottom: 1px solid black;
+}
 
-.tabs-control {
-  margin-top: 10em;
-}
-.splash {
-  max-height: 20rem;
-}
 .grid-container {
   /* height: 100vh; */
   display: grid;
   grid-template-columns: 1fr 4fr;
-  grid-template-rows: 2fr 1fr 7fr;
+  grid-template-rows: 1fr 1fr 7fr;
   grid-template-areas:
     'coverpic coverpic coverpic'
     'artistCard portfolio protfolio'
@@ -357,10 +390,11 @@ export default {
 #bio {
   grid-area: artistCard;
 }
+
 #portfolioBtn {
   grid-area: portfolio;
   display: grid;
-  grid-template-columns: 2fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
   align-self: center;
   gap: 12px;
 }
