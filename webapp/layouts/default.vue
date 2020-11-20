@@ -22,24 +22,12 @@
           <div v-if="$auth.loggedIn">
             <v-btn color="indigo accent-4" to="/jobs" rounded> Jobs </v-btn>
           </div>
-          <v-btn icon to="/search">
-            <v-icon>mdi-magnify</v-icon>
-          </v-btn>
 
           <v-btn icon>
             <v-icon>mdi-arrow-all</v-icon>
           </v-btn>
 
           <div v-if="$auth.loggedIn">
-            <!-- <v-btn icon dark @click="snackbar = true,messages=0" >
-          <v-badge 
-        :content="messages"
-        :value="messages"
-         color="green"
-        overlap> 
-        <v-icon >mdi-bell-outline</v-icon>    </v-badge>  
-        </v-btn> -->
-
             <v-menu bottom offset-y transition="slide-x-transition">
               <template v-slot:activator="{ on, attrs }">
                 <v-btn
@@ -90,22 +78,6 @@
               >Welcome {{ user }}
             </v-btn>
             <v-btn text @click="$auth.logout()" dark>Logout</v-btn>
-
-            <!-- <v-Snackbars
-
-
- v-for="(notification,index) in notifications" v-model="snackbar" :key="index" right top color="indigo lighten-1" :timeout="timeout" >
-    
-      
-               {{ notification.text }}
-               <br>
-               <v-btn light x-small > Approve</v-btn>
-               <v-btn light x-small> Delete</v-btn>
-
-              <template v-slot:action="{ attrs }">
-                <v-btn   color=""   text    v-bind="attrs" @click="snackbar = false"  > Close  </v-btn>
-              </template>
-      </v-Snackbars> -->
           </div>
 
           <div v-else>
@@ -115,6 +87,72 @@
           </div>
         </template>
         <template v-if="mobile">
+          <div v-if="$auth.loggedIn">
+            <v-btn color="indigo accent-4" to="/jobs" rounded> Jobs </v-btn>
+          </div>
+          <v-btn icon to="/search">
+            <v-icon>mdi-magnify</v-icon>
+          </v-btn>
+          <v-menu
+            v-if="$auth.loggedIn"
+            bottom
+            offset-y
+            transition="slide-x-transition"
+          >
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn
+                :disabled="notifications.length === 0"
+                dark
+                icon
+                class="ma-2"
+                v-bind="attrs"
+                v-on="on"
+              >
+                <v-badge
+                  :content="notifications.length"
+                  :value="notifications.length"
+                  color="green"
+                  overlap
+                >
+                  <v-icon color="black">mdi-bell-outline</v-icon>
+                </v-badge>
+              </v-btn>
+            </template>
+            <v-card>
+              <v-list>
+                <v-list-item
+                  v-for="(notification, i) in notifications"
+                  :key="i"
+                >
+                  <v-list-item-title
+                    >{{ notification.notification }}
+                  </v-list-item-title>
+                  <v-card-actions>
+                    <v-spacer></v-spacer>
+                  </v-card-actions>
+                  <v-list-item
+                    v-for="(notification, i) in notifications"
+                    :key="i"
+                  >
+                    <v-list-item-title
+                      >{{ notification.text }}
+                    </v-list-item-title>
+
+                    <v-card-actions>
+                      <v-spacer></v-spacer>
+
+                      <v-btn text nuxt :to="notification.actionLink">{{
+                        notification.actionText
+                      }}</v-btn>
+                      <v-btn color="primary" text @click="removeNotification(i)"
+                        >Remove</v-btn
+                      >
+                    </v-card-actions>
+                  </v-list-item>
+                </v-list-item>
+              </v-list>
+            </v-card>
+          </v-menu>
           <v-app-bar-nav-icon
             @click.stop="drawer = !drawer"
           ></v-app-bar-nav-icon>
@@ -123,7 +161,7 @@
       <v-navigation-drawer
         v-if="drawer"
         v-model="drawer"
-        bottom
+        right
         absolute
         temporary
       >
@@ -132,67 +170,7 @@
           active-class="deep-purple--text text--accent-4"
           class="d-flex"
         >
-          <v-list-itm-group v-if="$auth.loggedIn">
-            <v-list-item>
-              <v-menu bottom offset-y transition="slide-x-transition">
-                <template v-slot:activator="{ on, attrs }">
-                  <v-btn
-                    :disabled="notifications.length === 0"
-                    dark
-                    icon
-                    class="ma-2"
-                    v-bind="attrs"
-                    v-on="on"
-                  >
-                    <v-badge
-                      :content="notifications.length"
-                      :value="notifications.length"
-                      color="green"
-                      overlap
-                    >
-                      <v-icon color="black">mdi-bell-outline</v-icon>
-                    </v-badge>
-                  </v-btn>
-                </template>
-                <v-card>
-                  <v-list>
-                    <v-list-item
-                      v-for="(notification, i) in notifications"
-                      :key="i"
-                    >
-                      <v-list-item-title
-                        >{{ notification.notification }}
-                      </v-list-item-title>
-                      <v-card-actions>
-                        <v-spacer></v-spacer>
-                      </v-card-actions>
-                      <v-list-item
-                        v-for="(notification, i) in notifications"
-                        :key="i"
-                      >
-                        <v-list-item-title
-                          >{{ notification.text }}
-                        </v-list-item-title>
-
-                        <v-card-actions>
-                          <v-spacer></v-spacer>
-
-                          <v-btn text nuxt :to="notification.actionLink">{{
-                            notification.actionText
-                          }}</v-btn>
-                          <v-btn
-                            color="primary"
-                            text
-                            @click="removeNotification(i)"
-                            >Remove</v-btn
-                          >
-                        </v-card-actions>
-                      </v-list-item>
-                    </v-list-item>
-                  </v-list>
-                </v-card>
-              </v-menu>
-            </v-list-item>
+          <v-list-itm-group v-if="$auth.loggedIn" class="pa-3">
             <v-list-item>
               <v-icon>mdi-account</v-icon>
               <v-btn
@@ -211,7 +189,7 @@
               >
             </v-list-item>
           </v-list-itm-group>
-          <v-list-itm-group v-else class="justify-center">
+          <v-list-itm-group v-else class="justify-center pa-3">
             <v-list-item>
               <v-icon>mdi-login</v-icon>
               <v-btn class="text-center" text to="/auth/login">Login</v-btn>
@@ -225,11 +203,12 @@
           </v-list-itm-group>
         </v-list-item-group>
       </v-navigation-drawer>
+
       <v-main>
         <nuxt />
       </v-main>
 
-      <FooterComponent />
+      <FooterComponent class="bottm-nav" />
     </template>
   </v-app>
 </template>
@@ -241,7 +220,7 @@ import SiteLoader from '../components/SiteLoader'
 
 export default {
   props: {
-    source: String,
+    source: String
   },
   components: { FooterComponent, SiteLoader },
   data: () => ({
@@ -252,13 +231,13 @@ export default {
       {
         icon: 'mdi-apps',
         title: 'Welcome',
-        to: '/',
+        to: '/'
       },
       {
         icon: 'mdi-chart-bubble',
         title: 'Inspire',
-        to: '/inspire',
-      },
+        to: '/inspire'
+      }
     ],
     icons: [],
 
@@ -269,21 +248,21 @@ export default {
     text: 'Hello I am New User',
     timeout: null,
     notifications: [],
-    user: undefined,
+    user: undefined
   }),
   watch: {
     group() {
       this.drawer = false
-    },
+    }
   },
   computed: {
-    isLoggedIn: function () {
+    isLoggedIn: function() {
       return this.$auth.loggedIn
     },
 
-    logOut: function () {
+    logOut: function() {
       this.$auth.logout()
-    },
+    }
   },
   methods: {
     removeNotification(index) {
@@ -298,7 +277,7 @@ export default {
       } else {
         return this.$auth?.user?.user_id
       }
-    },
+    }
   },
   async created() {
     this.user = this.$auth?.user?.username || null
@@ -309,7 +288,7 @@ export default {
         const token = state.replace('Bearer ', '')
         const userPayload = {
           operation: 'get_profile',
-          authorizationToken: token,
+          authorizationToken: token
         }
         let user = await this.$axios
           .put(
@@ -323,7 +302,7 @@ export default {
               this.notifications.push({
                 notification: 'You have not yet verified your email',
                 actionText: 'verify',
-                actionLink: '/auth/verify',
+                actionLink: '/auth/verify'
               })
             }
           })
@@ -337,7 +316,7 @@ export default {
       const payload = {
         operation: 'get_all_notifications',
         id: this.checkAdmin(),
-        authorizationToken: this.$auth.getToken('local').replace('Bearer ', ''),
+        authorizationToken: this.$auth.getToken('local').replace('Bearer ', '')
       }
 
       try {
@@ -360,7 +339,7 @@ export default {
   },
   mounted() {
     this.mobile = screen.width > 760 ? false : true
-  },
+  }
 }
 </script>
 <style scoped>
@@ -369,5 +348,12 @@ export default {
 }
 .foot {
   display: flex;
+}
+.bottm-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+
+  width: 100%;
 }
 </style>

@@ -2,32 +2,28 @@
   <div>
     <div class="image-grid">
       <template v-for="(x, index) in images">
-        <v-img
-          :src="x.url"
-          :key="index"
-          alt="post"
-          class="single-image"
-          lazy-src="/loadersvg.svg"
-          @click="showDetail($event, x)"
-        />
+        <nuxt-link :to="`/posts/` + x.postid" :key="index">
+          <v-img
+            :src="x.url"
+            :key="index"
+            alt="post"
+            class="single-image"
+            lazy-src="/loadersvg.svg"
+            @click="showDetail($event, x)"
+          />
+        </nuxt-link>
       </template>
     </div>
-    <Modal
-      v-if="selectedPost"
-      :showModal="dialog"
-      :postData="selectedPost"
-      @closedModal="clearModalValues()"
-    />
   </div>
 </template>
 
 <script>
 import axios, * as others from 'axios'
-import Modal from './Modal'
+
 const API_KEY = 'c397975f-36f1-49d9-9299-530a628c8663'
 export default {
   name: 'ImageGrid',
-  components: { Modal },
+
   data() {
     return {
       imageurls: [],
@@ -35,21 +31,21 @@ export default {
       dialog: false,
       selectedPost: undefined,
       imgval: '',
-      images: this.postData,
+      images: this.postData
     }
   },
   props: {
-    postData: { type: Array, required: true },
+    postData: { type: Array, required: true }
   },
   watch: {
     postData() {
       this.images = this.postData
-    },
+    }
   },
   computed: {
     renderImage() {
       return this.imageurls.filter((p) => p.isActive).length
-    },
+    }
   },
   methods: {
     getManyPussy() {
@@ -71,11 +67,11 @@ export default {
       this.dialog = false
       this.title = ''
       this.imgval = ''
-    },
+    }
   },
   mounted() {
     this.images = this.postData
-  },
+  }
 }
 </script>
 

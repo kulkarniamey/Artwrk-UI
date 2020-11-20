@@ -1,5 +1,5 @@
 <template>
-  <v-card elevation="9" min-height="600" max-width="550" class="mx-auto">
+  <v-card elevation="9" min-height="600" max-width="550" class="mx-auto custom">
     <v-card-title>
       <span class="headline">Sign Up!</span>
     </v-card-title>
@@ -12,6 +12,7 @@
                 v-model="email"
                 :rules="emailRules"
                 label="E-mail*"
+                dark
                 required
               ></v-text-field>
             </v-col>
@@ -20,6 +21,7 @@
                 v-model="username"
                 :rules="usernameRules"
                 label="Username*"
+                dark
                 required
               ></v-text-field>
             </v-col>
@@ -30,6 +32,7 @@
                 v-model="pass"
                 :rules="passRules"
                 type="password"
+                dark
                 required
               ></v-text-field>
             </v-col>
@@ -39,6 +42,7 @@
                 v-model="pass2"
                 :rules="passTwoRules"
                 type="password"
+                dark
                 required
               ></v-text-field>
             </v-col>
@@ -47,13 +51,14 @@
                 v-model="userType"
                 :items="items"
                 label="User Type*"
+                dark
               ></v-select>
             </v-col>
           </v-row>
         </v-form>
       </v-container>
-      <small>*indicates required field</small>
-      <p class="text-lg-right">
+      <small class="show white--text">*indicates required field</small>
+      <p class="text-lg-right white--text">
         Already an User?<v-btn
           text
           nuxt
@@ -72,7 +77,7 @@
         class="mx-auto"
         :disabled="!valid"
         @click="validate"
-        >Sign up</v-btn
+        ><strong>Sign up</strong></v-btn
       >
     </v-card-actions>
     <v-snackbar v-model="snackbar" :timeout="timeout" color="red">
@@ -97,33 +102,32 @@ export default {
       pass2: '',
       passRules: [
         (v) => !!v || 'Password is required',
-        (v) =>
-          (v && v.length <= 8) || 'Password must be less than 8 characters',
+        (v) => (v && v.length <= 8) || 'Password must be less than 8 characters'
       ],
       passTwoRules: [
         (v) => !!v || 'Password is required',
         (v) =>
           (v && v.length <= 8) || 'Password must be less than 8 characters',
-        (v) => (v && this.checkMatch) || 'Passwords must match',
+        (v) => (v && this.checkMatch) || 'Passwords must match'
       ],
       email: '',
       emailRules: [
         (v) => !!v || 'E-mail is required',
-        (v) => /.+@.+\..+/.test(v) || 'E-mail must be valid',
+        (v) => /.+@.+\..+/.test(v) || 'E-mail must be valid'
       ],
       username: '',
       usernameRules: [
         (v) => !!v || 'Username is required',
         (v) =>
-          (v && v.length <= 50) || 'Username must be less than 25 characters',
+          (v && v.length <= 50) || 'Username must be less than 25 characters'
       ],
       items: [
         { text: 'Artist', value: 'artist' },
-        { text: 'Recruiter', value: 'recruiter' },
+        { text: 'Recruiter', value: 'recruiter' }
       ],
       snackbar: false,
       timeout: 2000,
-      errorMsg: '',
+      errorMsg: ''
     }
   },
   methods: {
@@ -138,7 +142,7 @@ export default {
         username: this.username,
         email: this.email,
         password: this.pass,
-        type: this.userType,
+        type: this.userType
       }
       try {
         await this.$axios.$put('/register', payload).then((response) => {
@@ -155,7 +159,7 @@ export default {
         console.log(error)
       }
       console.log('Data Submitted payload:', payload)
-    },
+    }
   },
   computed: {
     checkMatch() {
@@ -164,9 +168,19 @@ export default {
       } else {
         return false
       }
-    },
-  },
+    }
+  }
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="css" scoped>
+.custom {
+  background: linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.65));
+  color: #fff;
+}
+@media only screen and (max-width: 600px) {
+  .show {
+    display: none;
+  }
+}
+</style>
