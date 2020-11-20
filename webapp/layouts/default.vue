@@ -206,7 +206,7 @@
         <nuxt />
       </v-main>
 
-      <FooterComponent class="bottm-nav" />
+      <FooterComponent v-if="mobile" />
     </template>
   </v-app>
 </template>
@@ -356,13 +356,5 @@ export default {
 }
 .foot {
   display: flex;
-}
-.bottm-nav {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-
-  width: 100%;
-  padding-top: 3em;
 }
 </style>

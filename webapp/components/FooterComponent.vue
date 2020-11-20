@@ -1,5 +1,5 @@
 <template>
-  <v-footer dark padless>
+  <v-footer dark padless class="show">
     <v-row justify="center" no-gutters>
       <template v-if="mobile">
         <!-- <v-col cols="12">
@@ -102,5 +102,8 @@ export default {
 .links {
   color: #fff;
   text-decoration: none;
+}
+.show {
+  display: none;
 }
 </style>
