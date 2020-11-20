@@ -1,5 +1,5 @@
 <template>
-  <v-card elevation="9" min-height="600" max-width="550" class="mx-auto">
+  <v-card elevation="9" min-height="600" max-width="550" class="mx-auto custom">
     <v-card-title>
       <span class="headline">Log in</span>
     </v-card-title>
@@ -12,6 +12,7 @@
                 v-model="userinfo.username"
                 :rules="usernameRules"
                 label="Username*"
+                dark
                 required
               ></v-text-field>
             </v-col>
@@ -22,6 +23,7 @@
                 v-model="userinfo.password"
                 :rules="passRules"
                 type="password"
+                dark
                 required
               ></v-text-field>
             </v-col>
@@ -30,26 +32,26 @@
         <v-btn-toggle
           v-model="userinfo.type"
           tile
-          color="indigo accent-3"
+          color="orange darken-1"
           group
         >
-          <v-btn value="artist">
+          <v-btn value="artist" dark>
             Artist
           </v-btn>
 
-          <v-btn value="recruiter">
+          <v-btn value="recruiter" dark>
             Recruiter
           </v-btn>
 
-          <v-btn value="admin">
+          <v-btn value="admin" dark>
             Admin
           </v-btn>
         </v-btn-toggle>
       </v-container>
-      <span class="text-caption text-left inline"
+      <span class="show text-caption text-left white--text inline"
         >*indicates required field
       </span>
-      <p class="text-right inline">
+      <p class="text-right inline white--text">
         Forgot password? Reset<v-btn
           nuxt
           text
@@ -60,7 +62,7 @@
           Here.
         </v-btn>
       </p>
-      <p class="text-lg-right">
+      <p class="text-lg-right white--text">
         New User?<v-btn nuxt text color="orange darken-1" to="/auth/register">
           Create Account
         </v-btn>
@@ -74,7 +76,7 @@
         class="mx-auto"
         :disabled="!valid"
         @click="validate"
-        >Log in</v-btn
+        ><strong>Log in</strong></v-btn
       >
     </v-card-actions>
 
@@ -102,7 +104,7 @@ export default {
       passRules: [
         (v) => !!v || 'Password is required',
         (v) =>
-          (v && v.length <= 15) || 'Password must be less than 8 characters',
+          (v && v.length <= 15) || 'Password must be less than 8 characters'
       ],
 
       usernameRules: [(v) => !!v || 'Username is required'],
@@ -110,8 +112,8 @@ export default {
         operation: 'sign_in',
         username: '',
         password: '',
-        type: 'artist',
-      },
+        type: 'artist'
+      }
     }
   },
   methods: {
@@ -134,8 +136,8 @@ export default {
             username: username,
             password: password,
             type: type,
-            operation: operation,
-          },
+            operation: operation
+          }
         })
         if (response?.data?.statusCode !== 200) {
           this.text = response.data.message
@@ -144,7 +146,7 @@ export default {
         const token = response.data.token
         const userPayload = {
           operation: 'get_profile',
-          authorizationToken: token,
+          authorizationToken: token
         }
         if (type === 'admin') {
           let user = await this.$axios.put('/profile/', userPayload)
@@ -160,9 +162,20 @@ export default {
         console.log('Error hua')
         this.snackbar = true
       }
-    },
-  },
+    }
+  }
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="css" scoped>
+.custom {
+  background: linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.65));
+  color: #fff;
+}
+
+@media only screen and (max-width: 600px) {
+  .show {
+    display: none;
+  }
+}
+</style>
