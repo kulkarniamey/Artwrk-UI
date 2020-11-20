@@ -1,6 +1,6 @@
 <template>
   <div class="contain">
-    <v-card elevation="3" class="card">
+    <v-card elevation="3" class="card custom" max-width="380">
       <v-card-title>
         <span class="headline">Forgot Password?</span>
       </v-card-title>
@@ -13,23 +13,24 @@
                   v-model="userinfo.email"
                   :rules="emailRules"
                   label="Enter E-mail"
+                  dark
                   required
                 ></v-text-field>
               </v-col>
             </v-row>
           </v-form>
-          <p>Select User Type</p>
+          <p class="white--text">Select User Type</p>
           <v-btn-toggle
             v-model="userinfo.type"
             tile
-            color="indigo accent-4"
+            color="orange darken-1"
             group
           >
-            <v-btn value="artist">
+            <v-btn value="artist" dark>
               Artist
             </v-btn>
 
-            <v-btn value="recruiter">
+            <v-btn value="recruiter" dark>
               Recruiter
             </v-btn>
           </v-btn-toggle>
@@ -117,5 +118,9 @@ export default {
 
 .contain .card {
   width: 450px;
+}
+.custom {
+  background: linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.65));
+  color: #fff;
 }
 </style>

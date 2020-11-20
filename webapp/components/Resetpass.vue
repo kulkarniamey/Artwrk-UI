@@ -1,6 +1,6 @@
 <template>
   <div class="contain">
-    <v-card elevation="9" max-width="450" class="card">
+    <v-card elevation="9" max-width="380" class="card custom-card">
       <v-card-title>
         <span class="headline">Reset Password</span>
       </v-card-title>
@@ -14,6 +14,7 @@
                     v-model="OTP.otp"
                     :rules="OTPRules"
                     label="Enter OTP"
+                    dark
                     required
                   ></v-text-field>
                 </v-col>
@@ -25,6 +26,7 @@
                     v-model="pass"
                     :rules="passRules"
                     type="password"
+                    dark
                     required
                   ></v-text-field>
                 </v-col>
@@ -34,6 +36,7 @@
                     v-model="pass2"
                     :rules="passTwoRules"
                     type="password"
+                    dark
                     required
                   ></v-text-field>
                 </v-col>
@@ -43,7 +46,7 @@
         </v-container>
       </v-card-text>
       <p class="text-right custom">
-        <v-btn small text color="black darken-1" @click="requestOtp">
+        <v-btn small text color="orange darken-1" @click="requestOtp">
           Resend OTP
         </v-btn>
       </p>
@@ -178,5 +181,9 @@ export default {
 
 .custom {
   display: inline;
+}
+.custom-card {
+  background: linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.65));
+  color: #fff;
 }
 </style>
