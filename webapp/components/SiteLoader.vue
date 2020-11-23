@@ -22,7 +22,7 @@ import ArtWrkLogo from '@/assets/ArtWrkLogo';
 }
 .loader-pic{
     opacity: 1;
-    animation: fade 2s linear;
+    animation: fade 1.5s linear infinite;
 }
 
 @keyframes fade {

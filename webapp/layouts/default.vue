@@ -22,10 +22,16 @@
           <div v-if="$auth.loggedIn">
             <v-btn color="indigo accent-4" to="/jobs" rounded> Jobs </v-btn>
           </div>
-
+        <nuxt-link to="/community"> 
           <v-btn icon>
             <v-icon>mdi-arrow-all</v-icon>
           </v-btn>
+          </nuxt-link>
+          <v-btn @click="$vuetify.theme.dark=!$vuetify.theme.dark" icon>
+            <v-icon v-if="!$vuetify.theme.dark" >mdi-weather-sunny</v-icon>
+            <v-icon v-if="$vuetify.theme.dark">mdi-weather-night</v-icon>
+          </v-btn>
+          
 
           <div v-if="$auth.loggedIn">
             <v-menu bottom offset-y transition="slide-x-transition">
@@ -356,5 +362,12 @@ export default {
 }
 .foot {
   display: flex;
+}
+.nuxt-link-active > button{
+  color: #3550E6 !important;
+  
+}
+a {
+  text-decoration: none;
 }
 </style>
