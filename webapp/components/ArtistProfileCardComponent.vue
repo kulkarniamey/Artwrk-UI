@@ -1,5 +1,5 @@
 <template>
-  <v-card class="artist-card mx-auto my-12 tile" min-width="374">
+  <v-card flat class="artist-card mx-auto my-12 tile" min-width="374">
     <v-card-actions class="pt-10">
       <div v-if="!isUserSelf">
         <v-btn
@@ -14,7 +14,8 @@
       </div>
       <v-spacer></v-spacer>
       <v-list-item-title class="font-weight-bold pl-5"
-        >Connections {{ profile.followers.length }}
+        >Connections {{ Object.keys(profile.followers).length
+ }}
       </v-list-item-title>
 
       <v-spacer />
