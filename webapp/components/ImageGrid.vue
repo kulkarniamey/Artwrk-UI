@@ -3,14 +3,13 @@
     <div class="image-grid">
       <template v-for="(x, index) in images">
         <div :key="index">
-          <v-hover v-slot:default="{ hover }">
             <nuxt-link :to="`/posts/` + x.post_id">
               <v-img
                 :key="index"
                 :src="x.url"
                 alt="post"
                 class="single-image"
-                lazy-src="/loadersvg.svg"
+                lazy-src="/information_flow.png"
                 @click="showDetail($event, x)"
               >
                 <v-expand-transition>
@@ -40,13 +39,12 @@
                       >
                         <v-icon :color="liked" left>mdi-heart</v-icon>
                       </v-btn>
-                      <span class="votes">{{ x.vote_count }}</span>
+                      <span class="votes">{{ Object.keys(x.voters).length }}</span>
                     </div>
                   </div>
                 </v-expand-transition>
               </v-img>
             </nuxt-link>
-          </v-hover>
           <div></div>
         </div>
       </template>
@@ -68,7 +66,8 @@ export default {
       dialog: false,
       selectedPost: undefined,
       imgval: '',
-      images: this.postData
+      images: this.postData,
+      hover:false
     }
   },
   computed: {
@@ -101,7 +100,7 @@ export default {
 <style lang="scss" scoped>
 .image-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 24px;
 }
 .single-image {
