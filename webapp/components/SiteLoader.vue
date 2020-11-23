@@ -1,6 +1,6 @@
 <template>
   <div class="loader">
-<ArtWrkLogo style="margin:auto;"/>
+<ArtWrkLogo class="loader-pic" style="margin:auto;"/>
   </div>
 </template>
 
@@ -19,5 +19,14 @@ import ArtWrkLogo from '@/assets/ArtWrkLogo';
   align-content: center;
   justify-items: center;
   
+}
+.loader-pic{
+    opacity: 1;
+    animation: fade 2s linear;
+}
+
+@keyframes fade {
+  0%,100% { opacity: 0 }
+  50% { opacity: 1 }
 }
 </style>
