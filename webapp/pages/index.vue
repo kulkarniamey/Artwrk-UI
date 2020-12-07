@@ -1,7 +1,7 @@
 <template>
   <div>
     <section class="bg-container">
-      <div class="hero-text-div text-justify">
+      <div class="hero-text-div ">
         <h1 class="hero-text white--text pa-2 font-weight-bold">
           Welcome to ArtWrk!
         </h1>
@@ -12,12 +12,10 @@
         </h3>
         <v-btn
           color="white lighten-1"
-          absolute
-          right
           rounded
           nuxt
           to="/auth/register"
-          class="pa-3"
+          class="pa-3 join-btn"
         >
           <h4 class=" font-weight-regular pa-1">Join Us Now!</h4>
         </v-btn>
@@ -40,14 +38,30 @@ export default {
   background-size: cover;
   background-position: top;
   height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
 }
 .hero-text-div {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -70%);
+  margin: 0 2em;
 }
 .hero-text {
-  font-size: 4em;
+  font-size: 2em;
+  text-align: left;
+}
+
+.join-btn {
+  float: right;
+}
+
+/* Mobile view css */
+@media screen and (min-width: 768px) {
+  .hero-text {
+    font-size: 4em;
+  }
+  .hero-text-div {
+    margin: 0 20em;
+  }
 }
 </style>

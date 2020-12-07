@@ -41,6 +41,7 @@
 import Register from '../../components/Register'
 
 export default {
+  auth: 'guest',
   layout: 'authlayout',
   name: 'registerPage',
   components: {

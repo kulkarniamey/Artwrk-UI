@@ -2,12 +2,8 @@
   <div class="grid-container">
     <CoverPic :profileData="profile" id="cover" />
     <ArtistProfileCardComponent :profileData="profile" id="bio" />
-    
 
     <div id="portfolioBtn">
- <v-btn text class="font-weight-bold mb-3 section-tab"  :class="isPostsSelected?'active':''" @click="selectPostsSection" > Projects </v-btn>
-<v-btn text class="font-weight-bold mb-3 section-tab " :class="!isPostsSelected?'active':''" @click="selectTimelineSection"> Timeline </v-btn>
-
       <PortfolioButton :profile="profile" id="" />
       <v-dialog max-width="600" v-model="dialog" persistent>
         <template v-slot:activator="{ on, attrs }">
@@ -20,14 +16,11 @@
           >
             Upload Post
           </v-btn>
-          
         </template>
-        
         <v-card>
           <v-card-title> Post Details </v-card-title>
           <v-card-text>
             <v-form class="px-3">
-              <v-text-field label="Post Title" v-model="title"> </v-text-field>
               <v-text-field label="Description" v-model="desc"> </v-text-field>
               <v-file-input
                 prepend-icon="mdi-camera"
@@ -48,17 +41,7 @@
         </v-card>
       </v-dialog>
     </div>
-    <div id="posts">
-      <timeline v-if="!isPostsSelected"/>
-      <div v-else >
-      <ImageGrid v-if="!isPostsNull" :postData="postData.posts" />
-      
-</div>
-            
-      
-    
-
-  </div>
+    <ImageGrid v-if="!isPostsNull" :postData="postData.posts" id="posts" />
   </div>
 </template>
 
@@ -67,7 +50,6 @@ import CoverPic from '../../components/CoverPic'
 import ArtistProfileCardComponent from '../../components/ArtistProfileCardComponent'
 import ImageGrid from '../../components/ImageGrid'
 import PortfolioButton from '../../components/PortfolioButton'
-import timeline from '../../components/timeline'
 export default {
   value: '_id',
   middleware: 'auth',
@@ -76,7 +58,6 @@ export default {
     ImageGrid,
     ArtistProfileCardComponent,
     PortfolioButton,
-    timeline
   },
   data() {
     return {
@@ -102,14 +83,12 @@ export default {
         certificates: [],
         applied_jobs: [],
         email: '',
-        artist_type: null
+        artist_type: null,
       },
       width: 0,
-      title: '',
       desc: '',
       fileData: undefined,
       postData: [],
-      isPostsSelected: true,
     }
   },
   async created() {
@@ -125,17 +104,6 @@ export default {
   },
 
   methods: {
-    selectPostsSection(){
-      
-      this.isPostsSelected = true
-      return(this.isPostsSelected)
-    },
-    selectTimelineSection(){
-      
-      this.isPostsSelected = false
-      return(this.isPostsSelected)
-    },
-
     handleResize() {
       this.width = window.innerWidth
     },
@@ -145,7 +113,7 @@ export default {
     async fetchPosts() {
       const payload = {
         operation: 'get_posts_by_user',
-        id: this.profile.user_id
+        id: this.profile.user_id,
       }
       const response = await this.$axios.put(
         'https://cuwewf4fsg.execute-api.ap-south-1.amazonaws.com/artwrkInit/posts',
@@ -185,12 +153,11 @@ export default {
           metadata: JSON.stringify({
             user_id: id,
             upload_type: 'post',
-            title: this.title,
             description: this.desc,
             filename: fname + '_' + time,
-            date_time: date + '_' + time
-          })
-        }
+            date_time: date + '_' + time,
+          }),
+        },
       }
       try {
         let response = await this.$axios
@@ -204,7 +171,7 @@ export default {
         this.dialog = false
         this.fetchPosts()
       }
-    }
+    },
   },
   computed: {
     mobile() {
@@ -213,8 +180,8 @@ export default {
       }
 
       return false
-    }
-  }
+    },
+  },
 }
 </script>
 
@@ -309,15 +276,18 @@ export default {
 .profile-card {
   padding: 3em;
 }
-.active{
-  border-bottom: 1px solid black;
-}
 
+.tabs-control {
+  margin-top: 10em;
+}
+.splash {
+  max-height: 20rem;
+}
 .grid-container {
   /* height: 100vh; */
   display: grid;
   grid-template-columns: 1fr 4fr;
-  grid-template-rows: 1fr 1fr 7fr;
+  grid-template-rows: 2fr 1fr 7fr;
   grid-template-areas:
     'coverpic coverpic coverpic'
     'artistCard portfolio protfolio'
@@ -331,11 +301,10 @@ export default {
 #bio {
   grid-area: artistCard;
 }
-
 #portfolioBtn {
   grid-area: portfolio;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: 2fr 1fr;
   align-self: center;
   gap: 12px;
 }
@@ -345,19 +314,15 @@ export default {
 #posts {
   grid-area: imageGrid;
 }
-#mobile-bio {
-  display: none;
-}
 
 @media screen and (max-width: 760px) {
   .grid-container {
     /* height: 100vh; */
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: auto auto auto 1fr;
+    grid-template-rows: auto auto 1fr;
     grid-template-areas:
       'coverpic'
-      'mobilebio'
       'portfolio'
       'imageGrid';
     gap: 12px;
@@ -365,9 +330,6 @@ export default {
   }
   #bio {
     display: none;
-  }
-  #mobile-bio {
-    display: block;
   }
   #portfolioBtn {
     grid-area: portfolio;

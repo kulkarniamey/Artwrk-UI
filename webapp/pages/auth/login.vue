@@ -40,6 +40,7 @@
 <script>
 import Login from '../../components/Login'
 export default {
+  auth: 'guest',
   layout: 'authlayout',
   name: 'loginPage',
   components: {

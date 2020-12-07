@@ -22,9 +22,14 @@
           <div v-if="$auth.loggedIn">
             <v-btn color="indigo accent-4" to="/jobs" rounded> Jobs </v-btn>
           </div>
-
-          <v-btn icon>
-            <v-icon>mdi-arrow-all</v-icon>
+          <nuxt-link to="/community">
+            <v-btn icon>
+              <v-icon>mdi-arrow-all</v-icon>
+            </v-btn>
+          </nuxt-link>
+          <v-btn @click="$vuetify.theme.dark = !$vuetify.theme.dark" icon>
+            <v-icon v-if="!$vuetify.theme.dark">mdi-weather-sunny</v-icon>
+            <v-icon v-if="$vuetify.theme.dark">mdi-weather-night</v-icon>
           </v-btn>
 
           <div v-if="$auth.loggedIn">
@@ -55,7 +60,11 @@
                     :key="i"
                   >
                     <v-list-item-title
-                      >{{ notification.notification }}
+                      @click="linkNotification(notification.notification)"
+                    >
+                      <nuxt-link to="">
+                        {{ notification.notification }}</nuxt-link
+                      >
                     </v-list-item-title>
                     <v-card-actions>
                       <v-spacer></v-spacer>
@@ -74,7 +83,7 @@
               </v-card>
             </v-menu>
 
-            <v-btn nuxt :to="`/artist/` + 'me'" text large dark
+            <v-btn nuxt :to="`/artist/` + user" text large dark
               >Welcome {{ user }}
             </v-btn>
             <v-btn text @click="$auth.logout()" dark>Logout</v-btn>
@@ -87,72 +96,6 @@
           </div>
         </template>
         <template v-if="mobile">
-          <div v-if="$auth.loggedIn">
-            <v-btn color="indigo accent-4" to="/jobs" rounded> Jobs </v-btn>
-          </div>
-          <v-btn icon to="/search">
-            <v-icon>mdi-magnify</v-icon>
-          </v-btn>
-          <v-menu
-            v-if="$auth.loggedIn"
-            bottom
-            offset-y
-            transition="slide-x-transition"
-          >
-            <template v-slot:activator="{ on, attrs }">
-              <v-btn
-                :disabled="notifications.length === 0"
-                dark
-                icon
-                class="ma-2"
-                v-bind="attrs"
-                v-on="on"
-              >
-                <v-badge
-                  :content="notifications.length"
-                  :value="notifications.length"
-                  color="green"
-                  overlap
-                >
-                  <v-icon color="black">mdi-bell-outline</v-icon>
-                </v-badge>
-              </v-btn>
-            </template>
-            <v-card>
-              <v-list>
-                <v-list-item
-                  v-for="(notification, i) in notifications"
-                  :key="i"
-                >
-                  <v-list-item-title
-                    >{{ notification.notification }}
-                  </v-list-item-title>
-                  <v-card-actions>
-                    <v-spacer></v-spacer>
-                  </v-card-actions>
-                  <v-list-item
-                    v-for="(notification, i) in notifications"
-                    :key="i"
-                  >
-                    <v-list-item-title
-                      >{{ notification.text }}
-                    </v-list-item-title>
-
-                    <v-card-actions>
-                      <v-spacer></v-spacer>
-
-                      <v-btn text nuxt :to="notification.actionLink">{{
-                        notification.actionText
-                      }}</v-btn>
-                      <v-btn color="primary" text @click="removeNotification(i)"
-                        >Remove</v-btn
-                      >
-                    </v-card-actions>
-                  </v-list-item>
-                </v-list-item>
-              </v-list>
-            </v-card>
-          </v-menu>
           <v-app-bar-nav-icon
             @click.stop="drawer = !drawer"
           ></v-app-bar-nav-icon>
@@ -172,15 +115,95 @@
         >
           <v-list-itm-group v-if="$auth.loggedIn" class="pa-3">
             <v-list-item>
-              <v-icon>mdi-account</v-icon>
-              <v-btn
-                class="justify-center"
-                nuxt
-                :to="`/artist/` + user"
-                text
-                large
-                >Welcome {{ user }}
+              <v-menu bottom offset-y transition="slide-x-transition">
+                <template v-slot:activator="{ on, attrs }">
+                  <v-btn
+                    :disabled="notifications.length === 0"
+                    dark
+                    icon
+                    class="ma-2"
+                    v-bind="attrs"
+                    v-on="on"
+                  >
+                    <v-badge
+                      :content="notifications.length"
+                      :value="notifications.length"
+                      color="green"
+                      overlap
+                    >
+                      <v-icon :color="!$vuetify.theme.dark ? 'black' : 'white'"
+                        >mdi-bell-outline</v-icon
+                      >
+                    </v-badge>
+                  </v-btn>
+                </template>
+                <v-card>
+                  <v-list>
+                    <v-list-item
+                      v-for="(notification, i) in notifications"
+                      :key="i"
+                    >
+                      <v-list-item-title
+                        >{{ notification.notification }}
+                      </v-list-item-title>
+                      <v-card-actions>
+                        <v-spacer></v-spacer>
+                      </v-card-actions>
+                      <v-list-item
+                        v-for="(notification, i) in notifications"
+                        :key="i"
+                      >
+                        <v-list-item-title
+                          >{{ notification.text }}
+                        </v-list-item-title>
+
+                        <v-card-actions>
+                          <v-spacer></v-spacer>
+
+                          <v-btn text nuxt :to="notification.actionLink">{{
+                            notification.actionText
+                          }}</v-btn>
+                          <v-btn
+                            color="primary"
+                            text
+                            @click="removeNotification(i)"
+                            >Remove</v-btn
+                          >
+                        </v-card-actions>
+                      </v-list-item>
+                    </v-list-item>
+                  </v-list>
+                </v-card>
+              </v-menu>
+            </v-list-item>
+            <v-list-item>
+              <nuxt-link
+                to="/community"
+                class="mobileDrawerLinks"
+                :class="!$vuetify.theme.dark ? 'whiteTheme' : 'darkTheme'"
+              >
+                <v-btn icon>
+                  <v-icon>mdi-arrow-all</v-icon>
+                </v-btn>
+                <v-list-item-title> Community </v-list-item-title>
+              </nuxt-link>
+            </v-list-item>
+            <v-list-item
+              ><div v-if="$auth.loggedIn">
+                <v-btn color="indigo accent-4 white--text" to="/jobs" rounded>
+                  Jobs
+                </v-btn>
+              </div></v-list-item
+            >
+            <v-list-item
+              class="mobileDrawerLinks"
+              @click="$vuetify.theme.dark = !$vuetify.theme.dark"
+              :class="!$vuetify.theme.dark ? 'whiteTheme' : 'darkTheme'"
+              ><v-btn icon>
+                <v-icon v-if="!$vuetify.theme.dark">mdi-weather-sunny</v-icon>
+                <v-icon v-if="$vuetify.theme.dark">mdi-weather-night</v-icon>
               </v-btn>
+              <v-list-item-title> Change Theme </v-list-item-title>
             </v-list-item>
             <v-list-item>
               <v-icon>mdi-logout</v-icon>
@@ -208,7 +231,7 @@
         <nuxt />
       </v-main>
 
-      <FooterComponent class="bottm-nav" />
+      <FooterComponent />
     </template>
   </v-app>
 </template>
@@ -269,13 +292,23 @@ export default {
       this.notifications.splice(index, 1)
     },
     gotoProfile() {
-      this.$router.push('artist/' + 'me')
+      this.$router.push('artist/' + this.user)
     },
     checkAdmin() {
       if (this.$auth?.user?.user_id === 'admin_admin') {
         return 'admin'
       } else {
         return this.$auth?.user?.user_id
+      }
+    },
+
+    linkNotification(i) {
+      console.log(i)
+      console.log(i.substr(0, i.indexOf(' ')))
+      if (this.$auth?.user?.user_id === 'admin_admin') {
+        this.$router.push('/recruiter/' + i.substr(0, i.indexOf(' ')))
+      } else if (this.$auth?.user?.type === 'recruiter') {
+        this.$router.push('/artist/' + i.substr(0, i.indexOf(' ')))
       }
     }
   },
@@ -330,7 +363,7 @@ export default {
             response.data.notifications
           )
 
-          console.log(this.notifications)
+          //console.log(this.notifications)
         }
       } catch (err) {
         console.log(err)
@@ -342,18 +375,28 @@ export default {
   }
 }
 </script>
-<style scoped>
+<style lang="scss" scoped>
 .v-btn {
   height: 10px;
 }
 .foot {
   display: flex;
 }
-.bottm-nav {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-
-  width: 100%;
+.nuxt-link-active > button {
+  color: #3550e6 !important;
+}
+a {
+  text-decoration: none;
+}
+.mobileDrawerLinks {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+.whiteTheme {
+  color: $mobileDrawerWhiteTheme;
+}
+.darkTheme {
+  color: $mobileDrawerDarkTheme;
 }
 </style>

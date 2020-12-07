@@ -5,6 +5,7 @@
 <script>
 import Forgotpass from '../../components/Forgotpass'
 export default {
+  auth: 'guest',
   name: 'forgot',
   layout: 'authlayout',
   components: {

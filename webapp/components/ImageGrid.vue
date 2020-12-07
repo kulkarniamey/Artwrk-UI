@@ -2,28 +2,63 @@
   <div>
     <div class="image-grid">
       <template v-for="(x, index) in images">
-        <nuxt-link :to="`/posts/` + x.postid" :key="index">
-          <v-img
-            :src="x.url"
-            :key="index"
-            alt="post"
-            class="single-image"
-            lazy-src="/loadersvg.svg"
-            @click="showDetail($event, x)"
-          />
-        </nuxt-link>
+        <div :key="index">
+            <nuxt-link :to="`/posts/` + x.post_id">
+              <v-img
+                :key="index"
+                :src="x.url"
+                alt="post"
+                class="single-image"
+                lazy-src="/information_flow.png"
+                @click="showDetail($event, x)"
+              >
+                <v-expand-transition>
+                  <div
+                    v-if="hover"
+                    class="d-flex transition-fast-in-fast-out hover-card v-card--reveal display-3 white--text"
+                    style="height: 100%;"
+                  >
+                    <span class="headd">{{ x.title }}</span>
+                    <v-btn class="more" dark icon v-bind="attrs" v-on="on">
+                      <v-icon>mdi-dots-vertical</v-icon>
+                    </v-btn>
+                    <v-rating
+                      v-model="rating"
+                      background-color="white"
+                      color="yellow accent-4"
+                      dense
+                      half-increments
+                      hover
+                      size="24"
+                    ></v-rating>
+                    <div class="cta">
+                      <v-btn
+                        icon
+                        @click="upvotePost"
+                        class="white--text align-end "
+                      >
+                        <v-icon :color="liked" left>mdi-heart</v-icon>
+                      </v-btn>
+                      <span class="votes">{{ Object.keys(x.voters).length }}</span>
+                    </div>
+                  </div>
+                </v-expand-transition>
+              </v-img>
+            </nuxt-link>
+          <div></div>
+        </div>
       </template>
     </div>
   </div>
 </template>
 
 <script>
-import axios, * as others from 'axios'
-
-const API_KEY = 'c397975f-36f1-49d9-9299-530a628c8663'
 export default {
   name: 'ImageGrid',
 
+  props: {
+    postData: { type: Array, required: true }
+  },
   data() {
     return {
       imageurls: [],
@@ -31,15 +66,8 @@ export default {
       dialog: false,
       selectedPost: undefined,
       imgval: '',
-      images: this.postData
-    }
-  },
-  props: {
-    postData: { type: Array, required: true }
-  },
-  watch: {
-    postData() {
-      this.images = this.postData
+      images: this.postData,
+      hover:false
     }
   },
   computed: {
@@ -47,18 +75,15 @@ export default {
       return this.imageurls.filter((p) => p.isActive).length
     }
   },
+  watch: {
+    postData() {
+      this.images = this.postData
+    }
+  },
+  mounted() {
+    this.images = this.postData
+  },
   methods: {
-    getManyPussy() {
-      var totalCount = 20
-      var i = 0
-      for (i = 0; i < totalCount; i++) {
-        const url = { url: '/coolpost.png' }
-
-        this.imageurls.push(url)
-      }
-
-      return this.imageurls
-    },
     showDetail(e, data) {
       this.selectedPost = data
       this.dialog = true
@@ -68,9 +93,6 @@ export default {
       this.title = ''
       this.imgval = ''
     }
-  },
-  mounted() {
-    this.images = this.postData
   }
 }
 </script>
@@ -78,7 +100,7 @@ export default {
 <style lang="scss" scoped>
 .image-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 24px;
 }
 .single-image {
@@ -86,6 +108,38 @@ export default {
   min-width: 145px;
   max-height: 200px;
   min-height: 100px;
+}
+.hover-card {
+  position: relative;
+  background-color: rgba(0, 0, 0, 0.4);
+  text-decoration: none !important;
+  display: flex;
+  align-items: center;
+  justify-items: center;
+  justify-content: center;
+}
+.cta {
+  position: absolute;
+  left: 12px;
+  bottom: 0;
+}
+.headd {
+  position: absolute;
+  top: 0;
+  left: 8px;
+  font-size: 24px;
+  font-weight: 700;
+}
+a {
+  text-decoration: none;
+}
+.votes {
+  font-size: 24px;
+}
+.more {
+  position: absolute;
+  top: 10px;
+  right: 8px;
 }
 @media screen and (max-width: 760px) {
   .image-grid {
