@@ -22,16 +22,15 @@
           <div v-if="$auth.loggedIn">
             <v-btn color="indigo accent-4" to="/jobs" rounded> Jobs </v-btn>
           </div>
-        <nuxt-link to="/community"> 
-          <v-btn icon>
-            <v-icon>mdi-arrow-all</v-icon>
-          </v-btn>
+          <nuxt-link to="/community">
+            <v-btn icon>
+              <v-icon>mdi-arrow-all</v-icon>
+            </v-btn>
           </nuxt-link>
-          <v-btn @click="$vuetify.theme.dark=!$vuetify.theme.dark" icon>
-            <v-icon v-if="!$vuetify.theme.dark" >mdi-weather-sunny</v-icon>
+          <v-btn @click="$vuetify.theme.dark = !$vuetify.theme.dark" icon>
+            <v-icon v-if="!$vuetify.theme.dark">mdi-weather-sunny</v-icon>
             <v-icon v-if="$vuetify.theme.dark">mdi-weather-night</v-icon>
           </v-btn>
-          
 
           <div v-if="$auth.loggedIn">
             <v-menu bottom offset-y transition="slide-x-transition">
@@ -132,7 +131,9 @@
                       color="green"
                       overlap
                     >
-                      <v-icon color="black">mdi-bell-outline</v-icon>
+                      <v-icon :color="!$vuetify.theme.dark ? 'black' : 'white'"
+                        >mdi-bell-outline</v-icon
+                      >
                     </v-badge>
                   </v-btn>
                 </template>
@@ -175,17 +176,35 @@
                 </v-card>
               </v-menu>
             </v-list-item>
-            <!-- <v-list-item>
-              <v-icon>mdi-account</v-icon>
-              <v-btn
-                class="justify-center"
-                nuxt
-                :to="`/artist/` + user"
-                text
-                large
-                >Welcome {{ user }}
+            <v-list-item>
+              <nuxt-link
+                to="/community"
+                class="mobileDrawerLinks"
+                :class="!$vuetify.theme.dark ? 'whiteTheme' : 'darkTheme'"
+              >
+                <v-btn icon>
+                  <v-icon>mdi-arrow-all</v-icon>
+                </v-btn>
+                <v-list-item-title> Community </v-list-item-title>
+              </nuxt-link>
+            </v-list-item>
+            <v-list-item
+              ><div v-if="$auth.loggedIn">
+                <v-btn color="indigo accent-4 white--text" to="/jobs" rounded>
+                  Jobs
+                </v-btn>
+              </div></v-list-item
+            >
+            <v-list-item
+              class="mobileDrawerLinks"
+              @click="$vuetify.theme.dark = !$vuetify.theme.dark"
+              :class="!$vuetify.theme.dark ? 'whiteTheme' : 'darkTheme'"
+              ><v-btn icon>
+                <v-icon v-if="!$vuetify.theme.dark">mdi-weather-sunny</v-icon>
+                <v-icon v-if="$vuetify.theme.dark">mdi-weather-night</v-icon>
               </v-btn>
-            </v-list-item> -->
+              <v-list-item-title> Change Theme </v-list-item-title>
+            </v-list-item>
             <v-list-item>
               <v-icon>mdi-logout</v-icon>
               <v-btn class="justify-center" text @click="$auth.logout()"
@@ -212,7 +231,7 @@
         <nuxt />
       </v-main>
 
-      <FooterComponent v-if="mobile" />
+      <FooterComponent />
     </template>
   </v-app>
 </template>
@@ -356,18 +375,28 @@ export default {
   }
 }
 </script>
-<style scoped>
+<style lang="scss" scoped>
 .v-btn {
   height: 10px;
 }
 .foot {
   display: flex;
 }
-.nuxt-link-active > button{
-  color: #3550E6 !important;
-  
+.nuxt-link-active > button {
+  color: #3550e6 !important;
 }
 a {
   text-decoration: none;
+}
+.mobileDrawerLinks {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+.whiteTheme {
+  color: $mobileDrawerWhiteTheme;
+}
+.darkTheme {
+  color: $mobileDrawerDarkTheme;
 }
 </style>

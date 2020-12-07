@@ -1,5 +1,5 @@
 <template>
-  <v-footer dark padless class="show">
+  <v-footer dark padless :class="mobile ? null : 'show'">
     <v-row justify="center" no-gutters>
       <template v-if="mobile">
         <!-- <v-col cols="12">
